@@ -1,0 +1,43 @@
+<template>
+  <div class="auth__checkbox">
+    <input
+      type="checkbox"
+      class="auth__field"
+      :id="id"
+      @change="$emit('change')"
+    />
+    <label :for="id" class="auth__label">{{ label }}</label>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    id: {
+      type: String,
+      required: true
+    },
+    label: {
+      type: String,
+      required: true
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.auth__checkbox {
+  margin-bottom: 2rem;
+}
+
+.auth__label {
+  color: #eee;
+  font-size: 0.8rem;
+  padding-left: 0.5rem;
+}
+
+.auth__field {
+  margin: 0;
+  transform: translateY(1px);
+}
+</style>

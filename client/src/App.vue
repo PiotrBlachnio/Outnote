@@ -1,16 +1,17 @@
 <template>
   <div id="app" data-theme="dark">
-    <navigation />
+    <!-- <navigation /> -->
     <router-view />
   </div>
 </template>
 
 <script>
-import Navigation from './components/core/Navigation';
+// import Navigation from './components/core/Navigation';
+// TODO: move navigation to other view/component
 
 export default {
   components: {
-    Navigation
+    // Navigation
   }
 };
 </script>
