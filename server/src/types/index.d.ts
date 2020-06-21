@@ -1,8 +1,6 @@
 import UserService from "../services/user-service";
 import EmailService from "../services/email-service";
-import BanService from "../services/ban-service";
 import TokenService from "../services/token-service";
-import EventEmitter from "../events/event-emitter";
 
 export {};
 
@@ -24,7 +22,6 @@ declare module 'express-serve-static-core' {
            email: EmailService;
            token: TokenService;
            user: UserService;
-       },
-       eventEmitter: EventEmitter
+       }
     }
 }
