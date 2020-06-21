@@ -1,6 +1,5 @@
 import UserService from "../services/user-service";
 import EmailService from "../services/email-service";
-import BanService from "../services/ban-service";
 import TokenService from "../services/token-service";
 import EventEmitter from "../events/event-emitter";
 

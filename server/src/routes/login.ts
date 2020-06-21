@@ -13,7 +13,6 @@ const router: Router = Router();
 */
 router.post('/', cookieParser(), validate.login, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Logged in successfully!', place: 'Login route' });
-    req.eventEmitter.emit('LOGIN_SUCCESS', req.context!.banId);
     
     const refreshToken: string =  req.services.token.generateToken(Token.REFRESH, {
         id: req.context!.id!,
