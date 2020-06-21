@@ -17,9 +17,8 @@
  * 300 - User does not exist
  * 301 - Username already exists
  * 302 - Email already exists
- * 303 - Username and email already exist
- * 304 - Email has already been confirmed
- * 305 - Email has not been confirmed yet
+ * 303 - Email has already been confirmed
+ * 304 - Email has not been confirmed yet
  */
 export class GenericError extends Error {
     public id: number = 0;
@@ -172,21 +171,11 @@ export class EmailAlreadyExistError extends GenericError {
     };
 };
 
-export class UsernameAndEmailAlreadyExistError extends GenericError {
-    constructor() {
-        super();
-
-        this.id = 303;
-        this.statusCode = 401;
-        this.message = 'Username and email already exist';
-    };
-};
-
 export class EmailAlreadyConfirmedError extends GenericError {
     constructor() {
         super();
 
-        this.id = 304;
+        this.id = 303;
         this.statusCode = 403;
         this.message = 'Email has already been confirmed';
     };
@@ -196,14 +185,8 @@ export class EmailNotConfirmedError extends GenericError {
     constructor() {
         super();
 
-        this.id = 305;
+        this.id = 304;
         this.statusCode = 403;
         this.message = 'Email has not been confirmed yet';
     };
 };
-
-export class BadRequest extends GenericError {};
-
-export class Unauthorized extends GenericError {};
-
-export class Forbidden extends GenericError {};
