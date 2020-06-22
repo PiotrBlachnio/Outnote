@@ -41,6 +41,14 @@ const routes = [
           title: 'Notes App | Forgot Password'
         },
         component: () => import('@/views/auth/ForgotPassword')
+      },
+      {
+        path: 'reset-password',
+        name: 'Reset Password',
+        meta: {
+          title: 'Notes App | Reset Password'
+        },
+        component: () => import('@/views/auth/ResetPassword')
       }
     ]
   },
