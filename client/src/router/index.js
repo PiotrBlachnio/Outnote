@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from '../store';
 
 Vue.use(VueRouter);
 
@@ -10,9 +11,37 @@ const routes = [
     component: () => import('@/views/Home')
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/auth/Login')
+    path: '/auth',
+    component: {
+      render(c) {
+        return c('router-view');
+      }
+    },
+    children: [
+      {
+        path: 'login',
+        name: 'Login',
+        meta: {
+          title: 'Notes App | Login'
+        },
+        component: () => import('@/views/auth/Login')
+      },
+      {
+        path: 'register',
+        name: 'Register',
+        meta: {
+          title: 'Notes App | Register'
+        },
+        component: () => import('@/views/auth/Register')
+      }
+    ]
+  },
+  {
+    path: '/dashboard',
+    meta: {
+      requiresAuth: true,
+      title: 'User Dashboard'
+    }
   }
 ];
 
@@ -20,6 +49,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.state.userAuthStatus) {
+      next();
+      return;
+    }
+    next('/auth/login');
+  } else {
+    document.title = to.meta.title;
+    next();
+  }
 });
 
 export default router;
