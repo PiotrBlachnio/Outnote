@@ -1,5 +1,6 @@
 <template>
   <form class="auth__form" @submit.prevent>
+    <h1 class="auth__route-heading">{{ $route.name }}</h1>
     <slot></slot>
 
     <button class="auth__button">{{ buttonLabel }}</button>
@@ -70,6 +71,27 @@ export default {
 
   @include mq {
     width: 20rem;
+  }
+}
+
+.auth__route-heading {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  position: absolute;
+  font-size: 2.5rem;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.05);
+
+  @include mq {
+    width: auto;
+    top: auto;
+    left: 4rem;
+    bottom: 4rem;
+    font-size: 5rem;
+    transform: translateX(0);
   }
 }
 

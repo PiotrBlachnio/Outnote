@@ -36,7 +36,7 @@ const routes = [
       },
       {
         path: 'forgot-password',
-        name: 'ForgotPassword',
+        name: 'Forgot Password',
         meta: {
           title: 'Notes App | Forgot Password'
         },
