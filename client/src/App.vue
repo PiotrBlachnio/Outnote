@@ -1,7 +1,9 @@
 <template>
   <div id="app" data-theme="dark">
     <!-- <navigation /> -->
-    <router-view />
+    <transition name="fade">
+      <router-view />
+    </transition>
   </div>
 </template>
 
@@ -18,6 +20,18 @@ export default {
 
 <style lang="scss">
 @import './style/_base';
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.9s;
+}
+.fade-enter-active {
+  opacity: 1;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
 
 #app {
   height: 100vh;

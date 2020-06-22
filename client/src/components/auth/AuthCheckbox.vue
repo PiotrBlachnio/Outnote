@@ -4,7 +4,8 @@
       type="checkbox"
       class="auth__field"
       :id="id"
-      @change="$emit('change')"
+      v-model="isChecked"
+      @change="$emit('change', isChecked)"
     />
     <label :for="id" class="auth__label">{{ label }}</label>
   </div>
@@ -21,6 +22,11 @@ export default {
       type: String,
       required: true
     }
+  },
+  data() {
+    return {
+      isChecked: false
+    };
   }
 };
 </script>

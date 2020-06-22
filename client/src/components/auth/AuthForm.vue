@@ -1,31 +1,26 @@
 <template>
   <form class="auth__form" @submit.prevent>
-    <auth-input id="email" label="Email" v-model="form.email" />
-    <auth-input
-      id="Password"
-      label="Password"
-      type="password"
-      v-model="form.password"
-    />
+    <slot></slot>
 
-    <div class="auth__together">
-      <auth-checkbox
-        id="rememberMe"
-        label="Remember me"
-        @change="form.rememberPassword = !form.rememberPassword"
-      />
-      <router-link to="#" class="auth__link">Forgot password?</router-link>
-    </div>
-
-    <button class="auth__button" :disabled="buttonActive">Sign in</button>
+    <button class="auth__button">{{ buttonLabel }}</button>
 
     <div class="auth__hr"></div>
 
-    <router-link to="#" class="auth__link">Privacy policy</router-link>
-    <span class="auth__span">
+    <router-link to="/privacy-policy" class="auth__link">
+      Privacy policy
+    </router-link>
+
+    <span class="auth__span" v-if="formType === 'login'">
       Don't have an account?
-      <router-link to="#" class="auth__link">
+      <router-link to="/auth/register" class="auth__link">
         Create one!
+      </router-link>
+    </span>
+
+    <span class="auth__span" v-else-if="formType === 'register'">
+      Already have an account?
+      <router-link to="/auth/login" class="auth__link">
+        Sign in
       </router-link>
     </span>
 
@@ -38,30 +33,18 @@
 </template>
 
 <script>
-import AuthInput from './AuthInput';
-import AuthCheckbox from './AuthCheckbox';
-
 export default {
-  components: {
-    AuthInput,
-    AuthCheckbox
-  },
-  data() {
-    return {
-      form: {
-        email: '',
-        password: '',
-        rememberPassword: false
-      }
-    };
-  },
-  computed: {
-    buttonActive() {
-      return this.form.email.length < 1 || this.form.password.length < 1;
+  props: {
+    formType: {
+      type: String,
+      required: true,
+      validator: value =>
+        ['login', 'register', 'confirmEmail', 'forgotPassword'].includes(value)
+    },
+    buttonLabel: {
+      type: String,
+      required: true
     }
-  },
-  created() {
-    console.log(this.buttonActive);
   }
 };
 </script>

@@ -8,7 +8,7 @@
       {{ label }}
     </label>
     <input
-      :type="type ? type : 'text'"
+      :type="type"
       :id="id"
       v-model="inputValue"
       class="auth__field"
@@ -34,7 +34,8 @@ export default {
     },
     type: {
       required: false,
-      type: String
+      type: String,
+      default: 'text'
     }
   },
   data() {
