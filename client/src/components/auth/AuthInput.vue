@@ -14,6 +14,7 @@
       class="auth__field"
       spellcheck="false"
       autocomplete="off"
+      :class="{ 'auth__field--error': error }"
       @focus="isInputActive = true"
       @blur="isInputActive = false"
       @input="$emit('input', inputValue)"
@@ -36,6 +37,11 @@ export default {
       required: false,
       type: String,
       default: 'text'
+    },
+    error: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   data() {
@@ -85,6 +91,11 @@ export default {
 
   &:focus {
     border-color: $primary;
+  }
+
+  &--error {
+    animation: vibrate 0.25s linear;
+    border-color: #ff4444;
   }
 }
 </style>
