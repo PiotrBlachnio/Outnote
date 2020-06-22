@@ -32,8 +32,7 @@ export default {
       form: {
         email: '',
         password: '',
-        passwordRepeat: '',
-        rememberPassword: false
+        passwordRepeat: ''
       }
     };
   }

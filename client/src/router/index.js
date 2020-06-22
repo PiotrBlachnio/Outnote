@@ -33,6 +33,14 @@ const routes = [
           title: 'Notes App | Register'
         },
         component: () => import('@/views/auth/Register')
+      },
+      {
+        path: 'forgot-password',
+        name: 'ForgotPassword',
+        meta: {
+          title: 'Notes App | Forgot Password'
+        },
+        component: () => import('@/views/auth/ForgotPassword')
       }
     ]
   },

@@ -24,11 +24,13 @@
       </router-link>
     </span>
 
-    <div class="auth__hr"></div>
+    <div class="auth__full-width" v-if="formType !== 'forgotPassword'">
+      <div class="auth__hr"></div>
 
-    <button class="auth__button auth__button--discord">
-      Sign in with Discord
-    </button>
+      <button class="auth__button auth__button--discord">
+        Sign in with Discord
+      </button>
+    </div>
   </form>
 </template>
 
@@ -129,5 +131,9 @@ export default {
   color: #ddd;
   font-size: 0.8rem;
   margin: 0 auto;
+}
+
+.auth__full-width {
+  width: 100%;
 }
 </style>
