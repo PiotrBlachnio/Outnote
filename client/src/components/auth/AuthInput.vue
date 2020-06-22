@@ -8,7 +8,7 @@
       {{ label }}
     </label>
     <input
-      :type="type"
+      :type="passwordVisible ? 'text' : type"
       :id="id"
       v-model="inputValue"
       class="auth__field"
@@ -19,6 +19,18 @@
       @blur="isInputActive = false"
       @input="$emit('input', inputValue)"
     />
+
+    <transition name="fade-password">
+      <button
+        type="button"
+        class="auth__show-password"
+        :class="{ 'auth__show-password--active': passwordVisible }"
+        @click="passwordVisible = !passwordVisible"
+        v-if="inputValue.length > 0 && type === 'password'"
+      >
+        👁
+      </button>
+    </transition>
   </div>
 </template>
 
@@ -47,7 +59,8 @@ export default {
   data() {
     return {
       inputValue: '',
-      isInputActive: false
+      isInputActive: false,
+      passwordVisible: false
     };
   }
 };
@@ -97,5 +110,37 @@ export default {
     animation: vibrate 0.25s linear;
     border-color: #ff4444;
   }
+}
+
+.auth__show-password {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  color: rgb(189, 189, 189);
+  font-size: 2rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  &--active::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 3px;
+    height: 2rem;
+    background-color: rgb(189, 189, 189);
+    transform: translate(0.9rem, -2.1rem) rotate(45deg);
+  }
+}
+
+.fade-password-enter-active,
+.fade-password-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-password-enter-active {
+  opacity: 1;
+}
+.fade-password-enter,
+.fade-password-leave-to {
+  opacity: 0;
 }
 </style>
