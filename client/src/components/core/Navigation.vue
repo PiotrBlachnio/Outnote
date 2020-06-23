@@ -17,7 +17,9 @@
         :key="category"
         v-show="isMenuAvtive"
       >
-        <router-link to="#" class="navigation__link">{{ category }}</router-link>
+        <router-link to="#" class="navigation__link">
+          {{ category }}
+        </router-link>
       </li>
     </ul>
   </nav>
@@ -68,7 +70,7 @@ export default {
     display: block;
     width: 100%;
     height: 3px;
-    background-color: #eee;
+    background-color: $navigationHamburgerColor;
     transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
 
     &:nth-of-type(2) {
@@ -99,12 +101,9 @@ export default {
     opacity: 1;
   }
 
-  &__element {
-  }
-
   &__link {
     display: block;
-    color: #eee;
+    color: $navigationLinkColor;
     padding: 0.5rem;
     opacity: 0;
     font-weight: bold;
@@ -112,7 +111,7 @@ export default {
     transition: border-left 0.1s ease-in-out, opacity 0.3s ease-in-out;
 
     &:hover {
-      border-left: 2px solid #eee;
+      border-left: 2px solid $navigationLinkActiveBorderColor;
     }
   }
 

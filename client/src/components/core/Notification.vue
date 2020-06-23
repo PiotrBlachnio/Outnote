@@ -64,19 +64,19 @@ export default {
   background-color: $notificationBackground;
 
   &--info {
-    border-color: #33b5e5;
+    border-color: $notificationBorderInfo;
   }
 
   &--error {
-    border-color: #ff4444;
+    border-color: $notificationBorderError;
   }
 
   &--success {
-    border-color: #00c851;
+    border-color: $notificationBorderSuccess;
   }
 
   &__content {
-    color: #ddd;
+    color: $notificationContentColor;
   }
 }
 

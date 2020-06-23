@@ -79,7 +79,7 @@ export default {
   cursor: text;
   position: absolute;
   transform: translate(1rem, 1.5rem);
-  color: rgb(199, 199, 199);
+  color: $authInputLabelColor;
   transition: all 0.2s ease-in-out;
 
   &::selection {
@@ -87,20 +87,20 @@ export default {
   }
 
   &--active {
-    color: #aaa;
+    color: $authInputLabelActiveColor;
     font-size: 0.75rem;
     transform: translate(1rem, 0.5rem);
   }
 }
 
 .auth__field {
-  color: #eee;
+  color: $authInputFieldColor;
   border: none;
   padding: 2rem 1rem 1rem;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out;
   border: 1px solid transparent;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: $authInputFieldBackground;
 
   &:focus {
     border-color: $primary;
@@ -108,7 +108,7 @@ export default {
 
   &--error {
     animation: vibrate 0.25s linear;
-    border-color: #ff4444;
+    border-color: $error;
   }
 }
 
@@ -116,7 +116,7 @@ export default {
   position: absolute;
   right: 1rem;
   top: 50%;
-  color: rgb(189, 189, 189);
+  color: $authInputShowPasswordButtonColor;
   font-size: 2rem;
   transform: translateY(-50%);
   cursor: pointer;
@@ -127,7 +127,7 @@ export default {
     position: absolute;
     width: 3px;
     height: 2rem;
-    background-color: rgb(189, 189, 189);
+    background-color: $authInputShowPasswordButtonColor;
     transform: translate(0.9rem, -2.1rem) rotate(45deg);
   }
 }

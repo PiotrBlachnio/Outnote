@@ -37,7 +37,7 @@ export default {
 }
 
 .auth__label {
-  color: #eee;
+  color: $authInputFieldColor;
   font-size: 0.8rem;
   padding-left: 0.5rem;
 }

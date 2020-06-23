@@ -57,7 +57,7 @@ export default {
   width: 100%;
   height: 1px;
   margin: 1rem auto;
-  background-color: #444;
+  background-color: $authHrBackground;
 }
 
 .auth__form {
@@ -83,7 +83,7 @@ export default {
   top: 1rem;
   left: 50%;
   transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.05);
+  color: $authRouteHeadingColor;
 
   @include mq {
     width: auto;
@@ -97,7 +97,7 @@ export default {
 
 .auth__heading {
   width: 100%;
-  color: #eee;
+  color: $authHeadingColor;
   margin: 0;
   text-align: center;
   font-size: 2rem;
@@ -107,7 +107,7 @@ export default {
 .auth__button {
   width: 100%;
   padding: 1rem;
-  color: #eee;
+  color: $authButtonColor;
   font-size: 1.05rem;
   font-weight: bold;
   text-transform: uppercase;
@@ -124,10 +124,10 @@ export default {
   &--discord {
     border: none;
     text-transform: initial;
-    background-color: #7289da;
+    background-color: $authButtonDiscordBackground;
 
     &:hover {
-      background-color: darken(#7289da, 5%);
+      background-color: darken($authButtonDiscordBackground, 5%);
     }
   }
 }
@@ -150,7 +150,7 @@ export default {
 }
 
 .auth__span {
-  color: #ddd;
+  color: $authSpanColor;
   font-size: 0.8rem;
   margin: 0 auto;
 }
