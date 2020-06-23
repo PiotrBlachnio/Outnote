@@ -3,12 +3,12 @@ services:
     server:
         container_name: note-app-server
         restart: always
-        build: .
+        build: ../server
         ports:
             - '9000:4000'
     client:
         container_name: note-app-client
         restart: always
-        build: ../client
+        build: .
         ports:
             - '9001:8080'
