@@ -1,0 +1,11 @@
+@mixin mq($deviceType: 'desktop') {
+  @if ($deviceType == 'tablet') {
+    @media all and (min-width: 481px) {
+      @content;
+    }
+  } @else if ($deviceType == 'desktop') {
+    @media all and (min-width: 1025px) {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+// Main colors
+$primary: #2196F3;
+$secondary: #fff; // MVP
+$info: #33b5e5;
+$error: #ff4444;
+$success: #00c851;
+
+$backgroundColor: hsl(0, 0%, 15%);
+
+// AuthForm
+$authHrBackground: #444;
+$authHeadingColor: #eee;
+$authButtonColor: #eee;
+$authSpanColor: #ddd;
+$authButtonDiscordBackground: #7289da;
+$authRouteHeadingColor: rgba(255, 255, 255, 0.05);
+
+// AuthInput
+$authInputLabelColor: rgb(199, 199, 199);
+$authInputLabelActiveColor: #aaa;
+$authInputFieldColor: #eee;
+$authInputFieldBackground: rgba(255, 255, 255, 0.05);
+$authInputShowPasswordButtonColor: rgb(189, 189, 189);
+
+// Notification
+$notificationBackground: #313131;
+$notificationContentColor: #ddd;
+$notificationBorderInfo: $info;
+$notificationBorderError: $error;
+$notificationBorderSuccess: $success;
+
+// Navigation
+$navigationLinkColor: #eee;
+$navigationLinkActiveBorderColor: #eee;
+$navigationBackground: #1C1C1C;
+$navigationHamburgerColor: #eee;
