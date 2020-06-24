@@ -1,5 +1,5 @@
 import { EventEmitter as NodeEventEmitter } from 'events';
-import { TEvents } from './lib';
+import events, { TEvents } from './lib';
 
 export class EventEmitter extends NodeEventEmitter {
     private _events: TEvents;
@@ -16,4 +16,4 @@ export class EventEmitter extends NodeEventEmitter {
     };
 };
 
-export default EventEmitter;
+export default new EventEmitter(events);

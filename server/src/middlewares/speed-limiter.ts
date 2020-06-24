@@ -5,9 +5,3 @@ export const spamLimiter = slowDown({
     delayAfter: 10,
     delayMs: 500
 });
-
-export const speedLimiter = slowDown({
-    windowMs: 2 * 1000,
-    delayAfter: 1,
-    delayMs: 300
-});

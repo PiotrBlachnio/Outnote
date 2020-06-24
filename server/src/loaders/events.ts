@@ -1,10 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import EventEmitter from '../events/event-emitter';
-import events from '../events/lib';
+import eventEmitter from '../events/event-emitter';
 
-export default (req: Request, res: Response, next: NextFunction): void => {
-    const eventEmitter: EventEmitter = new EventEmitter(events);
-    
+export default (req: Request, res: Response, next: NextFunction): void => {    
     req.eventEmitter = eventEmitter;
     next();
 };
