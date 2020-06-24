@@ -20,7 +20,7 @@ router.post('/', cookieParser(), validate.register, async (req: Request, res: Re
         ip: req.ip
     });
 
-    res.status(201);
+    res.status(201).end();
 });
 
 export default router;
