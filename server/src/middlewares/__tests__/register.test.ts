@@ -21,12 +21,20 @@ describe('Register validator', () => {
         user: new UserService()
     };
 
-    const req: any = {
-        context: {},
-        body: {
-            password: 'Jeff12345'
+    const req = {
+        context: {
+            username: '',
+            email: '',
+            password: ''
         },
-        cookies: {},
+        body: {
+            password: 'Jeff12345',
+            username: '',
+            email: ''
+        },
+        cookies: {
+            jid: ''
+        },
         services: services
     };
 
@@ -34,7 +42,7 @@ describe('Register validator', () => {
     
     describe('When user is already logged in', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             req.cookies.jid =  services.token.generateToken(Token.REFRESH, { id: faker.random.uuid() });
 
             // @ts-ignore-start
@@ -47,7 +55,7 @@ describe('Register validator', () => {
 
     describe('When input is invalid', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             req.cookies.jid = '';
 
             // @ts-ignore-start
@@ -60,7 +68,7 @@ describe('Register validator', () => {
     
     describe('When username already exists', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             user = await createUser({ email: 'Jeff@gmail.com', username: 'Jeff123' });
 
             req.body.username = user.username;
@@ -76,7 +84,7 @@ describe('Register validator', () => {
 
     describe('When email already exists', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             req.body.username = 'Jeff1234';
 
             // @ts-ignore-start
@@ -89,7 +97,7 @@ describe('Register validator', () => {
 
     describe('When valid data was provided', () => {
         it('Should assign req context property', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             req.body.email = 'Jeff2@gmail.com';
 
             // @ts-ignore-start

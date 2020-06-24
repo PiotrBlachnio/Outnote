@@ -8,8 +8,8 @@ const router: Router = Router();
  * @desc    Return all server logs
  * @access  Public
 */
-router.get('/', async (req: Request, res: Response): Promise<Response<any> | void> => {
-    const logs: object[] = await logger.findLogs({});
+router.get('/', async (req: Request, res: Response): Promise<void> => {
+    const logs: Record<string, unknown>[] = await logger.findLogs({});
 
     res.status(200).json(logs);
 });
@@ -19,7 +19,7 @@ router.get('/', async (req: Request, res: Response): Promise<Response<any> | voi
  * @desc    Return all server logs
  * @access  Public
 */
-router.delete('/', async (req: Request, res: Response): Promise<Response<any> | void> => {
+router.delete('/', async (req: Request, res: Response): Promise<void> => {
     await logger.removeLogs();
 
     res.status(200).end();

@@ -14,9 +14,9 @@ router.post('/', cookieParser(), validate.register, async (req: Request, res: Re
     await logger.log({ type: 'info', message: 'Registered successfully!', place: 'Register route' });
     
     req.eventEmitter.emit('REGISTER_SUCCESS', {
-        username: req.context!.username!,
-        email: req.context!.email!,
-        password: req.context!.password!,
+        username: req.context!.username,
+        email: req.context!.email,
+        password: req.context!.password,
         ip: req.ip
     });
 

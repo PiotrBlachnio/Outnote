@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@stargaze/logger": "^1.2.1",
+    "@stargaze/logger": "^1.2.2",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
