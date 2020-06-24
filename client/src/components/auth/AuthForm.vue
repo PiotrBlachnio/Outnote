@@ -3,7 +3,9 @@
     <h1 class="auth__route-heading">{{ $route.name }}</h1>
     <slot></slot>
 
-    <button class="auth__button">{{ buttonLabel }}</button>
+    <button class="auth__button" @click="$emit('submit')">
+      {{ buttonLabel }}
+    </button>
 
     <div class="auth__hr"></div>
 
