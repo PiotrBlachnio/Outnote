@@ -3,8 +3,13 @@
     <h1 class="auth__route-heading">{{ $route.name }}</h1>
     <slot></slot>
 
-    <button class="auth__button" @click="$emit('submit')">
-      {{ buttonLabel }}
+    <button
+      class="auth__button"
+      :class="{ 'auth__button--loading': loading }"
+      @click="$emit('submit')"
+    >
+      <loader v-if="loading" />
+      <span v-else>{{ buttonLabel }}</span>
     </button>
 
     <div class="auth__hr"></div>
@@ -38,7 +43,12 @@
 </template>
 
 <script>
+import Loader from './Loader';
+
 export default {
+  components: {
+    Loader
+  },
   props: {
     formType: {
       type: String,
@@ -49,6 +59,10 @@ export default {
     buttonLabel: {
       type: String,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      required: false
     }
   }
 };
@@ -121,6 +135,11 @@ export default {
 
   &:hover {
     background-color: darken($primary, 5%);
+  }
+
+  &--loading {
+    position: relative;
+    padding-top: 2.2rem;
   }
 
   &--discord {

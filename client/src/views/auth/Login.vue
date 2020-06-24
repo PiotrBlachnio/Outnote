@@ -2,7 +2,12 @@
   <div class="auth login">
     <notification />
 
-    <auth-form form-type="login" button-label="Sign in" @submit="signIn">
+    <auth-form
+      form-type="login"
+      button-label="Sign in"
+      @submit="signIn"
+      :loading="formLoading"
+    >
       <auth-input
         id="email"
         label="Email"
@@ -58,12 +63,15 @@ export default {
         active: false,
         emailInput: false,
         passwordInput: false
-      }
+      },
+      formLoading: false
     };
   },
   methods: {
     async signIn() {
+      this.formLoading = true;
       const execute = await this.$store.dispatch('authSignIn', this.form);
+      this.formLoading = false;
 
       if (!execute.success) {
         this.error.active = true;
