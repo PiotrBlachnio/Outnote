@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import error from './consts';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthCheckbox from '@/components/auth/AuthCheckbox';
 import AuthForm from '@/components/auth/AuthForm';
@@ -62,12 +63,12 @@ export default {
   },
   methods: {
     async signIn() {
-      const execute = await this.$store.dispatch('signIn', this.form);
+      const execute = await this.$store.dispatch('authSignIn', this.form);
 
       if (!execute.success) {
         this.error.active = true;
         this.$store.dispatch('notificationActivate', {
-          content: 'XDDD',
+          content: error[execute.data.error.id].message,
           type: 'error'
         });
       } else {
