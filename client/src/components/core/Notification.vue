@@ -1,8 +1,13 @@
 <template>
   <transition name="slide">
-    <div class="notification" v-if="isActive" :class="'notification--' + type">
+    <div
+      ref="notification"
+      class="notification"
+      v-if="isActive"
+      :class="'notification--' + type"
+    >
       <span class="notification__content">
-        <slot />
+        {{ notificationContent }}
       </span>
     </div>
   </transition>
@@ -10,43 +15,15 @@
 
 <script>
 export default {
-  props: {
-    active: {
-      type: Boolean,
-      required: false,
-      default: false
+  computed: {
+    isActive() {
+      return this.$store.state.notification.active;
     },
-    activeDuration: {
-      type: Number,
-      required: false,
-      default: 3000
+    notificationContent() {
+      return this.$store.state.notification.content;
     },
-    type: {
-      type: String,
-      required: true,
-      validator(value) {
-        return ['info', 'error', 'success'].includes(value);
-      }
-    }
-  },
-  data() {
-    return {
-      isActive: false
-    };
-  },
-  watch: {
-    active() {
-      this.actiateNotification();
-    }
-  },
-  methods: {
-    actiateNotification() {
-      this.isActive = true;
-
-      setTimeout(() => {
-        this.isActive = false;
-        this.$emit('closed');
-      }, this.activeDuration || 3000);
+    type() {
+      return this.$store.state.notification.type;
     }
   }
 };
