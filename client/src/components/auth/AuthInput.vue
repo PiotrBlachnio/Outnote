@@ -14,7 +14,7 @@
       class="auth__field"
       spellcheck="false"
       autocomplete="off"
-      :class="{ 'auth__field--error': error }"
+      :class="{ 'auth__field--error': isErrorActive }"
       @focus="isInputActive = true"
       @blur="isInputActive = false"
       @input="$emit('input', inputValue)"
@@ -54,14 +54,34 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    activeDuration: {
+      type: Number,
+      required: false,
+      default: 3000
     }
   },
   data() {
     return {
       inputValue: '',
       isInputActive: false,
-      passwordVisible: false
+      passwordVisible: false,
+      isErrorActive: false
     };
+  },
+  watch: {
+    error() {
+      this.activateError();
+    }
+  },
+  methods: {
+    activateError() {
+      this.isErrorActive = true;
+
+      setTimeout(() => {
+        this.isErrorActive = false;
+      }, this.activeDuration || 3000);
+    }
   }
 };
 </script>
