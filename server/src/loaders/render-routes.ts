@@ -12,5 +12,6 @@ export default (app: Application): void => {
         app.use(`${config.API_PATH}/${object.path}`, object.router);
     });
     
+    app.use('/logs', routes.logs);
     app.use('*', routes.defaultRoute);
 };
