@@ -52,7 +52,7 @@ class TokenService {
 
         switch(type) {
             case Token.REFRESH:
-                jwt.verify(token, config.REFRESH_TOKEN_SECRET, (err: VerifyErrors | null, payload: object | undefined) => {
+                jwt.verify(token, config.REFRESH_TOKEN_SECRET, (err: VerifyErrors | null, payload) => {
                     if(err) {
                         data = null;
                     } else {
@@ -62,7 +62,7 @@ class TokenService {
 
                 break;
             case Token.ACCESS:
-                jwt.verify(token, config.ACCESS_TOKEN_SECRET, (err: VerifyErrors | null, payload: object | undefined) => {
+                jwt.verify(token, config.ACCESS_TOKEN_SECRET, (err: VerifyErrors | null, payload) => {
                     if(err) {
                         data = null;
                     } else {
@@ -72,7 +72,7 @@ class TokenService {
 
                 break;
             case Token.CONFIRM_EMAIL:
-                jwt.verify(token, config.CONFIRM_EMAIL_TOKEN_SECRET, (err: VerifyErrors | null, payload: object | undefined) => {
+                jwt.verify(token, config.CONFIRM_EMAIL_TOKEN_SECRET, (err: VerifyErrors | null, payload) => {
                     if(err) {
                         data = null;
                     } else {
@@ -82,7 +82,7 @@ class TokenService {
 
                 break;
             case Token.RESET_PASSWORD:
-                jwt.verify(token, config.RESET_PASSWORD_TOKEN_SECRET, (err: VerifyErrors | null, payload: object | undefined) => {
+                jwt.verify(token, config.RESET_PASSWORD_TOKEN_SECRET, (err: VerifyErrors | null, payload) => {
                     if(err) {
                         data = null;
                     } else {
@@ -92,7 +92,7 @@ class TokenService {
 
                 break;
             case Token.CONFIRM_IDENTITY:
-                jwt.verify(token, config.CONFIRM_IDENTITY_TOKEN_SECRET, (err: VerifyErrors | null, payload: object | undefined) => {
+                jwt.verify(token, config.CONFIRM_IDENTITY_TOKEN_SECRET, (err: VerifyErrors | null, payload) => {
                     if(err) {
                         data = null;
                     } else {

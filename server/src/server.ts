@@ -2,7 +2,6 @@ import express, { Application } from 'express';
 import initLoaders from './loaders';
 import http, { Server as HttpServer } from 'http';
 import config from './assets/config';
-import { argv } from 'yargs';
 
 class Server {
     public PORT: string;
