@@ -5,23 +5,27 @@ import { Token } from "../assets/enums";
 
 class TokenService {
     public generateToken(type: Token, payload: TokenPayload): string {
+        if(!payload) {
+            throw new Error('Payload must be provided!');
+        };
+
         let token: string = '';
 
         switch(type) {
             case Token.REFRESH:
-                token = jwt.sign(payload!, config.REFRESH_TOKEN_SECRET);
+                token = jwt.sign(payload, config.REFRESH_TOKEN_SECRET);
                 break;
             case Token.ACCESS:
-                token = jwt.sign(payload!, config.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+                token = jwt.sign(payload, config.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
                 break;
             case Token.CONFIRM_EMAIL:
-                token = jwt.sign(payload!, config.CONFIRM_EMAIL_TOKEN_SECRET, { expiresIn: '1h' });
+                token = jwt.sign(payload, config.CONFIRM_EMAIL_TOKEN_SECRET, { expiresIn: '1h' });
                 break;
             case Token.RESET_PASSWORD:
-                token = jwt.sign(payload!, config.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: '1h' });
+                token = jwt.sign(payload, config.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: '1h' });
                 break;
             case Token.CONFIRM_IDENTITY:
-                token = jwt.sign(payload!, config.CONFIRM_IDENTITY_TOKEN_SECRET, { expiresIn: '1h' });
+                token = jwt.sign(payload, config.CONFIRM_IDENTITY_TOKEN_SECRET, { expiresIn: '1h' });
                 break;
             default:
                 throw new Error('Token type is invalid!');
