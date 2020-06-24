@@ -7,6 +7,7 @@
       button-label="Sign in"
       @submit="signIn"
       :loading="formLoading"
+      :formInactive="isFormEmpty"
     >
       <auth-input
         id="email"
@@ -69,6 +70,8 @@ export default {
   },
   methods: {
     async signIn() {
+      if (this.isFormEmpty) return;
+
       this.formLoading = true;
       const execute = await this.$store.dispatch('authSignIn', this.form);
       this.formLoading = false;
@@ -84,6 +87,11 @@ export default {
           this.$store.dispatch('authRememberLoginData');
         }
       }
+    }
+  },
+  computed: {
+    isFormEmpty() {
+      return this.form.email.length < 1 || this.form.password.length < 1;
     }
   }
 };
