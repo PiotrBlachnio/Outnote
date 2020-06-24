@@ -4,7 +4,8 @@ import config from '../assets/config';
 
 export default (app: Application): void => {
     const rootRouter: { path: string, router: Router }[] = [
-        { path: 'login', router: routes.login }
+        { path: 'login', router: routes.login },
+        { path: 'register', router: routes.register }
     ];
 
     rootRouter.forEach(object => {

@@ -1,6 +1,6 @@
 /**
  * 0 - Internal server error
- * ? Unpredicted user's actions
+ * 
  * 100 - Provided data did not pass the validation proccess
  * 101 - Token has already expired or is invalid
  * 102 - Provided user does not match the decoded user
@@ -8,12 +8,12 @@
  * 104 - Detected action performed by an unknown identity
  * 105 - Token has not expired yet or is invalid
  * 106 - Location has already been added to trusted
- * ? Auth actions
+ * 
  * 200 - Invalid email or password
  * 201 - Detected login attempt from a different location
  * 202 - Invalid password
  * 203 - You do not have required permissions to perform this action
- * ? Existence errors
+ * 
  * 300 - User does not exist
  * 301 - Username already exists
  * 302 - Email already exists
