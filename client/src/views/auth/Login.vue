@@ -1,19 +1,34 @@
 <template>
   <div class="auth login">
-    <auth-form form-type="login" button-label="Sign in">
-      <auth-input id="email" label="Email" type="email" v-model="form.email" />
+    <notification />
+
+    <auth-form
+      form-type="login"
+      button-label="Sign in"
+      @submit="signIn"
+      :loading="formLoading"
+      :formInactive="isFormEmpty"
+    >
+      <auth-input
+        id="email"
+        label="Email"
+        type="email"
+        v-model="form.email"
+        :error="error.emailInput"
+      />
       <auth-input
         id="Password"
         label="Password"
         type="password"
         v-model="form.password"
+        :error="error.passwordInput"
       />
 
       <div class="auth__together">
         <auth-checkbox
           id="rememberMe"
           label="Remember me"
-          @change="form.rememberPassword = !form.rememberPassword"
+          @change="rememberPassword = !rememberPassword"
         />
 
         <router-link to="/auth/forgot-password" class="auth__link">
@@ -25,24 +40,73 @@
 </template>
 
 <script>
+import error from './consts';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthCheckbox from '@/components/auth/AuthCheckbox';
 import AuthForm from '@/components/auth/AuthForm';
+import Notification from '@/components/core/Notification';
 
 export default {
   components: {
     AuthForm,
     AuthInput,
-    AuthCheckbox
+    AuthCheckbox,
+    Notification
   },
   data() {
     return {
       form: {
         email: '',
-        password: '',
-        rememberPassword: false
-      }
+        password: ''
+      },
+      rememberPassword: false,
+      error: {
+        emailInput: false,
+        passwordInput: false
+      },
+      formLoading: false
     };
+  },
+  methods: {
+    async signIn() {
+      if (this.isFormEmpty) return;
+
+      this.formLoading = true;
+      const execute = await this.$store.dispatch('authSignIn', this.form);
+      this.formLoading = false;
+
+      if (!execute.success) {
+        this.$store.dispatch('notificationActivate', {
+          content: error[execute.data.error.id].message,
+          type: 'error'
+        });
+
+        this.activateInputsError();
+      } else {
+        this.$store.dispatch('notificationActivate', {
+          content: 'Signed In successfully!',
+          type: 'success'
+        });
+
+        if (this.rememberPassword) {
+          this.$store.dispatch('authRememberLoginData');
+        }
+      }
+    },
+    activateInputsError() {
+      this.error.emailInput = true;
+      this.error.passwordInput = true;
+
+      setTimeout(() => {
+        this.error.emailInput = false;
+        this.error.passwordInput = false;
+      }, 2000);
+    }
+  },
+  computed: {
+    isFormEmpty() {
+      return this.form.email.length < 1 || this.form.password.length < 1;
+    }
   }
 };
 </script>
