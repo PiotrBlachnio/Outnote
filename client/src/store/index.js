@@ -77,7 +77,7 @@ export default new Vuex.Store({
 
       setTimeout(() => {
         commit('notificationHide');
-      }, 3000);
+      }, 4500);
     }
   },
   modules: {},

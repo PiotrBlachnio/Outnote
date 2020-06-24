@@ -61,7 +61,6 @@ export default {
       },
       rememberPassword: false,
       error: {
-        active: false,
         emailInput: false,
         passwordInput: false
       },
@@ -77,16 +76,31 @@ export default {
       this.formLoading = false;
 
       if (!execute.success) {
-        this.error.active = true;
         this.$store.dispatch('notificationActivate', {
           content: error[execute.data.error.id].message,
           type: 'error'
         });
+
+        this.activateInputsError();
       } else {
+        this.$store.dispatch('notificationActivate', {
+          content: 'Signed In successfully!',
+          type: 'success'
+        });
+
         if (this.rememberPassword) {
           this.$store.dispatch('authRememberLoginData');
         }
       }
+    },
+    activateInputsError() {
+      this.error.emailInput = true;
+      this.error.passwordInput = true;
+
+      setTimeout(() => {
+        this.error.emailInput = false;
+        this.error.passwordInput = false;
+      }, 2000);
     }
   },
   computed: {
