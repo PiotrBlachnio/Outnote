@@ -7,8 +7,8 @@
     "build:ts": "tsc",
     "build:webpack": "webpack",
     "prod": "node build/server.bundle.js",
-    "test:services": "jest --testTimeout=20000 --detectOpenHandles --forceExit ./src/services",
-    "test": "jest --testTimeout=20000 --detectOpenHandles --forceExit",
+    "test:services": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/services",
+    "test": "jest --testTimeout=25000 --detectOpenHandles --forceExit",
     "lint": "eslint src"
   },
   "license": "MIT",

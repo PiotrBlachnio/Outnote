@@ -11,7 +11,7 @@ afterAll(async () => {
     await clearDatabase();
 });
 
-describe('Namespace validator', () => {
+describe('Validator', () => {
     describe('Has min length function', () => {
         describe('When the value is shorter than the provided length', () => {
             it('Should return false', (done) => {
@@ -378,7 +378,7 @@ describe('Namespace validator', () => {
                 it('Should return true', async (done) => {
                     const id: string = (await createUser()).id;
 
-                    expect(validator.validateInput({ id: id })).toBeTruthy();
+                    expect(validator.validateInput({ id })).toBeTruthy();
                     done();
                 });
             });
