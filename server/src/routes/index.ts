@@ -8,6 +8,7 @@ import forgotPassword from './forgot-password';
 import logout from './logout';
 import refreshToken from './refresh-token';
 import resetPassword from './reset-password';
+import sendConfirmationMail from './send-confirmation-mail';
 
 export default {
     defaultRoute,
@@ -19,5 +20,6 @@ export default {
     forgotPassword,
     logout,
     refreshToken,
-    resetPassword
+    resetPassword,
+    sendConfirmationMail
 };
