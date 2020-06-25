@@ -8,7 +8,8 @@ export default (app: Application): void => {
         { path: 'login', router: routes.login },
         { path: 'register', router: routes.register },
         { path: 'add-location', router: routes.addLocation },
-        { path: 'confirm-email', router: routes.confirmEmail }
+        { path: 'confirm-email', router: routes.confirmEmail },
+        { path: 'forgot-password', router: routes.forgotPassword }
     ];
 
     rootRouter.forEach(object => {

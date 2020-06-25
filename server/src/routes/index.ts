@@ -4,6 +4,7 @@ import register from './register';
 import logs from './logs';
 import addLocation from './add-location';
 import confirmEmail from './confirm-email';
+import forgotPassword from './forgot-password';
 
 export default {
     defaultRoute,
@@ -11,5 +12,6 @@ export default {
     register,
     logs,
     addLocation,
-    confirmEmail
+    confirmEmail,
+    forgotPassword
 };
