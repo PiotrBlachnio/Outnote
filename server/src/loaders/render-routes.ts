@@ -9,7 +9,9 @@ export default (app: Application): void => {
         { path: 'register', router: routes.register },
         { path: 'add-location', router: routes.addLocation },
         { path: 'confirm-email', router: routes.confirmEmail },
-        { path: 'forgot-password', router: routes.forgotPassword }
+        { path: 'forgot-password', router: routes.forgotPassword },
+        { path: 'logout', router: routes.logout },
+        { path: 'refresh-token', router: routes.refreshToken }
     ];
 
     rootRouter.forEach(object => {

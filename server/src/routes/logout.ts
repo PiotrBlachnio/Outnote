@@ -12,7 +12,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Logged out successfully!', place: 'Logout route' });
     
     res.cookie('jid', '', { httpOnly: true });
-    res.status(204);
+    res.status(200).end();
 });
 
 export default router;

@@ -6,6 +6,7 @@ import addLocation from './add-location';
 import confirmEmail from './confirm-email';
 import forgotPassword from './forgot-password';
 import logout from './logout';
+import refreshToken from './refresh-token';
 
 export default {
     defaultRoute,
@@ -15,5 +16,6 @@ export default {
     addLocation,
     confirmEmail,
     forgotPassword,
-    logout
+    logout,
+    refreshToken
 };
