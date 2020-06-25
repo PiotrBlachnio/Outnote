@@ -1,15 +1,6 @@
 import validator from '../validators';
 import faker from 'faker';
 import bcrypt from 'bcryptjs';
-import { createUser, connectDatabase, clearDatabase } from '../test-utils';
-
-beforeAll(async () => {
-    await connectDatabase();
-});
-
-afterAll(async () => {
-    await clearDatabase();
-});
 
 describe('Validator', () => {
     describe('Has min length function', () => {
