@@ -376,9 +376,7 @@ describe('Validator', () => {
         describe('ID validation', () => {
             describe('When ID is valid', () => {
                 it('Should return true', async (done) => {
-                    const id: string = (await createUser()).id;
-
-                    expect(validator.validateInput({ id })).toBeTruthy();
+                    expect(validator.validateInput({ id: '5ef4429ccc4ff01ad85c009a' })).toBeTruthy();
                     done();
                 });
             });
