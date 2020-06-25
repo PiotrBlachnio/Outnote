@@ -4,6 +4,7 @@ import addLocation from './add-location';
 import confirmEmail from './confirm-email';
 import forgotPassword from './forgot-password';
 import refreshToken from './refresh-token';
+import resetPassword from './reset-password';
 
 export default {
     login,
@@ -11,5 +12,6 @@ export default {
     addLocation,
     confirmEmail,
     forgotPassword,
-    refreshToken
+    refreshToken,
+    resetPassword
 };
