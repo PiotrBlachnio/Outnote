@@ -15,6 +15,10 @@ export class EventEmitter extends NodeEventEmitter {
         this.on('REGISTER_SUCCESS', this._events.registerSuccess);
 
         this.on('ADD_LOCATION_SUCCESS', this._events.addLocationSuccess);
+
+        this.on('FORGOT_PASSWORD_SUCCESS', this._events.forgotPasswordSuccess);
+
+        this.on('CONFIRM_EMAIL_SUCCESS', this._events.confirmEmailSuccess);
     };
 };
 
