@@ -10,7 +10,7 @@
     "test:services": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/services",
     "test:events": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/events",
     "test:routes": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/routes",
-    "test": "jest --testTimeout=25000 --detectOpenHandles --forceExit confirm-email-success.test.ts",
+    "test": "jest --testTimeout=25000 --detectOpenHandles --forceExit forgot-password-success.test.ts",
     "lint": "eslint src"
   },
   "license": "MIT",
