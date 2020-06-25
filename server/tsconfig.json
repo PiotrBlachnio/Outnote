@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2020",                          
+    "target": "ES2019",                          
     "module": "commonjs",                    
-    "lib": ["DOM", "es6", "ES2017", "ESNext.AsyncIterable"],                     
+    "lib": ["DOM", "ESNext.AsyncIterable", "ES2019"],                     
     "allowJs": true,
     "outDir": "dist",
     "rootDir": "src",

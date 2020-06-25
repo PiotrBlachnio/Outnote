@@ -24,6 +24,6 @@ declare module 'express-serve-static-core' {
            token: TokenService;
            user: UserService;
        },
-       eventEmitter: EventEmitter
+       eventEmitter: typeof EventEmitter
     }
 }

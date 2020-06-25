@@ -22,13 +22,23 @@ describe('Login validator', () => {
         user: new UserService()
     };
 
-    const generateTokenMock: jest.Mock<any, any> = jest.fn().mockReturnValue('test-token');
-    const sendMailMock: jest.Mock<any, any> = jest.fn();
+    const generateTokenMock: jest.Mock = jest.fn().mockReturnValue('test-token');
+    const sendMailMock: jest.Mock = jest.fn();
 
-    const req: any = {
-        context: {},
-        body: {},
-        cookies: {},
+    const req = {
+        context: {
+            ban: '',
+            id: '',
+            email: '',
+            username: ''
+        },
+        body: {
+            email: '',
+            password: ''
+        },
+        cookies: {
+            jid: ''
+        },
         services: {
             token: {
                 generateToken: generateTokenMock,
@@ -47,7 +57,7 @@ describe('Login validator', () => {
     
     describe('When user is already logged in', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             req.cookies.jid =  services.token.generateToken(Token.REFRESH, { id: faker.random.uuid() });
 
             // @ts-ignore-start
@@ -60,7 +70,7 @@ describe('Login validator', () => {
 
     describe('When input is invalid', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             req.cookies.jid = '';
 
             // @ts-ignore-start
@@ -73,7 +83,7 @@ describe('Login validator', () => {
     
     describe('When user does not exist', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             req.body.email = faker.internet.email();
             req.body.password = 'Jeff1234';
 
@@ -87,7 +97,7 @@ describe('Login validator', () => {
 
     describe('When password is invalid', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             user = await createUser({ password: await bcrypt.hash(password, 12) });
 
             req.body.email = user.email;
@@ -103,7 +113,7 @@ describe('Login validator', () => {
 
     describe('When user\'s account is not confirmed yet', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             req.body.password = password;
 
             // @ts-ignore-start
@@ -116,7 +126,7 @@ describe('Login validator', () => {
 
     describe('When user location is not confirmed yet', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             await services.user.updateOne({ _id: user.id }, { isConfirmed: true });
 
             // @ts-ignore-start
@@ -154,7 +164,7 @@ describe('Login validator', () => {
 
     describe('When valid data was provided', () => {
         it('Should assign req context property', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             await services.user.updateOne({ _id: user.id }, { trustedIPS: [await bcrypt.hash(req.ip, 12)] });
 
             // @ts-ignore-start

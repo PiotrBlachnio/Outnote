@@ -6,15 +6,15 @@ import isAlphanumeric from "./is-alphanumeric";
 import config from "../../../assets/config";
 import { Types } from 'mongoose';
 
-export default (data: object): boolean => {
+export default (data: Record<string, unknown>): boolean => {
     let isValid: boolean = true;
 
-    for(let key of Object.keys(data)) {
+    for(const key of Object.keys(data)) {
         if(!isValid) return false;
 
         switch(key) {
             case 'email':
-                const email: any = data[key];
+                const email: unknown = data[key];
 
                 if(typeof email !== 'string') {
                     isValid = false;
@@ -38,7 +38,7 @@ export default (data: object): boolean => {
 
                 break;
             case 'password':
-                const password: any = data[key];
+                const password: unknown = data[key];
 
                 if(typeof password !== 'string') {
                     isValid = false;
@@ -57,7 +57,7 @@ export default (data: object): boolean => {
 
                 break;
             case 'confirmationCode':
-                const confirmationCode: any = data[key];
+                const confirmationCode: unknown = data[key];
 
                 if(typeof confirmationCode !== 'string') {
                     isValid = false;
@@ -71,7 +71,7 @@ export default (data: object): boolean => {
 
                 break;
             case 'username':
-                const username: any = data[key];
+                const username: unknown = data[key];
 
                 if(typeof username !== 'string') {
                     isValid = false;
@@ -94,7 +94,7 @@ export default (data: object): boolean => {
                 };
                 break;
             case 'id':
-                const id: any = data[key];
+                const id: unknown = data[key];
 
                 if(typeof id !== 'string') {
                     isValid = false;
@@ -113,7 +113,7 @@ export default (data: object): boolean => {
                 
                 break;
             case 'invitationStatus':
-                const status: any = data[key];
+                const status: unknown = data[key];
 
                 if(status !== 1 && status !== 2) {
                     isValid = false;
