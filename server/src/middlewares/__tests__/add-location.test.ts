@@ -22,9 +22,15 @@ describe('Add location validator', () => {
         user: new UserService()
     };
 
-    const req: any = {
-        context: {},
-        body: {},
+    const req = {
+        context: {
+            id: ''
+        },
+        body: {
+            token: '',
+            id: '',
+            password: ''
+        },
         services: services
     };
 
@@ -35,7 +41,7 @@ describe('Add location validator', () => {
 
     describe('When input is not valid', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
 
             //@ts-ignore-start
             await addLocation(req, {}, next);
@@ -47,11 +53,12 @@ describe('Add location validator', () => {
 
     describe('When token is invalid', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
 
             req.body = {
                 id: '5ef4429ccc4ff01ad85c009a',
-                password: faker.random.alphaNumeric(10)
+                password: faker.random.alphaNumeric(10),
+                token: ''
             };
 
             //@ts-ignore-start
@@ -64,7 +71,7 @@ describe('Add location validator', () => {
 
     describe('When user is invalid', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             req.body.token = services.token.generateToken(Token.CONFIRM_IDENTITY, { id: faker.random.alphaNumeric(10) });
 
             //@ts-ignore-start
@@ -77,7 +84,7 @@ describe('Add location validator', () => {
 
     describe('When user does not exist', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             req.body.token = services.token.generateToken(Token.CONFIRM_IDENTITY, { id: req.body.id })
 
             //@ts-ignore-start
@@ -90,7 +97,7 @@ describe('Add location validator', () => {
 
     describe('When password is invalid', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             user = await createUser({ password: await bcrypt.hash(password, 12) });
 
             req.body.id = user.id;
@@ -106,7 +113,7 @@ describe('Add location validator', () => {
 
     describe('When email is not confirmed', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             req.body.password = password;
 
             //@ts-ignore-start
@@ -119,7 +126,7 @@ describe('Add location validator', () => {
 
     describe('When location is already added', () => {
         it('Should throw an error', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
 
             const hashedIP: string = await bcrypt.hash(ip, 12);
             await services.user.updateOne({ _id: user.id }, { isConfirmed: true, trustedIPS: [hashedIP] });
@@ -134,7 +141,7 @@ describe('Add location validator', () => {
 
     describe('When valid data was provided', () => {
         it('Should assign correct ', async (done) => {
-            const next: jest.Mock<any, any> = jest.fn();
+            const next: jest.Mock = jest.fn();
             await services.user.updateOne({ _id: user.id }, { trustedIPS: [] });
 
             //@ts-ignore-start
