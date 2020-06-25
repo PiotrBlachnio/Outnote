@@ -3,13 +3,15 @@ import addLocationSuccess from './add-location-success';
 import confirmEmailSuccess from './confirm-email-success';
 import forgotPasswordSuccess from './forgot-password-success';
 import resetPasswordSuccess from './reset-password-success';
+import sendConfirmationMailSuccess from './send-confirmation-mail-success';
 
 const events = {
     registerSuccess,
     addLocationSuccess,
     confirmEmailSuccess,
     forgotPasswordSuccess,
-    resetPasswordSuccess
+    resetPasswordSuccess,
+    sendConfirmationMailSuccess
 };
 
 export type TEvents = typeof events;

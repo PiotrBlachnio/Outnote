@@ -21,6 +21,8 @@ export class EventEmitter extends NodeEventEmitter {
         this.on('CONFIRM_EMAIL_SUCCESS', this._events.confirmEmailSuccess);
 
         this.on('RESET_PASSWORD_SUCCESS', this._events.resetPasswordSuccess);
+
+        this.on('SEND_CONFIRMATION_MAIL_SUCCESS', this._events.sendConfirmationMailSuccess);
     };
 };
 
