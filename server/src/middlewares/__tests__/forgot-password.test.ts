@@ -1,10 +1,10 @@
 import { clearDatabase, connectDatabase, createUser } from '../../utils/test-utils';
 import UserService from '../../services/user-service';
 import TokenService from '../../services/token-service';
-import { IncorrectInputError, AlreadyLoggedInError, UsernameAlreadyExistError, EmailAlreadyExistError } from '../../assets/errors';
+import { IncorrectInputError, UserNotFoundError, AlreadyLoggedInError, EmailNotConfirmedError } from '../../assets/errors';
 import { Token } from '../../assets/enums';
 import { IUser } from '../../types/models';
-import register from '../validators/register';
+import forgotPassword from '../validators/forgot-password';
 import faker from 'faker';
 
 beforeAll(async () => {
@@ -15,7 +15,7 @@ afterAll(async () => {
     await clearDatabase();
 });
 
-describe('Register validator', () => {
+describe('Forgot password validator', () => {
     const services = {
         token: new TokenService(),
         user: new UserService()
@@ -23,13 +23,10 @@ describe('Register validator', () => {
 
     const req = {
         context: {
-            username: '',
-            email: '',
-            password: ''
+            id: '',
+            email: ''
         },
         body: {
-            password: 'Jeff12345',
-            username: '',
             email: ''
         },
         cookies: {
@@ -46,7 +43,7 @@ describe('Register validator', () => {
             req.cookies.jid =  services.token.generateToken(Token.REFRESH, { id: faker.random.uuid() });
 
             // @ts-ignore-start
-            await register(req, {}, next);
+            await forgotPassword(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError());
             done();
@@ -59,38 +56,37 @@ describe('Register validator', () => {
             req.cookies.jid = '';
 
             // @ts-ignore-start
-            await register(req, {}, next);
+            await forgotPassword(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new IncorrectInputError());
             done();
         });
     });
     
-    describe('When username already exists', () => {
+    describe('When user does not exist', () => {
         it('Should throw an error', async (done) => {
             const next: jest.Mock = jest.fn();
-            user = await createUser({ email: 'Jeff@gmail.com', username: 'Jeff123' });
+            req.body.email = faker.internet.email();
 
-            req.body.username = user.username;
-            req.body.email = user.email;
-            
             // @ts-ignore-start
-            await register(req, {}, next);
+            await forgotPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new UsernameAlreadyExistError());
+            expect(next).toHaveBeenCalledWith(new UserNotFoundError());
             done();
         });
     });
 
-    describe('When email already exists', () => {
+    describe('When user\'s account is not confirmed yet', () => {
         it('Should throw an error', async (done) => {
             const next: jest.Mock = jest.fn();
-            req.body.username = 'Jeff1234';
+
+            user = await createUser();
+            req.body.email = user.email;
 
             // @ts-ignore-start
-            await register(req, {}, next);
+            await forgotPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new EmailAlreadyExistError());
+            expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError());
             done();
         });
     });
@@ -98,14 +94,13 @@ describe('Register validator', () => {
     describe('When valid data was provided', () => {
         it('Should assign req context property', async (done) => {
             const next: jest.Mock = jest.fn();
-            req.body.email = 'Jeff2@gmail.com';
+            await services.user.updateOne({ _id: user.id }, { isConfirmed: true });
 
             // @ts-ignore-start
-            await register(req, {}, next);
+            await forgotPassword(req, {}, next);
 
-            expect(req.context.username).toEqual('Jeff1234');
-            expect(req.context.email).toEqual('Jeff2@gmail.com');
-            expect(req.context.password).toEqual(req.body.password);
+            expect(req.context.id).toEqual(user.id);
+            expect(req.context.email).toEqual(user.email);
 
             done();
         });

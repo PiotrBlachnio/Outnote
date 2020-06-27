@@ -10,10 +10,10 @@ const defaultTransporter: Transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
         type: 'OAuth2',
-        user: config.MAIL_USER!,
-        refreshToken: config.MAIL_REFRESH_TOKEN!,
-        clientId: config.MAIL_CLIENT_ID!,
-        clientSecret: config.MAIL_CLIENT_SECRET!
+        user: config.MAIL_USER,
+        refreshToken: config.MAIL_REFRESH_TOKEN,
+        clientId: config.MAIL_CLIENT_ID,
+        clientSecret: config.MAIL_CLIENT_SECRET
     }
 });
 

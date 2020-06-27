@@ -5,14 +5,14 @@ import config from "../assets/config";
 import logger from "./logger";
 import { connect, connection } from "mongoose";
 
-export async function createUser(data: any = {}): Promise<IUser> {
+export async function createUser(data: Record<string, unknown> = {}): Promise<IUser> {
     const user: IUser = new User({
         username: faker.internet.userName(),
         email: faker.internet.email(),
         password: faker.internet.password()
     });
 
-    Object.keys(data).forEach((key: any) => {
+    Object.keys(data).forEach((key: string) => {
         user[key] = data[key];
     });
 
