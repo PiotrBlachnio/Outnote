@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { GenericError } from "../assets/errors";
 import logger from "../utils/logger";
 import IError from "../types/errors";
 
-export default async (err: IError, req: Request, res: Response): Promise<Response> => {
+export default async (err: IError, req: Request, res: Response, next: NextFunction): Promise<Response> => {
     if(err instanceof GenericError) {
         await logger.log({ type: 'info', message: err.message, place: err.place });
 
