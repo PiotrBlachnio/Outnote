@@ -6,7 +6,7 @@
     <button
       class="auth__button"
       :class="{ 'auth__button--loading': loading }"
-      :disabled="formInactive"
+      :disabled="formInactive || loading"
       @click="$emit('submit')"
     >
       <loader v-if="loading" />
@@ -33,13 +33,13 @@
       </router-link>
     </span>
 
-    <div class="auth__full-width" v-if="formType !== 'forgotPassword'">
+    <!-- <div class="auth__full-width" v-if="formType !== 'forgotPassword'">
       <div class="auth__hr"></div>
 
       <button class="auth__button auth__button--discord">
         Sign in with Discord
       </button>
-    </div>
+    </div> -->
   </form>
 </template>
 
