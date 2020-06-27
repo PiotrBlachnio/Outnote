@@ -1,0 +1,33 @@
+name: Server
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: build
+      run: cd server && npm install
+    
+    - name: test
+      run: cd server && npm run test
+      env:
+        DATABASE_CONN: ${{ secrets.DATABASE_CONN }}
+        LOCALIZATION_API_KEY: ${{ secrets.LOCALIZATION_API_KEY }}
+        MAIL_USER: ${{ secrets.MAIL_USER }}
+        MAIL_REFRESH_TOKEN: ${{ secrets.MAIL_REFRESH_TOKEN }}
+        MAIL_CLIENT_ID: ${{ secrets.MAIL_CLIENT_ID }}
+        MAIL_CLIENT_SECRET: ${{ secrets.MAIL_CLIENT_SECRET }}
+        REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
+        ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+        CONFIRM_EMAIL_TOKEN_SECRET: ${{ secrets.CONFIRM_EMAIL_TOKEN_SECRET }}
+        RESET_PASSWORD_TOKEN_SECRET: ${{ secrets.RESET_PASSWORD_TOKEN_SECRET }}
+        CONFIRM_IDENTITY_TOKEN_SECRET: ${{ secrets.CONFIRM_IDENTITY_TOKEN_SECRET }}
+      
+    - name: lint
+      run: cd server && npm run lint

@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 
 export default (ipList: string[], ip: string): Promise<boolean> => {
-    return new Promise(async (resolve: Function, reject: Function) => {
+    return new Promise(async (resolve, reject) => {
         let isValid: boolean = false;
 
         try {

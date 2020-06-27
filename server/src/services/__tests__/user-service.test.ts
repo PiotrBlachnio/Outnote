@@ -30,7 +30,7 @@ describe('User service', () => {
                 user = await createUser();
                 const foundUser: IUser | null = await userService.findOne({ _id: user._id });
 
-                expect(foundUser!.id).toEqual(user.id);
+                expect(foundUser?.id).toEqual(user.id);
                 done();
             });
         });
@@ -50,7 +50,7 @@ describe('User service', () => {
             it('Should return object', async (done) => {
                 const foundUser: IUser | null = await userService.findById(user.id);
 
-                expect(foundUser!.id).toEqual(user.id);
+                expect(foundUser?.id).toEqual(user.id);
                 done();
             });
         });
@@ -61,7 +61,7 @@ describe('User service', () => {
             await userService.updateOne({  _id: user._id }, { username: 'Jeff' });
             const updatedUser: IUser | null = await userService.findById(user._id);
 
-            expect(updatedUser!.username).toEqual('Jeff');
+            expect(updatedUser?.username).toEqual('Jeff');
             done();
         });
     });
@@ -71,7 +71,7 @@ describe('User service', () => {
             const createdUser: IUser = await userService.create({ username: faker.internet.userName(), email: faker.internet.email(), password: faker.internet.password(), trustedIPS: [faker.internet.ip()] });
             const foundUser: IUser | null = await userService.findById(createdUser.id);
 
-            expect(createdUser.username).toEqual(foundUser!.username);
+            expect(createdUser.username).toEqual(foundUser?.username);
             done();
         });
     });

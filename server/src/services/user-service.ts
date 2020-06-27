@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { IUser } from '../types/models';
 
 class UserService {
-    public async findOne(data: object): Promise<IUser | null> {
+    public async findOne(data: Record<string, unknown>): Promise<IUser | null> {
         try {
             const user: IUser | null = await User.findOne(data);
             return user;
@@ -23,18 +23,18 @@ class UserService {
         return user;
     };
 
-    public async updateOne(searchData: object, updateData: object): Promise<void> {
+    public async updateOne(searchData: Record<string, unknown>, updateData: Record<string, unknown>): Promise<void> {
         await User.updateOne(searchData, updateData);
     };
 
-    public async create(data: object): Promise<IUser> {
+    public async create(data: Record<string, unknown>): Promise<IUser> {
         const user: IUser = new User(data);
         await user.save();
 
         return user;
     };
 
-    public async deleteOne(searchData: object): Promise<void> {
+    public async deleteOne(searchData: Record<string, unknown>): Promise<void> {
         await User.deleteOne(searchData);
     };
 };

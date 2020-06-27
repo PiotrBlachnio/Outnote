@@ -1,17 +1,8 @@
 import validator from '../validators';
 import faker from 'faker';
 import bcrypt from 'bcryptjs';
-import { createUser, connectDatabase, clearDatabase } from '../test-utils';
 
-beforeAll(async () => {
-    await connectDatabase();
-});
-
-afterAll(async () => {
-    await clearDatabase();
-});
-
-describe('Namespace validator', () => {
+describe('Validator', () => {
     describe('Has min length function', () => {
         describe('When the value is shorter than the provided length', () => {
             it('Should return false', (done) => {
@@ -376,9 +367,7 @@ describe('Namespace validator', () => {
         describe('ID validation', () => {
             describe('When ID is valid', () => {
                 it('Should return true', async (done) => {
-                    const id: string = (await createUser()).id;
-
-                    expect(validator.validateInput({ id: id })).toBeTruthy();
+                    expect(validator.validateInput({ id: '5ef4429ccc4ff01ad85c009a' })).toBeTruthy();
                     done();
                 });
             });
