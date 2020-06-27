@@ -35,19 +35,19 @@ export default {
   203: {
     message: 'You do not have required permissions to perform this action'
   },
-  301: {
+  300: {
     message: 'User does not exist'
   },
-  302: {
+  301: {
     message: 'Username already exists'
   },
-  303: {
+  302: {
     message: 'Email already exists'
   },
-  304: {
+  303: {
     message: 'Email has already been confirmed'
   },
-  305: {
+  304: {
     message: 'Email has not been confirmed yet'
   }
 };
