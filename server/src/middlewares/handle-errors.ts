@@ -3,7 +3,7 @@ import { GenericError } from "../assets/errors";
 import logger from "../utils/logger";
 import IError from "../types/errors";
 
-export default async (err: IError, req: Request, res: Response, next: NextFunction): Promise<Response> => {
+export default async (err: IError, req: Request, res: Response, next: NextFunction): Promise<Response> => { // eslint-disable-line
     if(err instanceof GenericError) {
         await logger.log({ type: 'info', message: err.message, place: err.place });
 

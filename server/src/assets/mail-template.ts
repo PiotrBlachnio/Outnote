@@ -1,5 +1,6 @@
 import config from "./config";
 import getLocalization from "../utils/get-localization";
+import faker from 'faker';
 import { IConfirmEmailTemplateData, IMailTemplate, IConfirmIdentityTemplateData, IResetPasswordTemplateData } from "../types/mails";
 
 class MailTemplate {
@@ -9,7 +10,7 @@ class MailTemplate {
             to: data.email,
             subject: 'Email confirmation',
             html: `<b>Thanks for joining Realms community!</b><br></br>
-                      Please confirm that your email address is correct to continue. Your confirmation link: https://www.frontend.com/confirm-emai?user=${data.id}&token=${data.token}
+                      Click <a href="https://localhost:8080/confirm-email?user=${data.id}&token=${data.token}&uniqueKey=${faker.random.uuid()}">here</a> to confirm your email
                     
             `
         };
@@ -25,7 +26,7 @@ class MailTemplate {
             subject: '[Security alert] Someone is trying to login to your account from a different device!',
             html: `
                       Detected login attemp from ip: <b>${data.ip}</b>, localization: <b>${localizationMessage}</b>
-                      Click here to confirm your identity: https://www.frontend.com/confirm-identity?user=${data.id}&token=${data.token}
+                      Click <a href="https://localhost:8080/confirm-identity?user=${data.id}&token=${data.token}&uniqueKey=${faker.random.uuid()}">here</a> to confirm your identity
             `
         };
     };
@@ -36,7 +37,7 @@ class MailTemplate {
             to: data.email,
             subject: 'Reset password',
             html: `<b>Reset password request</b><br></br>
-                      Click here to reset your password: https://www.frontend.com/reset-password?user=${data.id}&token=${data.token}
+                      Click <a href="http://localhost:8080/reset-password?user=${data.id}&token=${data.token}&uniqueKey=${faker.random.uuid()}">here</a> to reset your password
                     
             `
         };
