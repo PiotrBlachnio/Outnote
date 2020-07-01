@@ -45,6 +45,7 @@ import AuthInput from '@/components/auth/AuthInput';
 import AuthCheckbox from '@/components/auth/AuthCheckbox';
 import AuthForm from '@/components/auth/AuthForm';
 import Notification from '@/components/core/Notification';
+import authLoadingMixin from '@/mixins/AuthLoadingMixin';
 
 export default {
   components: {
@@ -53,6 +54,7 @@ export default {
     AuthCheckbox,
     Notification
   },
+  mixins: [authLoadingMixin],
   data() {
     return {
       form: {
@@ -63,17 +65,16 @@ export default {
       error: {
         emailInput: false,
         passwordInput: false
-      },
-      formLoading: false
+      }
     };
   },
   methods: {
     async signIn() {
       if (this.isFormEmpty) return;
 
-      this.formLoading = true;
+      this.enableFormLoading();
       const execute = await this.$store.dispatch('authSignIn', this.form);
-      this.formLoading = false;
+      this.disableFormLoading();
 
       if (!execute.success) {
         this.$store.dispatch('notificationActivate', {

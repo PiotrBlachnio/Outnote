@@ -65,6 +65,7 @@ import errors from './consts';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthForm from '@/components/auth/AuthForm';
 import Notification from '@/components/core/Notification';
+import authLoadingMixin from '@/mixins/AuthLoadingMixin';
 
 export default {
   components: {
@@ -72,6 +73,7 @@ export default {
     AuthInput,
     Notification
   },
+  mixins: [authLoadingMixin],
   data() {
     return {
       form: {
@@ -79,7 +81,6 @@ export default {
         email: '',
         password: ''
       },
-      formLoading: false,
       isSuccess: false,
       isInputInvalid: false
     };
@@ -87,7 +88,7 @@ export default {
   methods: {
     async signUp() {
       if (this.isFormEmpty) return;
-      this.formLoading = true;
+      this.enableFormLoading();
 
       try {
         await axios({
@@ -101,14 +102,14 @@ export default {
         });
 
         this.isSuccess = true;
-        this.formLoading = false;
+        this.disableFormLoading();
       } catch (error) {
         this.$store.dispatch('notificationActivate', {
           content: errors[error.response.data.error.id].message,
           type: 'error'
         });
 
-        this.formLoading = false;
+        this.disableFormLoading();
         this.isInputInvalid = true;
 
         setTimeout(() => {

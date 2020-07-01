@@ -49,6 +49,14 @@ const routes = [
           title: 'Notes App | Reset Password'
         },
         component: () => import('@/views/auth/ResetPassword')
+      },
+      {
+        path: 'confirm-email',
+        name: 'Confirm Email',
+        meta: {
+          title: 'Notes App | Confirm EMail'
+        },
+        component: () => import('@/views/auth/ConfirmEmail')
       }
     ]
   },
