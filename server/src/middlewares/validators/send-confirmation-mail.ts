@@ -5,18 +5,18 @@ import validator from '../../utils/validators';
 import { Token } from "../../assets/enums";
 
 async function sendConfirmationMail(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const id: string = req.body.id;
+    const email: string = req.body.email;
 
     try {
         if(req.services.token.verifyToken(Token.REFRESH, req.cookies.jid)) {
             throw new AlreadyLoggedInError();
         };
         
-        if(!validator.validateInput({ id })) {
+        if(!validator.validateInput({ email })) {
             throw new IncorrectInputError();
         };
         
-        const user: IUser | null = await req.services.user.findById(id);
+        const user: IUser | null = await req.services.user.findOne({ email });
         if(!user) {
             throw new UserNotFoundError();
         };
