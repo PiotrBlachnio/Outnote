@@ -45,7 +45,7 @@ describe('Send confirmation mail validator', () => {
             // @ts-ignore-start
             await sendConfirmationMail(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError());
+            expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError);
             done();
         });
     });
@@ -58,7 +58,7 @@ describe('Send confirmation mail validator', () => {
             // @ts-ignore-start
             await sendConfirmationMail(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new IncorrectInputError());
+            expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
         });
     });
@@ -72,7 +72,7 @@ describe('Send confirmation mail validator', () => {
             // @ts-ignore-start
             await sendConfirmationMail(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new UserNotFoundError());
+            expect(next).toHaveBeenCalledWith(new UserNotFoundError);
             done();
         });
     });

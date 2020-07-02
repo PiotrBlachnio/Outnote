@@ -45,7 +45,7 @@ describe('Forgot password validator', () => {
             // @ts-ignore-start
             await forgotPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError());
+            expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError);
             done();
         });
     });
@@ -58,7 +58,7 @@ describe('Forgot password validator', () => {
             // @ts-ignore-start
             await forgotPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new IncorrectInputError());
+            expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
         });
     });
@@ -71,7 +71,7 @@ describe('Forgot password validator', () => {
             // @ts-ignore-start
             await forgotPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new UserNotFoundError());
+            expect(next).toHaveBeenCalledWith(new UserNotFoundError);
             done();
         });
     });
@@ -86,7 +86,7 @@ describe('Forgot password validator', () => {
             // @ts-ignore-start
             await forgotPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError());
+            expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError);
             done();
         });
     });

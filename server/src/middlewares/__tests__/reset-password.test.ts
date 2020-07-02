@@ -47,7 +47,7 @@ describe('Reset password validator', () => {
             // @ts-ignore-start
             await resetPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError());
+            expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError);
             done();
         });
     });
@@ -60,7 +60,7 @@ describe('Reset password validator', () => {
             // @ts-ignore-start
             await resetPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new IncorrectInputError());
+            expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
         });
     });
@@ -75,7 +75,7 @@ describe('Reset password validator', () => {
             // @ts-ignore-start
             await resetPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new ExpiredOrInvalidTokenError());
+            expect(next).toHaveBeenCalledWith(new ExpiredOrInvalidTokenError);
             done();
         });
     });
@@ -88,7 +88,7 @@ describe('Reset password validator', () => {
             // @ts-ignore-start
             await resetPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new InvalidUserError());
+            expect(next).toHaveBeenCalledWith(new InvalidUserError);
             done();
         });
     });
@@ -103,7 +103,7 @@ describe('Reset password validator', () => {
             // @ts-ignore-start
             await resetPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new UserNotFoundError());
+            expect(next).toHaveBeenCalledWith(new UserNotFoundError);
             done();
         });
     });
@@ -119,7 +119,7 @@ describe('Reset password validator', () => {
             // @ts-ignore-start
             await resetPassword(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError());
+            expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError);
             done();
         });
     });

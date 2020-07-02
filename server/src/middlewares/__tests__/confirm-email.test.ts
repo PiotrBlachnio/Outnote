@@ -42,7 +42,7 @@ describe('Confirm email validator', () => {
             // @ts-ignore-start
             await confirmEmail(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new IncorrectInputError());
+            expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
         });
     });
@@ -55,7 +55,7 @@ describe('Confirm email validator', () => {
             // @ts-ignore-start
             await confirmEmail(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new ExpiredOrInvalidTokenError());
+            expect(next).toHaveBeenCalledWith(new ExpiredOrInvalidTokenError);
             done();
         });
     });
@@ -68,7 +68,7 @@ describe('Confirm email validator', () => {
             // @ts-ignore-start
             await confirmEmail(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new InvalidUserError());
+            expect(next).toHaveBeenCalledWith(new InvalidUserError);
             done();
         });
     });
@@ -83,7 +83,7 @@ describe('Confirm email validator', () => {
             // @ts-ignore-start
             await confirmEmail(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new UserNotFoundError());
+            expect(next).toHaveBeenCalledWith(new UserNotFoundError);
             done();
         });
     });
@@ -99,7 +99,7 @@ describe('Confirm email validator', () => {
             // @ts-ignore-start
             await confirmEmail(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new EmailAlreadyConfirmedError());
+            expect(next).toHaveBeenCalledWith(new EmailAlreadyConfirmedError);
             done();
         });
     });

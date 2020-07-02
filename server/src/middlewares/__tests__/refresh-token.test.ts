@@ -51,7 +51,7 @@ describe('Refresh token validator', () => {
             // @ts-ignore-start
             await refreshToken(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new ExpiredOrInvalidTokenError());
+            expect(next).toHaveBeenCalledWith(new ExpiredOrInvalidTokenError);
             done();
         });
     });
@@ -64,7 +64,7 @@ describe('Refresh token validator', () => {
             // @ts-ignore-start
             await refreshToken(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new UserNotFoundError());
+            expect(next).toHaveBeenCalledWith(new UserNotFoundError);
             done();
         });
     });
@@ -80,7 +80,7 @@ describe('Refresh token validator', () => {
             // @ts-ignore-start
             await refreshToken(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new NotExpiredYetOrInvalidTokenError());
+            expect(next).toHaveBeenCalledWith(new NotExpiredYetOrInvalidTokenError);
             done();
         });
     });
@@ -95,7 +95,7 @@ describe('Refresh token validator', () => {
             // @ts-ignore-start
             await refreshToken(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new UserNotFoundError());
+            expect(next).toHaveBeenCalledWith(new UserNotFoundError);
             done();
         });
     });
@@ -110,7 +110,7 @@ describe('Refresh token validator', () => {
             // @ts-ignore-start
             await refreshToken(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError());
+            expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError);
             done();
         });
     });
@@ -123,7 +123,7 @@ describe('Refresh token validator', () => {
             // @ts-ignore-start
             await refreshToken(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new UnknownIdentityError());
+            expect(next).toHaveBeenCalledWith(new UnknownIdentityError);
             done();
         });
     });
