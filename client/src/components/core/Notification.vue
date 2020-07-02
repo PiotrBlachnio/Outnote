@@ -6,9 +6,7 @@
       v-if="isActive"
       :class="'notification--' + type"
     >
-      <span class="notification__content">
-        {{ notificationContent }}
-      </span>
+      <div class="notification__content" v-html="notificationContent"></div>
     </div>
   </transition>
 </template>

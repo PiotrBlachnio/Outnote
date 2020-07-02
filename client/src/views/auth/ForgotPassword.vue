@@ -45,7 +45,7 @@ export default {
 
         this.$store.dispatch('notificationActivate', {
           content: 'Reset password link has been sent!',
-          type: 'error'
+          type: 'success'
         });
 
         this.disableFormLoading();

@@ -57,6 +57,14 @@ const routes = [
           title: 'Notes App | Confirm EMail'
         },
         component: () => import('@/views/auth/ConfirmEmail')
+      },
+      {
+        path: 'resend-email',
+        name: 'Resend Email',
+        meta: {
+          title: 'Notes App | Resend EMail'
+        },
+        component: () => import('@/views/auth/ResendEmail')
       }
     ]
   },

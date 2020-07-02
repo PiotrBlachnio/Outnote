@@ -77,10 +77,17 @@ export default {
       this.disableFormLoading();
 
       if (!execute.success) {
-        this.$store.dispatch('notificationActivate', {
-          content: error[execute.data.error.id].message,
-          type: 'error'
-        });
+        if (execute.data.error.id === 304) {
+          this.$router.push({
+            name: 'Resend Email',
+            params: { email: this.form.email }
+          });
+        } else {
+          this.$store.dispatch('notificationActivate', {
+            content: error[execute.data.error.id].message,
+            type: 'error'
+          });
+        }
 
         this.activateInputsError();
       } else {

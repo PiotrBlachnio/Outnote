@@ -1,4 +1,8 @@
 .auth {
   height: 100vh;
   background-color: $navigationBackground;
+
+  &__link {
+    color: primary;
+  }
 }

@@ -43,6 +43,7 @@ export default new Vuex.Store({
       state.notification.active = true;
       state.notification.content = data.content;
       state.notification.type = data.type;
+      if (data.time) state.notification.time = data.time;
     },
     notificationHide(state) {
       state.notification.active = false;
@@ -72,12 +73,23 @@ export default new Vuex.Store({
     authRememberLoginData({ commit }) {
       commit('authRememberData');
     },
-    notificationActivate({ commit }, data) {
-      commit('notificationShow', data);
+    notificationActivate({ commit, state }, data) {
+      let closeDelay = data.time || 4500;
+
+      if (state.notification.active) {
+        commit('notificationHide');
+        closeDelay = data.time || 4500;
+
+        setTimeout(() => {
+          commit('notificationShow', data);
+        }, 500);
+      } else {
+        commit('notificationShow', data);
+      }
 
       setTimeout(() => {
         commit('notificationHide');
-      }, 4500);
+      }, closeDelay);
     }
   },
   modules: {},
