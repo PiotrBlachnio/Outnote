@@ -4,10 +4,10 @@ import config from '../assets/config';
 
 export default (req: Request, res: Response, next: NextFunction): void => {
     if(config.NODE_ENV === 'test') {
+        //@ts-ignore-start
         req.eventEmitter = {
-            //@ts-ignore-start
-            emit: () => {}
-        }
+            emit: () => { return true }
+        };
     } else req.eventEmitter = eventEmitter;
     
     next();
