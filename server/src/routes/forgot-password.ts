@@ -7,7 +7,7 @@ const router: Router = Router();
 
 /**
  * @route   POST api/v1/forgot-password
- * @desc    Get link to reset user's password
+ * @desc    Get reset password link
  * @access  Public
  */
 router.post('/', cookieParser(), validate.forgotPassword, async (req: Request, res: Response): Promise<void> => {

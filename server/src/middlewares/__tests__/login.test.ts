@@ -63,7 +63,7 @@ describe('Login validator', () => {
             // @ts-ignore-start
             await login(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError());
+            expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError);
             done();
         });
     });
@@ -76,7 +76,7 @@ describe('Login validator', () => {
             // @ts-ignore-start
             await login(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new IncorrectInputError());
+            expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
         });
     });
@@ -90,7 +90,7 @@ describe('Login validator', () => {
             // @ts-ignore-start
             await login(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new InvalidEmailOrPasswordError());
+            expect(next).toHaveBeenCalledWith(new InvalidEmailOrPasswordError);
             done();
         });
     });
@@ -106,7 +106,7 @@ describe('Login validator', () => {
             // @ts-ignore-start
             await login(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new InvalidEmailOrPasswordError());
+            expect(next).toHaveBeenCalledWith(new InvalidEmailOrPasswordError);
             done();
         });
     });
@@ -119,7 +119,7 @@ describe('Login validator', () => {
             // @ts-ignore-start
             await login(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError());
+            expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError);
             done();
         });
     });
@@ -132,7 +132,7 @@ describe('Login validator', () => {
             // @ts-ignore-start
             await login(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new UnknownLocationError());
+            expect(next).toHaveBeenCalledWith(new UnknownLocationError);
             done();
         });
 

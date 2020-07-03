@@ -9,7 +9,8 @@
     "prod": "node build/server.bundle.js",
     "test:services": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/services",
     "test:events": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/events",
-    "test:routes": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/routes",
+    "test:routes": "jest --testTimeout=25000 --detectOpenHandles ./src/routes --forceExit",
+    "test:middlewares": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/middlewares",
     "test": "jest --testTimeout=25000 --detectOpenHandles --forceExit",
     "lint": "eslint src"
   },
@@ -39,6 +40,7 @@
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.7.27",
     "@types/nodemailer": "^6.4.0",
+    "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^3.4.0",
     "@typescript-eslint/parser": "^3.4.0",
     "concurrently": "^5.2.0",
