@@ -94,7 +94,7 @@ export default {
           type: 'success'
         });
 
-        this.$store
+        this.$router.push('/dashboard');
       }
     },
     activateInputsError() {
