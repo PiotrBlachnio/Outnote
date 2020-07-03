@@ -3,7 +3,15 @@
     <h1 class="auth__route-heading">{{ $route.name }}</h1>
     <slot></slot>
 
-    <button class="auth__button">{{ buttonLabel }}</button>
+    <button
+      class="auth__button"
+      :class="{ 'auth__button--loading': loading }"
+      :disabled="loading"
+      @click="$emit('submit')"
+    >
+      <loader v-if="loading" />
+      <span v-else>{{ buttonLabel }}</span>
+    </button>
 
     <div class="auth__hr"></div>
 
@@ -25,18 +33,23 @@
       </router-link>
     </span>
 
-    <div class="auth__full-width" v-if="formType !== 'forgotPassword'">
+    <!-- <div class="auth__full-width" v-if="formType !== 'forgotPassword'">
       <div class="auth__hr"></div>
 
       <button class="auth__button auth__button--discord">
         Sign in with Discord
       </button>
-    </div>
+    </div> -->
   </form>
 </template>
 
 <script>
+import Loader from './Loader';
+
 export default {
+  components: {
+    Loader
+  },
   props: {
     formType: {
       type: String,
@@ -47,6 +60,10 @@ export default {
     buttonLabel: {
       type: String,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      required: false
     }
   }
 };
@@ -115,10 +132,23 @@ export default {
   border-radius: 0.25rem;
   background-color: transparent;
   border: 1px solid $primary;
-  transition: background-color 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, color 0.25s ease-in-out;
+
+  &:disabled {
+    color: $authButtonDisabledColor;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
 
   &:hover {
     background-color: darken($primary, 5%);
+  }
+
+  &--loading {
+    position: relative;
+    padding-top: 2.2rem;
   }
 
   &--discord {

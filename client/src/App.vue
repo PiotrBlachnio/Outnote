@@ -23,9 +23,10 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.9s;
+  transition: all 0.5s ease;
 }
-.fade-enter-active {
+.fade-enter-to,
+.fade-leave {
   opacity: 1;
 }
 .fade-enter,
@@ -35,6 +36,6 @@ export default {
 
 #app {
   height: 100vh;
-  background-color: $backgroundColor;
+  background-color: #1c1c1c;
 }
 </style>

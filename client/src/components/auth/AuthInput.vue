@@ -54,6 +54,11 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    activeDuration: {
+      type: Number,
+      required: false,
+      default: 3000
     }
   },
   data() {
@@ -109,6 +114,10 @@ export default {
   &--error {
     animation: vibrate 0.25s linear;
     border-color: $error;
+
+    &:focus {
+      border-color: $error;
+    }
   }
 }
 
