@@ -1,7 +1,6 @@
 import hasMinLength from "./has-min-length";
 import hasMaxLength from "./has-max-length";
 import isEmail from "./is-email";
-import isNumeric from "./is-numeric";
 import isAlphanumeric from "./is-alphanumeric";
 import config from "../../../assets/config";
 import { Types } from 'mongoose';

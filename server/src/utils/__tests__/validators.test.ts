@@ -183,23 +183,7 @@ describe('Validator', () => {
             });
         });
     });
-
-    describe('Is numeric function', () => {
-        describe('When value contains only numbers', () => {
-            it('Should return true', (done) => {
-                expect(validator.isNumeric('519751510')).toBeTruthy();
-                done();
-            });
-        });
-
-        describe('When value contains numbers and letters', () => {
-            it('Should return false', (done) => {
-                expect(validator.isNumeric('5197515ag161fagfab51510')).toBeFalsy();
-                done();
-            });
-        });
-    });
-
+    
     describe('Is alphanumeric function', () => {
         describe('When value contains only numbers', () => {
             it('Should return true', (done) => {
