@@ -1,5 +1,6 @@
 import request, { Response } from 'supertest';
 import { app } from '../../server';
+import faker from 'faker';
 import { connectDatabase, clearDatabase, createUser } from '../../utils/test-utils';
 import TokenService from '../../services/token-service';
 import { Token } from '../../assets/enums';
@@ -13,13 +14,14 @@ afterAll(async () => {
     await clearDatabase();
 });
 
-describe('Confirm email route', () => {
+describe('Reset password route', () => {
     it('Should return correct response', async (done) => {
-        const id: string = (await createUser()).id;
-        const token: string = new TokenService().generateToken(Token.CONFIRM_EMAIL, { id });
+        const password: string = faker.random.alphaNumeric(10);
+        const id: string = (await createUser({ isConfirmed: true })).id;
+        const token: string = new TokenService().generateToken(Token.RESET_PASSWORD, { id });
 
-        const response: Response = await request(app).post('/api/v1/confirm-email')
-        .send({ id, token })
+        const response: Response = await request(app).post('/api/v1/reset-password')
+        .send({ password, id, token })
 
         expect(response.status).toEqual(200);
         done();

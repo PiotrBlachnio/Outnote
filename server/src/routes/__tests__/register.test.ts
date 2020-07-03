@@ -4,6 +4,7 @@ import { connectDatabase, clearDatabase } from '../../utils/test-utils';
 import faker from 'faker';
 
 beforeAll(async () => {
+    jest.useFakeTimers()
     await connectDatabase();
 });
 
@@ -11,7 +12,7 @@ afterAll(async () => {
     await clearDatabase();
 });
 
-describe('Refresh token route', () => {
+describe('Register route', () => {
     it('Should return correct response', async (done) => {
         const response: Response = await request(app).post('/api/v1/register')
         .send({

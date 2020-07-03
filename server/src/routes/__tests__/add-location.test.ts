@@ -7,6 +7,7 @@ import TokenService from '../../services/token-service';
 import { Token } from '../../assets/enums';
 
 beforeAll(async () => {
+    jest.useFakeTimers()
     await connectDatabase();
 });
 

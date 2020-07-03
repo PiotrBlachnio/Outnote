@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import config from '../../assets/config';
 
 beforeAll(async () => {
+    jest.useFakeTimers()
     await connectDatabase();
 });
 

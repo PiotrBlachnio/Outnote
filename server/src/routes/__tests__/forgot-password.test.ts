@@ -4,6 +4,7 @@ import { connectDatabase, clearDatabase, createUser } from '../../utils/test-uti
 import { IUser } from '../../types/models';
 
 beforeAll(async () => {
+    jest.useFakeTimers()
     await connectDatabase();
 });
 

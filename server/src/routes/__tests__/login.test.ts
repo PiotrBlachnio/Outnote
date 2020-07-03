@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
 import faker from 'faker';
 
 beforeAll(async () => {
+    jest.useFakeTimers()
     await connectDatabase();
 });
 
