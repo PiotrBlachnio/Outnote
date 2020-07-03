@@ -1,7 +1,6 @@
 import hasMinLength from "./has-min-length";
 import hasMaxLength from "./has-max-length";
 import isEmail from "./is-email";
-import isNumeric from "./is-numeric";
 import isAlphanumeric from "./is-alphanumeric";
 import config from "../../../assets/config";
 import { Types } from 'mongoose';
@@ -51,20 +50,6 @@ export default (data: Record<string, unknown>): boolean => {
                 };
 
                 if(!hasMaxLength(password, 32)) {
-                    isValid = false;
-                    break;
-                };
-
-                break;
-            case 'confirmationCode':
-                const confirmationCode: unknown = data[key];
-
-                if(typeof confirmationCode !== 'string') {
-                    isValid = false;
-                    break;
-                };
-
-                if(!isNumeric(confirmationCode)) {
                     isValid = false;
                     break;
                 };

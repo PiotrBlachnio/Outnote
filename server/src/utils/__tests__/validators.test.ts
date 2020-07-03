@@ -183,23 +183,7 @@ describe('Validator', () => {
             });
         });
     });
-
-    describe('Is numeric function', () => {
-        describe('When value contains only numbers', () => {
-            it('Should return true', (done) => {
-                expect(validator.isNumeric('519751510')).toBeTruthy();
-                done();
-            });
-        });
-
-        describe('When value contains numbers and letters', () => {
-            it('Should return false', (done) => {
-                expect(validator.isNumeric('5197515ag161fagfab51510')).toBeFalsy();
-                done();
-            });
-        });
-    });
-
+    
     describe('Is alphanumeric function', () => {
         describe('When value contains only numbers', () => {
             it('Should return true', (done) => {
@@ -304,29 +288,6 @@ describe('Validator', () => {
     
                 it('Should return false', (done) => {
                     expect(validator.validateInput({ password: characters.join('') })).toBeFalsy();
-                    done();
-                });
-            });
-        });
-    
-        describe('Confirmation code validation', () => {
-            describe('When confirmation code is valid', () => {
-                it('Should return true', (done) => {
-                    expect(validator.validateInput({ confirmationCode: '123456' })).toBeTruthy();
-                    done();
-                });
-            });
-    
-            describe('When confirmation code has invalid type', () => {
-                it('Should return false', (done) => {
-                    expect(validator.validateInput({ confirmationCode: 123456 })).toBeFalsy();
-                    done();
-                });
-            });
-    
-            describe('When confirmation code does not have only numbers', () => {
-                it('Should return false', (done) => {
-                    expect(validator.validateInput({ confirmationCode: '12345a' })).toBeFalsy();
                     done();
                 });
             });
