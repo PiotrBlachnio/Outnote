@@ -10,7 +10,6 @@
         button-label="Sign up"
         @submit="signUp"
         :loading="formLoading"
-        :formInactive="isFormEmpty"
       >
         <auth-input
           id="username"
@@ -21,7 +20,6 @@
         <auth-input
           id="email"
           label="Email"
-          type="email"
           v-model="form.email"
           :error="isInputInvalid"
         />
@@ -61,19 +59,18 @@
 
 <script>
 import axios from 'axios';
-import errors from './consts';
+import { errors } from './consts';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthForm from '@/components/auth/AuthForm';
-import Notification from '@/components/core/Notification';
 import authLoadingMixin from '@/mixins/AuthLoadingMixin';
+import authValidator from '@/mixins/AuthValidatorMixin';
 
 export default {
   components: {
     AuthForm,
-    AuthInput,
-    Notification
+    AuthInput
   },
-  mixins: [authLoadingMixin],
+  mixins: [authLoadingMixin, authValidator],
   data() {
     return {
       form: {
@@ -87,7 +84,7 @@ export default {
   },
   methods: {
     async signUp() {
-      if (this.isFormEmpty) return;
+      if (!this.validateForm()) return;
       this.enableFormLoading();
 
       try {
@@ -116,13 +113,6 @@ export default {
           this.isInputInvalid = false;
         }, 3000);
       }
-    }
-  },
-  computed: {
-    isFormEmpty() {
-      const { username, email, password } = this.form;
-
-      return username.length < 1 || email.length < 1 || password.length < 1;
     }
   }
 };

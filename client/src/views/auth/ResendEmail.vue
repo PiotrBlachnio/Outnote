@@ -25,27 +25,25 @@
 
 <script>
 import axios from 'axios';
-import errors from './consts';
-import Notification from '@/components/core/Notification';
+import { errors } from './consts';
 
 export default {
-  beforeCreate() {
-    console.log(this.$route.params.email);
-    if (!this.$route.params.email) this.$router.push('/auth/login');
+  data() {
+    return {
+      emailAddress: null
+    };
   },
-  components: {
-    Notification
+  created() {
+    this.emailAddress = this.$route.params.email;
   },
   methods: {
     async resendEmail() {
-      console.log('wysłano');
-
       try {
         await axios({
           method: 'post',
           url: '/send-confirmation-mail',
           data: {
-            email: this.$route.params.email
+            email: this.emailAddress
           }
         });
 

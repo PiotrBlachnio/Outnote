@@ -6,7 +6,7 @@
     <button
       class="auth__button"
       :class="{ 'auth__button--loading': loading }"
-      :disabled="formInactive || loading"
+      :disabled="loading"
       @click="$emit('submit')"
     >
       <loader v-if="loading" />
@@ -64,11 +64,6 @@ export default {
     loading: {
       type: Boolean,
       required: false
-    },
-    formInactive: {
-      type: Boolean,
-      required: false,
-      default: false
     }
   }
 };

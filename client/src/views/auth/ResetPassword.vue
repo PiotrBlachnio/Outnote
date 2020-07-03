@@ -6,7 +6,6 @@
       form-type="forgotPassword"
       button-label="set new password"
       :loading="formLoading"
-      :formInactive="isFormEmpty"
       @submit="resetPassword"
     >
       <auth-input
@@ -30,16 +29,15 @@ import axios from 'axios';
 import errors from './consts';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthForm from '@/components/auth/AuthForm';
-import Notification from '@/components/core/Notification';
 import authLoadingMixin from '@/mixins/AuthLoadingMixin';
+import authValidator from '@/mixins/AuthValidatorMixin';
 
 export default {
   components: {
     AuthForm,
-    AuthInput,
-    Notification
+    AuthInput
   },
-  mixins: [authLoadingMixin],
+  mixins: [authLoadingMixin, authValidator],
   data() {
     return {
       form: {
@@ -54,7 +52,8 @@ export default {
   },
   methods: {
     async resetPassword() {
-      if (this.isFormEmpty) return;
+      if (!this.validateForm()) return;
+
       if (!this.arePasswordsEqual) {
         this.$store.dispatch('notificationActivate', {
           content: 'Passwords are not equal!',
@@ -93,11 +92,6 @@ export default {
     }
   },
   computed: {
-    isFormEmpty() {
-      const { password, repeatPassword } = this.form;
-
-      return password.length < 1 || repeatPassword.length < 1;
-    },
     arePasswordsEqual() {
       const { password, repeatPassword } = this.form;
 

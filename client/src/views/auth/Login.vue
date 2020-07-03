@@ -39,21 +39,19 @@
 
 <script>
 import { errors } from './consts';
-import validator from './authValidator';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthCheckbox from '@/components/auth/AuthCheckbox';
 import AuthForm from '@/components/auth/AuthForm';
-import Notification from '@/components/core/Notification';
 import authLoadingMixin from '@/mixins/AuthLoadingMixin';
+import authValidator from '@/mixins/AuthValidatorMixin';
 
 export default {
   components: {
     AuthForm,
     AuthInput,
-    AuthCheckbox,
-    Notification
+    AuthCheckbox
   },
-  mixins: [authLoadingMixin],
+  mixins: [authLoadingMixin, authValidator],
   data() {
     return {
       form: {
@@ -76,6 +74,7 @@ export default {
       this.disableFormLoading();
 
       if (!execute.success) {
+        console.log(execute);
         if (execute.data.error.id === 304) {
           this.$router.push({
             name: 'Resend Email',
@@ -95,9 +94,7 @@ export default {
           type: 'success'
         });
 
-        if (this.rememberPassword) {
-          this.$store.dispatch('authRememberLoginData');
-        }
+        this.$store
       }
     },
     activateInputsError() {
@@ -108,22 +105,6 @@ export default {
         this.error.emailInput = false;
         this.error.passwordInput = false;
       }, 2000);
-    },
-    validateForm() {
-      const formFields = Object.entries(this.form);
-
-      try {
-        validator(formFields);
-
-        return true;
-      } catch (error) {
-        this.$store.dispatch('notificationActivate', {
-          content: error.message,
-          type: 'error'
-        });
-
-        return false;
-      }
     }
   },
   computed: {}

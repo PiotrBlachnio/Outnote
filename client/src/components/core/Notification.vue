@@ -13,6 +13,7 @@
 
 <script>
 export default {
+  name: 'Notification',
   computed: {
     isActive() {
       return this.$store.state.notification.active;

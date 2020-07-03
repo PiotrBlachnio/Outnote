@@ -1,13 +1,14 @@
 <template>
   <div class="auth login">
+    <notification />
+
     <auth-form
       form-type="forgotPassword"
       button-label="Remind password"
       @submit="remindPassword"
       :loading="formLoading"
-      :formInactive="isFormEmpty"
     >
-      <auth-input id="email" label="Email" type="email" v-model="form.email" />
+      <auth-input id="email" label="Email" v-model="form.email" />
     </auth-form>
   </div>
 </template>
@@ -18,13 +19,14 @@ import errors from './consts';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthForm from '@/components/auth/AuthForm';
 import authLoadingMixin from '@/mixins/AuthLoadingMixin';
+import authValidator from '@/mixins/AuthValidatorMixin';
 
 export default {
   components: {
     AuthForm,
     AuthInput
   },
-  mixins: [authLoadingMixin],
+  mixins: [authLoadingMixin, authValidator],
   data() {
     return {
       form: {
@@ -34,6 +36,7 @@ export default {
   },
   methods: {
     async remindPassword() {
+      if (!this.validateForm()) return;
       this.enableFormLoading();
 
       try {
@@ -57,11 +60,6 @@ export default {
 
         this.disableFormLoading();
       }
-    }
-  },
-  computed: {
-    isFormEmpty() {
-      return this.form.email.length < 1;
     }
   }
 };

@@ -31,15 +31,32 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       isSuccess: true
     };
   },
-  computed: {
-    confirmationToken() {
-      return this.$route.query.token;
+  created() {
+    this.confirmEmail();
+  },
+  methods: {
+    confirmEmail() {
+      try {
+        axios({
+          method: 'post',
+          url: '/confirm-email',
+          data: {
+            id: this.$route.query.user,
+            token: this.$route.query.token,
+            uniqueKey: this.$route.query.uniqueKey
+          }
+        });
+      } catch (error) {
+        throw new Error(error);
+      }
     }
   }
 };

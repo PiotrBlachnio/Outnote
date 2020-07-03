@@ -7,14 +7,14 @@ Vue.use(Vuex);
 
 const vuexLocal = new VuexPersistence({
   key: 'vuex',
-  storage: window.localStorage
+  storage: window.localStorage,
+  reducer: state => ({ auth: state.auth, user: state.user })
 });
 
 export default new Vuex.Store({
   state: {
     auth: {
       status: null,
-      rememberMe: false,
       token: localStorage.getItem('accessToken') || null
     },
     notification: {
@@ -35,9 +35,6 @@ export default new Vuex.Store({
     authLogout(state) {
       state.auth.status = false;
       state.auth.token = null;
-    },
-    authRememberData(state) {
-      state.auth.rememberMe = true;
     },
     notificationShow(state, data) {
       state.notification.active = true;
@@ -69,9 +66,6 @@ export default new Vuex.Store({
     },
     authSignOut({ commit }) {
       commit('authLogout');
-    },
-    authRememberLoginData({ commit }) {
-      commit('authRememberData');
     },
     notificationActivate({ commit, state }, data) {
       let closeDelay = data.time || 4500;
