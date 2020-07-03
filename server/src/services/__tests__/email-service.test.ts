@@ -1,8 +1,6 @@
 import EmailService from "../email-service";
 import faker from 'faker';
 import { Mail } from "../../assets/enums";
-import MailTemplate from "../../assets/mail-template";
-import { IConfirmEmailTemplateData, IConfirmIdentityTemplateData, IResetPasswordTemplateData } from "../../types/mails";
 
 describe('Email service', () => {
     describe('Send mail function', () => {
@@ -27,11 +25,6 @@ describe('Email service', () => {
                 expect(transporter.sendMail).toHaveBeenCalled();
                 done();
             });
-
-            it('Should pass correct parameters to send mail function', (done) => {
-                expect(transporter.sendMail.mock.calls[0][0]).toEqual(new MailTemplate().confirmEmail(data as IConfirmEmailTemplateData))
-                done();
-            });
         });
 
         describe('Confirm identity mail', () => {
@@ -49,11 +42,6 @@ describe('Email service', () => {
                 expect(transporter.sendMail).toHaveBeenCalled();
                 done();
             });
-
-            it('Should pass correct parameters to send mail function', async (done) => {
-                expect(transporter.sendMail.mock.calls[0][0]).toEqual(await new MailTemplate().confirmIdentity(data as IConfirmIdentityTemplateData))
-                done();
-            });
         });
 
         describe('Reset password mail', () => {
@@ -69,11 +57,6 @@ describe('Email service', () => {
                 emailService.sendMail(Mail.RESET_PASSWORD, data);
 
                 expect(transporter.sendMail).toHaveBeenCalled();
-                done();
-            });
-
-            it('Should pass correct parameters to send mail function', (done) => {
-                expect(transporter.sendMail.mock.calls[0][0]).toEqual(new MailTemplate().resetPassword(data as IResetPasswordTemplateData))
                 done();
             });
         });

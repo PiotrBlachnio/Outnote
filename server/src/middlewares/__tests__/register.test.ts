@@ -48,7 +48,7 @@ describe('Register validator', () => {
             // @ts-ignore-start
             await register(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError());
+            expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError);
             done();
         });
     });
@@ -61,7 +61,7 @@ describe('Register validator', () => {
             // @ts-ignore-start
             await register(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new IncorrectInputError());
+            expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
         });
     });
@@ -77,7 +77,7 @@ describe('Register validator', () => {
             // @ts-ignore-start
             await register(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new UsernameAlreadyExistError());
+            expect(next).toHaveBeenCalledWith(new UsernameAlreadyExistError);
             done();
         });
     });
@@ -90,7 +90,7 @@ describe('Register validator', () => {
             // @ts-ignore-start
             await register(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new EmailAlreadyExistError());
+            expect(next).toHaveBeenCalledWith(new EmailAlreadyExistError);
             done();
         });
     });

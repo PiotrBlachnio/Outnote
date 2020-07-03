@@ -46,7 +46,7 @@ describe('Add location validator', () => {
             //@ts-ignore-start
             await addLocation(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new IncorrectInputError());
+            expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
         });
     });
@@ -64,7 +64,7 @@ describe('Add location validator', () => {
             //@ts-ignore-start
             await addLocation(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new ExpiredOrInvalidTokenError());
+            expect(next).toHaveBeenCalledWith(new ExpiredOrInvalidTokenError);
             done();
         });
     });
@@ -77,7 +77,7 @@ describe('Add location validator', () => {
             //@ts-ignore-start
             await addLocation(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new InvalidUserError());
+            expect(next).toHaveBeenCalledWith(new InvalidUserError);
             done();
         });
     });
@@ -90,7 +90,7 @@ describe('Add location validator', () => {
             //@ts-ignore-start
             await addLocation(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new UserNotFoundError());
+            expect(next).toHaveBeenCalledWith(new UserNotFoundError);
             done();
         });
     });
@@ -106,7 +106,7 @@ describe('Add location validator', () => {
             //@ts-ignore-start
             await addLocation(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new InvalidPasswordError());
+            expect(next).toHaveBeenCalledWith(new InvalidPasswordError);
             done();
         });
     });
@@ -119,7 +119,7 @@ describe('Add location validator', () => {
             //@ts-ignore-start
             await addLocation(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError());
+            expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError);
             done();
         });
     });
@@ -134,7 +134,7 @@ describe('Add location validator', () => {
             //@ts-ignore-start
             await addLocation(req, {}, next);
 
-            expect(next).toHaveBeenCalledWith(new LocationAlreadyAddedError());
+            expect(next).toHaveBeenCalledWith(new LocationAlreadyAddedError);
             done();
         });
     });
