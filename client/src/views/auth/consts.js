@@ -1,4 +1,24 @@
-export default {
+/* eslint-disable */
+
+export const validator = {
+  username: {
+    minLength: 4,
+    maxLength: 20,
+    regex: /^[a-zA-Z0-9]+$/
+  },
+  email: {
+    minLength: 5,
+    maxLength: 40,
+    regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  },
+  password: {
+    minLength: 6,
+    maxLength: 32,
+    regex: null
+  }
+};
+
+export const errors = {
   0: {
     message: 'Internal server error'
   },

@@ -7,12 +7,10 @@
       button-label="Sign in"
       @submit="signIn"
       :loading="formLoading"
-      :formInactive="isFormEmpty"
     >
       <auth-input
         id="email"
         label="Email"
-        type="email"
         v-model="form.email"
         :error="error.emailInput"
       />
@@ -40,7 +38,8 @@
 </template>
 
 <script>
-import error from './consts';
+import { errors } from './consts';
+import validator from './authValidator';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthCheckbox from '@/components/auth/AuthCheckbox';
 import AuthForm from '@/components/auth/AuthForm';
@@ -70,7 +69,7 @@ export default {
   },
   methods: {
     async signIn() {
-      if (this.isFormEmpty) return;
+      if (!this.validateForm()) return;
 
       this.enableFormLoading();
       const execute = await this.$store.dispatch('authSignIn', this.form);
@@ -84,7 +83,7 @@ export default {
           });
         } else {
           this.$store.dispatch('notificationActivate', {
-            content: error[execute.data.error.id].message,
+            content: errors[execute.data.error.id].message,
             type: 'error'
           });
         }
@@ -109,13 +108,25 @@ export default {
         this.error.emailInput = false;
         this.error.passwordInput = false;
       }, 2000);
+    },
+    validateForm() {
+      const formFields = Object.entries(this.form);
+
+      try {
+        validator(formFields);
+
+        return true;
+      } catch (error) {
+        this.$store.dispatch('notificationActivate', {
+          content: error.message,
+          type: 'error'
+        });
+
+        return false;
+      }
     }
   },
-  computed: {
-    isFormEmpty() {
-      return this.form.email.length < 1 || this.form.password.length < 1;
-    }
-  }
+  computed: {}
 };
 </script>
 
