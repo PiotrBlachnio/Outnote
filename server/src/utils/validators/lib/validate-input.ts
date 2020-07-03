@@ -56,20 +56,6 @@ export default (data: Record<string, unknown>): boolean => {
                 };
 
                 break;
-            case 'confirmationCode':
-                const confirmationCode: unknown = data[key];
-
-                if(typeof confirmationCode !== 'string') {
-                    isValid = false;
-                    break;
-                };
-
-                if(!isNumeric(confirmationCode)) {
-                    isValid = false;
-                    break;
-                };
-
-                break;
             case 'username':
                 const username: unknown = data[key];
 

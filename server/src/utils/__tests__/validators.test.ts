@@ -309,29 +309,6 @@ describe('Validator', () => {
             });
         });
     
-        describe('Confirmation code validation', () => {
-            describe('When confirmation code is valid', () => {
-                it('Should return true', (done) => {
-                    expect(validator.validateInput({ confirmationCode: '123456' })).toBeTruthy();
-                    done();
-                });
-            });
-    
-            describe('When confirmation code has invalid type', () => {
-                it('Should return false', (done) => {
-                    expect(validator.validateInput({ confirmationCode: 123456 })).toBeFalsy();
-                    done();
-                });
-            });
-    
-            describe('When confirmation code does not have only numbers', () => {
-                it('Should return false', (done) => {
-                    expect(validator.validateInput({ confirmationCode: '12345a' })).toBeFalsy();
-                    done();
-                });
-            });
-        });
-    
         describe('Username validation', () => {
             describe('When username is valid', () => {
                 it('Should return true', (done) => {
