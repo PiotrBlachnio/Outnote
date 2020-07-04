@@ -74,7 +74,6 @@ export default {
       this.disableFormLoading();
 
       if (!execute.success) {
-        console.log(execute);
         if (execute.data.error.id === 304) {
           this.$router.push({
             name: 'Resend Email',

@@ -7,6 +7,7 @@
       button-label="set new password"
       :loading="formLoading"
       @submit="resetPassword"
+      show-back-to-login
     >
       <auth-input
         id="password"
@@ -26,7 +27,7 @@
 
 <script>
 import axios from 'axios';
-import errors from './consts';
+import { errors } from './consts';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthForm from '@/components/auth/AuthForm';
 import authLoadingMixin from '@/mixins/AuthLoadingMixin';
@@ -46,13 +47,9 @@ export default {
       }
     };
   },
-  created() {
-    // const { token, uniqueKey } = this.$route.query;
-    // if (!token || !uniqueKey) this.$router.push('/auth/login');
-  },
   methods: {
     async resetPassword() {
-      if (!this.validateForm()) return;
+      if (!this.validateForm(new Array(Object.entries(this.form)[0]))) return;
 
       if (!this.arePasswordsEqual) {
         this.$store.dispatch('notificationActivate', {
@@ -69,7 +66,7 @@ export default {
           method: 'post',
           url: '/reset-password',
           data: {
-            id: this.$route.query.uniqueKey,
+            id: this.$route.query.user,
             token: this.$route.query.token,
             password: this.form.password
           }
