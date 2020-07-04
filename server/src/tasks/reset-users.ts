@@ -12,7 +12,7 @@ export default async (): Promise<void> => {
     for(const user of users) {
         if(Date.now() - user.joinedDate > DAYS3) {
             deletedUsers++;
-            await userService.deleteOne({ id: user.id });
+            await userService.deleteOne({ _id: user.id });
         };
     };
 
