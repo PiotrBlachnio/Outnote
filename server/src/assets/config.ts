@@ -17,7 +17,7 @@ const secrets = {
 
 const defaults = {
     PORT: '4000',
-    DATABASE_NAME: 'Main',
+    DATABASE_NAME: 'main',
     TEST_DATABASE_NAME: 'test',
     API_PATH: '/api/v1'
 };

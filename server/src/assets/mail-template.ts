@@ -10,7 +10,7 @@ class MailTemplate {
             to: data.email,
             subject: 'Email confirmation',
             html: `<b>Thanks for joining Realms community!</b><br></br>
-                      Click <a href="https://localhost:8080/auth/confirm-email?user=${data.id}&token=${data.token}&uniqueKey=${faker.random.uuid()}">here</a> to confirm your email
+                      Click <a href="http://localhost:8080/auth/confirm-email?user=${data.id}&token=${data.token}&uniqueKey=${faker.random.uuid()}">here</a> to confirm your email
                     
             `
         };
@@ -26,7 +26,7 @@ class MailTemplate {
             subject: '[Security alert] Someone is trying to login to your account from a different device!',
             html: `
                       Detected login attemp from ip: <b>${data.ip}</b>, localization: <b>${localizationMessage}</b>
-                      Click <a href="https://localhost:8080/auth/confirm-identity?user=${data.id}&token=${data.token}&uniqueKey=${faker.random.uuid()}">here</a> to confirm your identity
+                      Click <a href="http://localhost:8080/auth/confirm-identity?user=${data.id}&token=${data.token}&uniqueKey=${faker.random.uuid()}">here</a> to confirm your identity
             `
         };
     };

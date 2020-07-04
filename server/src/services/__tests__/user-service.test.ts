@@ -15,7 +15,19 @@ describe('User service', () => {
     const userService: UserService = new UserService();
     let user: IUser;
 
-    describe('Find one function', () => {
+    describe('Find method', () => {
+        it('Should return array of users', async (done) => {
+            const user: IUser = await createUser();
+            const users: IUser[] = await userService.find({ email: user.email });
+            
+            expect(users).toHaveLength(1);
+            expect(users[0].email).toEqual(user.email);
+
+            done();
+        });
+    });
+    
+    describe('Find one method', () => {
         describe('When object does not exist', () => {
             it('Should return null', async (done) => {
                 const foundUser: IUser | null = await userService.findOne({ _id: '1' });
@@ -36,7 +48,7 @@ describe('User service', () => {
         });
     });
 
-    describe('Find by id function', () => {
+    describe('Find by id method', () => {
         describe('When object does not exist', () => {
             it('Should return null', async (done) => {
                 const foundUser: IUser | null = await userService.findById('1vsffgs41541');
@@ -56,7 +68,7 @@ describe('User service', () => {
         });
     });
 
-    describe('Update one function', () => {
+    describe('Update one method', () => {
         it('Should successfully update object in the database', async (done) => {
             await userService.updateOne({  _id: user._id }, { username: 'Jeff' });
             const updatedUser: IUser | null = await userService.findById(user._id);
@@ -66,7 +78,7 @@ describe('User service', () => {
         });
     });
 
-    describe('Create function', () => {
+    describe('Create method', () => {
         it('Should successfully create object in the database', async (done) => {
             const createdUser: IUser = await userService.create({ username: faker.internet.userName(), email: faker.internet.email(), password: faker.internet.password(), trustedIPS: [faker.internet.ip()] });
             const foundUser: IUser | null = await userService.findById(createdUser.id);
@@ -76,7 +88,7 @@ describe('User service', () => {
         });
     });
 
-    describe('Delete one function', () => {
+    describe('Delete one method', () => {
         it('Should successfully delete object from the database', async (done) => {
             const createdUser: IUser = await userService.create({ username: faker.internet.userName(), email: faker.internet.email(), password: faker.internet.password(), trustedIPS: [faker.internet.ip()] });
             await userService.deleteOne({ _id: createdUser.id });
