@@ -3,6 +3,15 @@ import mongoose from 'mongoose';
 import { IUser } from '../types/models';
 
 class UserService {
+    public async find(data: Record<string, unknown>): Promise<IUser[]> {
+        try {
+            const users: IUser[] = await User.find(data);
+            return users;
+        } catch(error) {
+            throw error;
+        };
+    };
+
     public async findOne(data: Record<string, unknown>): Promise<IUser | null> {
         try {
             const user: IUser | null = await User.findOne(data);
