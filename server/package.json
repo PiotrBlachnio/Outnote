@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "@stargaze/logger": "^1.2.2",
+    "agenda": "^3.1.0",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
@@ -30,6 +31,7 @@
     "nodemailer": "^6.4.10"
   },
   "devDependencies": {
+    "@types/agenda": "^2.0.8",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.6",
