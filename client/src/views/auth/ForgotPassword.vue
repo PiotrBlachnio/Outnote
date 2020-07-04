@@ -7,6 +7,7 @@
       button-label="Remind password"
       @submit="remindPassword"
       :loading="formLoading"
+      show-back-to-login
     >
       <auth-input id="email" label="Email" v-model="form.email" />
     </auth-form>
@@ -15,7 +16,7 @@
 
 <script>
 import axios from 'axios';
-import errors from './consts';
+import { errors } from './consts';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthForm from '@/components/auth/AuthForm';
 import authLoadingMixin from '@/mixins/AuthLoadingMixin';

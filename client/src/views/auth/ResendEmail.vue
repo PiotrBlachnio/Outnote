@@ -51,6 +51,8 @@ export default {
           content: 'Confirmation e-mail has been sent.',
           type: 'success'
         });
+
+        this.$router.push('/auth/login');
       } catch (error) {
         this.$store.dispatch('notificationActivate', {
           content: errors[error.response.data.error.id].message,

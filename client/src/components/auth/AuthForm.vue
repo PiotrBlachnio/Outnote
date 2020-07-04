@@ -33,6 +33,10 @@
       </router-link>
     </span>
 
+    <router-link to="/auth/login" class="auth__link" v-if="showBackToLogin">
+      Back to Log-in page
+    </router-link>
+
     <!-- <div class="auth__full-width" v-if="formType !== 'forgotPassword'">
       <div class="auth__hr"></div>
 
@@ -64,6 +68,11 @@ export default {
     loading: {
       type: Boolean,
       required: false
+    },
+    showBackToLogin: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   }
 };

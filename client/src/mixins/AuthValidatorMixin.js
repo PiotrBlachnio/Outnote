@@ -2,8 +2,8 @@ import validator from '../views/auth/authValidator';
 
 export default {
   methods: {
-    validateForm() {
-      const formFields = Object.entries(this.form);
+    validateForm(fields) {
+      const formFields = fields || Object.entries(this.form);
 
       try {
         validator(formFields);
