@@ -28,4 +28,21 @@ router.get('/:id', auth(Roles.USER), async (req: Request, res: Response, next: N
     };
 });
 
+/**
+ * @route   GET api/v1/note
+ * @desc    Get all user's notes
+ * @access  Protected
+*/
+router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const notes: INote[] = await req.services.note.find({ ownerId: req.user!.id });
+
+        await logger.log({ type: 'info', message: 'Notes retrieved successfully!', place: 'Get all notes route' });
+        res.status(200).json({ notes });
+    } catch(error) {
+        error.place = 'Get all notes route';
+        next(error);
+    };
+});
+
 export default router;
