@@ -1,37 +1,22 @@
 import { Router, Request, Response } from 'express';
-import cookieParser from 'cookie-parser';
-import validate from '../middlewares/validators/index';
 import logger from '../utils/logger';
-import { Token } from '../assets/enums';
+import { Roles } from '../assets/enums';
+import auth from '../middlewares/auth';
 
 const router: Router = Router();
 
 /**
  * @route   GET api/v1/note/:id
- * @desc    Get single note by providing valid id
- * @access  Private
+ * @desc    Get a single note by providing a valid id
+ * @access  Protected
 */
-router.post('/', cookieParser(), validate.login, async (req: Request, res: Response): Promise<void> => {
-    await logger.log({ type: 'info', message: 'Logged in successfully!', place: 'Login route' });
-    
-    const refreshToken: string = req.services.token.generateToken(Token.REFRESH, {
-        id: req.context!.id!,
-        ip: req.ip
-    });
+router.get('/:id', auth(Roles.USER), async (req: Request, res: Response): Promise<void> => {
+    try {
 
-    const accessToken: string = req.services.token.generateToken(Token.ACCESS, {
-        id: req.context!.id!,
-        username: req.context!.username!,
-        email: req.context!.email!,
-        ip: req.ip
-    });
-
-    res.cookie('jid', refreshToken, { httpOnly: true });
-
-    res.status(200).json({
-        id: req.context!.id!,
-        token: accessToken
-    });
+    } catch(error) {
+        error.place = 'Get note by id route';
+        next(error);
+    };
 });
 
 export default router;

@@ -5,12 +5,12 @@ import { IUser } from "../types/models";
 import { Token, Roles } from "../assets/enums";
 import { IAccessTokenPayload } from "../types/tokens";
 
-export default (role: Roles): Function => {
+export default (role: Roles) => {
     return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        let token: string = req.headers['Authorization'] as string;
+        const token: string = req.headers['Authorization'] as string;
     
         try {
-            let payload: IAccessTokenPayload | null = req.services.token.verifyToken(Token.ACCESS, token);
+            const payload: IAccessTokenPayload | null = req.services.token.verifyToken(Token.ACCESS, token);
     
             if(!payload) {
                 throw new ExpiredOrInvalidTokenError();
