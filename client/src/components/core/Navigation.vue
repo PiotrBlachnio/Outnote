@@ -1,9 +1,9 @@
 <template>
-  <nav class="navigation" :class="{ 'navigation--active': isMenuAvtive }">
+  <nav class="navigation" :class="{ 'navigation--active': isMenuActive }">
     <button
       class="navigation__hamburger"
-      @click="isMenuAvtive = !isMenuAvtive"
-      :class="{ 'navigation__hamburger--active': isMenuAvtive }"
+      @click="isMenuActive = !isMenuActive"
+      :class="{ 'navigation__hamburger--active': isMenuActive }"
     >
       <span class="navigation__hamburger-line"></span>
       <span class="navigation__hamburger-line"></span>
@@ -15,7 +15,7 @@
         class="navigation__element"
         v-for="category in categories"
         :key="category"
-        v-show="isMenuAvtive"
+        v-show="isMenuActive"
       >
         <router-link to="#" class="navigation__link">
           {{ category }}
@@ -23,7 +23,7 @@
       </li>
     </ul>
 
-    <div class="navigation__bottom" v-show="isMenuAvtive">
+    <div class="navigation__bottom" v-show="isMenuActive">
       <img
         class="navigation__user-avatar"
         src="https://image.flaticon.com/icons/svg/848/848006.svg"
@@ -43,16 +43,38 @@
 </template>
 
 <script>
+import gsap from 'gsap';
+
 export default {
   data() {
     return {
-      isMenuAvtive: false
+      isMenuActive: false
     };
   },
   props: {
     categories: {
       type: Array,
       required: true
+    }
+  },
+  watch: {
+    isMenuActive(state) {
+      const animations = [
+        gsap.fromTo(
+          '.navigation__element',
+          state ? 0.5 : 0,
+          { opacity: 0, x: '-2rem' },
+          { stagger: 0.1, x: 0, opacity: 1, delay: 0.2 }
+        ),
+        gsap.fromTo(
+          '.navigation__bottom',
+          state ? 0.6 : 0,
+          { opacity: 0 },
+          { opacity: 1, ease: 'none' }
+        )
+      ];
+
+      if (state) animations.every(x => x.play());
     }
   }
 };
@@ -119,34 +141,19 @@ export default {
 
   &__list {
     margin-top: 5rem;
-    opacity: 0;
-    transition: all 0.2s ease-in-out;
-  }
-
-  &--active &__list {
-    opacity: 1;
   }
 
   &__link {
     display: block;
     color: $navigationLinkColor;
     padding: 0.5rem;
-    opacity: 0;
     font-weight: bold;
     white-space: nowrap;
-    transition: border-left 0.1s ease-in-out, opacity 0.3s ease-in-out;
+    transition: border-left 0.1s ease-in-out;
 
     &:hover {
       border-left: 2px solid $navigationLinkActiveBorderColor;
     }
-  }
-
-  &--active &__link {
-    opacity: 1;
-  }
-
-  &--active &__bottom {
-    opacity: 1;
   }
 
   &__bottom {
@@ -155,17 +162,12 @@ export default {
     position: absolute;
     bottom: 1rem;
     display: flex;
-    opacity: 1;
     align-items: center;
-    transition: opacity 0.3s ease-in-out;
   }
 
   &__user-avatar {
     width: 2rem;
     margin-right: 1rem;
-  }
-
-  &__user-name {
   }
 
   &__settings-button {

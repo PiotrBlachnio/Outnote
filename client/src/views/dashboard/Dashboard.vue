@@ -13,7 +13,15 @@ export default {
   },
   data() {
     return {
-      navCategories: ['Private notes', 'Work notes', 'Other notes']
+      navCategories: [
+        'Private notes',
+        'Work notes',
+        'Other notes',
+        'Other notes2',
+        'Other notes3',
+        'Other notes4',
+        'Other notes5'
+      ]
     };
   }
 };
