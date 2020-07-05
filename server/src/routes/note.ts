@@ -82,10 +82,33 @@ router.delete('/:id', auth(Roles.USER), async (req: Request, res: Response, next
 
         await req.services.note.deleteOne({ _id: note.id });
         await logger.log({ type: 'info', message: 'Note deleted successfully!', place: 'Delete note route' });
-        
+
         res.status(200).end();
     } catch(error) {
         error.place = 'Delete note route';
+        next(error);
+    };
+});
+
+/**
+ * @route   PATCH api/v1/note/:id
+ * @desc    Update single note by providing valid id
+ * @access  Protected
+*/
+router.patch('/:id', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
+
+        if(!note) {
+            throw new NoteNotFoundError();
+        }
+
+        await req.services.note.updateOne({ _id: note.id }, { [req.body.field]: req.body.value });
+        await logger.log({ type: 'info', message: 'Note updated successfully!', place: 'Update note route' });
+        
+        res.status(200).end();
+    } catch(error) {
+        error.place = 'Update note route';
         next(error);
     };
 });
