@@ -1,0 +1,37 @@
+import { Router, Request, Response } from 'express';
+import cookieParser from 'cookie-parser';
+import validate from '../middlewares/validators/index';
+import logger from '../utils/logger';
+import { Token } from '../assets/enums';
+
+const router: Router = Router();
+
+/**
+ * @route   GET api/v1/note/:id
+ * @desc    Get single note by providing valid id
+ * @access  Private
+*/
+router.post('/', cookieParser(), validate.login, async (req: Request, res: Response): Promise<void> => {
+    await logger.log({ type: 'info', message: 'Logged in successfully!', place: 'Login route' });
+    
+    const refreshToken: string = req.services.token.generateToken(Token.REFRESH, {
+        id: req.context!.id!,
+        ip: req.ip
+    });
+
+    const accessToken: string = req.services.token.generateToken(Token.ACCESS, {
+        id: req.context!.id!,
+        username: req.context!.username!,
+        email: req.context!.email!,
+        ip: req.ip
+    });
+
+    res.cookie('jid', refreshToken, { httpOnly: true });
+
+    res.status(200).json({
+        id: req.context!.id!,
+        token: accessToken
+    });
+});
+
+export default router;
