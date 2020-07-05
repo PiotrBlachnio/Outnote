@@ -45,4 +45,26 @@ router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: Next
     };
 });
 
+/**
+ * @route   POST api/v1/note
+ * @desc    Create new note
+ * @access  Protected
+*/
+router.post('/', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const note: INote = await req.services.note.create({
+            title: req.body.title,
+            category: req.body.title,
+            ownerId: req.user!.id,
+            isPrivate: req.body.isPrivate
+        });
+
+        await logger.log({ type: 'info', message: 'Note create successfully!', place: 'Create note route' });
+        res.status(201).json({ note });
+    } catch(error) {
+        error.place = 'Create note route';
+        next(error);
+    };
+});
+
 export default router;
