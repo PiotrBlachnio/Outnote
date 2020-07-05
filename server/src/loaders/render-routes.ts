@@ -13,7 +13,8 @@ export default (app: Application): void => {
         { path: 'logout', router: routes.logout },
         { path: 'refresh-token', router: routes.refreshToken },
         { path: 'reset-password', router: routes.resetPassword },
-        { path: 'send-confirmation-mail', router: routes.sendConfirmationMail }
+        { path: 'send-confirmation-mail', router: routes.sendConfirmationMail },
+        { path: 'note', router: routes.note }
     ];
 
     rootRouter.forEach(object => {

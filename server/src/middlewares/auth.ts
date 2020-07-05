@@ -7,7 +7,7 @@ import { IAccessTokenPayload } from "../types/tokens";
 
 export default (role: Roles) => {
     return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const token: string = req.headers['Authorization'] as string;
+        const token: string = req.headers['authorization'] as string;
     
         try {
             const payload: IAccessTokenPayload | null = req.services.token.verifyToken(Token.ACCESS, token);
