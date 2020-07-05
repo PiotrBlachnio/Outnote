@@ -13,7 +13,7 @@
     <ul class="navigation__list">
       <li
         class="navigation__element"
-        v-for="category in navCategories"
+        v-for="category in categories"
         :key="category"
         v-show="isMenuAvtive"
       >
@@ -22,6 +22,23 @@
         </router-link>
       </li>
     </ul>
+
+    <div class="navigation__bottom" v-show="isMenuAvtive">
+      <img
+        class="navigation__user-avatar"
+        src="https://image.flaticon.com/icons/svg/848/848006.svg"
+        alt=""
+      />
+      <span class="navigation__user-name">Username</span>
+
+      <button class="navigation__settings-button">
+        <img
+          class="navigation__settings-icon"
+          src="https://image.flaticon.com/icons/svg/2919/2919706.svg"
+          alt=""
+        />
+      </button>
+    </div>
   </nav>
 </template>
 
@@ -29,9 +46,14 @@
 export default {
   data() {
     return {
-      isMenuAvtive: false,
-      navCategories: ['Private notes', 'Work notes', 'Other notes']
+      isMenuAvtive: false
     };
+  },
+  props: {
+    categories: {
+      type: Array,
+      required: true
+    }
   }
 };
 </script>
@@ -40,21 +62,25 @@ export default {
 .navigation {
   padding: 24px;
   width: 80px;
+  height: 0;
+  position: relative;
   background-color: transparent;
-  transition: width 0.2s ease-in-out, background 0.2s ease-in-out;
+  transition: background 0.2s ease-in-out;
 
   @include mq {
     height: 100vh;
+    transition: width 0.2s ease-in-out;
     background-color: $navigationBackground;
   }
 
   &--active {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: $navigationBackground;
 
     @include mq {
-      width: 400px;
+      width: 20rem;
+      height: 100vh;
     }
   }
 
@@ -118,5 +144,49 @@ export default {
   &--active &__link {
     opacity: 1;
   }
+
+  &--active &__bottom {
+    opacity: 1;
+  }
+
+  &__bottom {
+    width: calc(100% - 3rem);
+    color: #eee;
+    position: absolute;
+    bottom: 1rem;
+    display: flex;
+    opacity: 1;
+    align-items: center;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  &__user-avatar {
+    width: 2rem;
+    margin-right: 1rem;
+  }
+
+  &__user-name {
+  }
+
+  &__settings-button {
+    margin-left: auto;
+  }
+
+  &__settings-icon {
+    width: 2rem;
+  }
+}
+
+.fade-navigation-enter-active,
+.fade-navigation-leave-active {
+  transition: all 0.2s ease;
+}
+.fade-navigation-enter-to,
+.fade-navigation-leave {
+  opacity: 1;
+}
+.fade-navigation-enter,
+.fade-navigation-leave-to {
+  opacity: 0;
 }
 </style>

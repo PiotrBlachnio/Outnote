@@ -101,7 +101,8 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: 'User Dashboard'
-    }
+    },
+    component: () => import('@/views/dashboard/Dashboard')
   }
 ];
 
