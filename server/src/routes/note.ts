@@ -67,4 +67,27 @@ router.post('/', auth(Roles.USER), async (req: Request, res: Response, next: Nex
     };
 });
 
+/**
+ * @route   DELETE api/v1/note/:id
+ * @desc    Delete single note by providing valid id
+ * @access  Protected
+*/
+router.delete('/:id', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
+
+        if(!note) {
+            throw new NoteNotFoundError();
+        }
+
+        await req.services.note.deleteOne({ _id: note.id });
+        await logger.log({ type: 'info', message: 'Note deleted successfully!', place: 'Delete note route' });
+        
+        res.status(200).end();
+    } catch(error) {
+        error.place = 'Delete note route';
+        next(error);
+    };
+});
+
 export default router;
