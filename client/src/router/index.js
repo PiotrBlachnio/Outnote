@@ -103,6 +103,17 @@ const routes = [
       title: 'User Dashboard'
     },
     component: () => import('@/views/dashboard/Dashboard')
+  },
+  {
+    path: '/logs',
+    meta: {
+      title: 'App Logs'
+    },
+    component: () => import('@/views/Logs'),
+    beforeEnter(to, from, next) {
+      if (process.env.NODE_ENV !== 'development') next('/dashboard');
+      else next();
+    }
   }
 ];
 
