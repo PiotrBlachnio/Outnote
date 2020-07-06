@@ -48,4 +48,4 @@ class CategoryService {
     };
 };
 
-export default NoteService;
+export default CategoryService;
