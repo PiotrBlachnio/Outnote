@@ -10,7 +10,7 @@ const NoteSchema: Schema = new Schema({
         type: String,
         default: ''
     },
-    category: {
+    categoryId: {
         type: String,
         required: true
     },

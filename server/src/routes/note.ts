@@ -54,7 +54,7 @@ router.post('/', auth(Roles.USER), async (req: Request, res: Response, next: Nex
     try {
         const note: INote = await req.services.note.create({
             title: req.body.title,
-            category: req.body.title,
+            categoryId: req.body.categoryId,
             ownerId: req.user!.id,
             isPrivate: req.body.isPrivate
         });
