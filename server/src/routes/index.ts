@@ -10,6 +10,7 @@ import refreshToken from './refresh-token';
 import resetPassword from './reset-password';
 import sendConfirmationMail from './send-confirmation-mail';
 import note from './note';
+import category from './category';
 
 export default {
     defaultRoute,
@@ -23,5 +24,6 @@ export default {
     refreshToken,
     resetPassword,
     sendConfirmationMail,
-    note
+    note,
+    category
 };
