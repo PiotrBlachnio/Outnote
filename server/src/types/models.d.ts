@@ -22,6 +22,6 @@ export interface INote extends Document {
 
 export interface ICategory extends Document {
     name: string;
-    userId: string;
+    ownerId: string;
     createdAt: string;
 }

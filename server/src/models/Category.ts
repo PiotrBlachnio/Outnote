@@ -6,7 +6,7 @@ const CategorySchema: Schema = new Schema({
         type: String,
         required: true
     },
-    userId: {
+    ownerId: {
         type: String,
         required: true
     },
