@@ -6,13 +6,13 @@ const CategorySchema: Schema = new Schema({
         type: String,
         required: true
     },
-    createdAt: {
-        type: Number,
-        default: Date.now()
-    },
     userId: {
         type: String,
         required: true
+    },
+    createdAt: {
+        type: Number,
+        default: Date.now()
     }
 });
 

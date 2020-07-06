@@ -19,3 +19,9 @@ export interface INote extends Document {
     lastEditedAt: number;
     ownerId: string;
 }
+
+export interface ICategory extends Document {
+    name: string;
+    userId: string;
+    createdAt: string;
+}
