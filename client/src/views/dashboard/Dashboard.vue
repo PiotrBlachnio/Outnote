@@ -1,18 +1,22 @@
 <template>
   <div class="dashboard">
     <navigation :categories="navCategories" />
+    <sub-navigation :is-active="submenuActive" />
   </div>
 </template>
 
 <script>
 import Navigation from '@/components/core/Navigation';
+import SubNavigation from './SubNavigation.vue';
 
 export default {
   components: {
-    Navigation
+    Navigation,
+    SubNavigation
   },
   data() {
     return {
+      submenuActive: false,
       navCategories: [
         'Private notes',
         'Work notes',
@@ -27,4 +31,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.dashboard {
+  display: flex;
+}
+</style>
