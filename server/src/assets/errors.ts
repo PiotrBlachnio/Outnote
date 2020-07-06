@@ -19,6 +19,8 @@
  * 302 - Email already exists
  * 303 - Email has already been confirmed
  * 304 - Email has not been confirmed yet
+ * 
+ * 400 - Note does not exist
  */
 export class GenericError extends Error {
     public id: number = 0;
@@ -188,5 +190,15 @@ export class EmailNotConfirmedError extends GenericError {
         this.id = 304;
         this.statusCode = 403;
         this.message = 'Email has not been confirmed yet';
+    };
+};
+
+export class NoteNotFoundError extends GenericError {
+    constructor() {
+        super();
+
+        this.id = 400;
+        this.statusCode = 404;
+        this.message = 'Note does not exist';
     };
 };

@@ -2,6 +2,7 @@ import UserService from "../services/user-service";
 import EmailService from "../services/email-service";
 import TokenService from "../services/token-service";
 import EventEmitter from "../events/event-emitter";
+import NoteService from "../services/note-service";
 
 export {};
 
@@ -23,6 +24,7 @@ declare module 'express-serve-static-core' {
            email: EmailService;
            token: TokenService;
            user: UserService;
+           note: NoteService;
        },
        eventEmitter: typeof EventEmitter
     }

@@ -1,9 +1,10 @@
 import User from "../models/User";
 import faker from 'faker';
-import { IUser } from "../types/models";
+import { IUser, INote } from "../types/models";
 import config from "../assets/config";
 import logger from "./logger";
 import { connect, connection } from "mongoose";
+import Note from "../models/Note";
 
 export async function createUser(data: Record<string, unknown> = {}): Promise<IUser> {
     const user: IUser = new User({
@@ -20,9 +21,26 @@ export async function createUser(data: Record<string, unknown> = {}): Promise<IU
     return user;
 };
 
+export async function createNote(data: Record<string, unknown> = {}): Promise<INote> {
+    const note: INote = new Note({
+        title: faker.random.word(),
+        category: faker.random.word(),
+        ownerId: faker.random.uuid(),
+        isPrivate: faker.random.boolean()
+    });
+
+    Object.keys(data).forEach((key: string) => {
+        note[key] = data[key];
+    });
+
+    await note.save();
+    return note;
+};
+
 export async function clearDatabase(): Promise<void> {
     if(connection.name) {
         await User.deleteMany({});
+        await Note.deleteMany({});
         
         await logger.log({ type: 'info', message: 'Database cleared successfully!', place: 'Clear database function' });
     } else {
