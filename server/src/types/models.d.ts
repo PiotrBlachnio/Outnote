@@ -9,3 +9,13 @@ export interface IUser extends Document {
     trustedIPS: string[];
     role: number;
 }
+
+export interface INote extends Document {
+    title: string;
+    content: string;
+    category: string;
+    tags: string[];
+    createdAt: number;
+    lastEditedAt: number;
+    ownerId: string;
+}
