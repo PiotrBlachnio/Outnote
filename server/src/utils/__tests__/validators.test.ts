@@ -1,6 +1,7 @@
 import validator from '../validators';
 import faker from 'faker';
 import bcrypt from 'bcryptjs';
+import config from '../../assets/config';
 
 describe('Validator', () => {
     describe('Has min length function', () => {
@@ -224,16 +225,16 @@ describe('Validator', () => {
                 });
             });
     
-            describe('When email has length shorter than 5 characters', () => {
+            describe('When email has length shorter than min characters', () => {
                 it('Should return false', (done) => {
-                    expect(validator.validateInput({ email: 'test' })).toBeFalsy();
+                    expect(validator.validateInput({ email: faker.random.alphaNumeric(config.validation.email.MIN_LENGTH - 2) })).toBeFalsy();
                     done();
                 });
             });
     
-            describe('When email has length longer than 30 characters', () => {
+            describe('When email has length longer than max characters', () => {
                 it('Should return false', (done) => {
-                    const characters: string[] = new Array(35).fill('a');
+                    const characters: string[] = new Array(config.validation.email.MAX_LENGTH + 4).fill('a');
     
                     expect(validator.validateInput({ email: characters.join('') })).toBeFalsy();
                     done();
@@ -278,15 +279,15 @@ describe('Validator', () => {
                 });
             });
     
-            describe('When password has length shorter than 3 characters', () => {
+            describe('When password has length shorter than min characters', () => {
                 it('Should return false', (done) => {
-                    expect(validator.validateInput({ password: 'Te' })).toBeFalsy();
+                    expect(validator.validateInput({ password: faker.random.alphaNumeric(config.validation.password.MIN_LENGTH - 1) })).toBeFalsy();
                     done();
                 });
             });
     
-            describe('When password has length longer than 32 characters', () => {
-                const characters: string[] = new Array(35).fill('a');
+            describe('When password has length longer than max characters', () => {
+                const characters: string[] = new Array(config.validation.password.MAX_LENGTH + 2).fill('a');
     
                 it('Should return false', (done) => {
                     expect(validator.validateInput({ password: characters.join('') })).toBeFalsy();
@@ -311,15 +312,15 @@ describe('Validator', () => {
                 });
             });
     
-            describe('When username has length shorter than 4 characters', () => {
+            describe('When username has length shorter than min characters', () => {
                 it('Should return false', (done) => {
-                    expect(validator.validateInput({ username: 'Tes' })).toBeFalsy();
+                    expect(validator.validateInput({ username: faker.random.alphaNumeric(config.validation.username.MIN_LENGTH - 1) })).toBeFalsy();
                     done();
                 });
             });
     
-            describe('When username has length longer than 20 characters', () => {
-                const characters: string[] = new Array(25).fill('a');
+            describe('When username has length longer than max characters', () => {
+                const characters: string[] = new Array(config.validation.username.MAX_LENGTH + 2).fill('a');
     
                 it('Should return false', (done) => {
                     expect(validator.validateInput({ username: characters.join('') })).toBeFalsy();
