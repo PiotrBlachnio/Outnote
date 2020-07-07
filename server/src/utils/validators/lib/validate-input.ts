@@ -2,11 +2,25 @@ import hasMinLength from "./has-min-length";
 import hasMaxLength from "./has-max-length";
 import isEmail from "./is-email";
 import isAlphanumeric from "./is-alphanumeric";
-import config from "../../../assets/config";
 import { Types } from 'mongoose';
+import hasType from "./has-type";
+
+const validateSchema = (schema: (() => boolean)[]) => {
+    let isValid: boolean = true;
+
+    for(const validationMethod of schema) {
+        if(!validationMethod()) {
+            isValid = false;
+            break;
+        }
+    };
+
+    return isValid;
+};
 
 export default (data: Record<string, unknown>): boolean => {
     let isValid: boolean = true;
+    let validationSchema: (() => boolean)[] = [];
 
     for(const key of Object.keys(data)) {
         if(!isValid) return false;
@@ -15,95 +29,50 @@ export default (data: Record<string, unknown>): boolean => {
             case 'email':
                 const email: unknown = data[key];
 
-                if(typeof email !== 'string') {
-                    isValid = false;
-                    break;
-                };
+                validationSchema = [
+                    hasType.bind(null, email, 'string'),
+                    hasMinLength.bind(null, email as string, 5),
+                    hasMaxLength.bind(null, email as string, 40),
+                    isEmail.bind(null, email as string)
+                ];
 
-                if(!hasMinLength(email, 5)) {
-                    isValid = false;
-                    break;
-                };
-
-                if(!hasMaxLength(email, 40)) {
-                    isValid = false;
-                    break;
-                };
-
-                if(!isEmail(email)) {
-                    isValid = false;
-                    break;
-                };
+                isValid = validateSchema(validationSchema);
 
                 break;
             case 'password':
                 const password: unknown = data[key];
 
-                if(typeof password !== 'string') {
-                    isValid = false;
-                    break;
-                };
+                validationSchema = [
+                    hasType.bind(null, password, 'string'),
+                    hasMinLength.bind(null, password as string, 6),
+                    hasMaxLength.bind(null, password as string, 32)
+                ];
 
-                if(!hasMinLength(password, 6)) {
-                    isValid = false;
-                    break;
-                };
-
-                if(!hasMaxLength(password, 32)) {
-                    isValid = false;
-                    break;
-                };
+                isValid = validateSchema(validationSchema);
 
                 break;
             case 'username':
                 const username: unknown = data[key];
 
-                if(typeof username !== 'string') {
-                    isValid = false;
-                    break;
-                };
+                validationSchema = [
+                    hasType.bind(null, username, 'string'),
+                    hasMinLength.bind(null, username as string, 4),
+                    hasMaxLength.bind(null, username as string, 20),
+                    isAlphanumeric.bind(null, username as string)
+                ];
 
-                if(!hasMinLength(username, 4)) {
-                    isValid = false;
-                    break;
-                };
+                isValid = validateSchema(validationSchema);
 
-                if(!hasMaxLength(username, 20)) {
-                    isValid = false;
-                    break;
-                };
-
-                if(!isAlphanumeric(username) && config.NODE_ENV !== 'test') {
-                    isValid = false;
-                    break;
-                };
                 break;
             case 'id':
                 const id: unknown = data[key];
 
-                if(typeof id !== 'string') {
-                    isValid = false;
-                    break;
-                };
-                
-                if(!Types.ObjectId.isValid(id)) {
-                    isValid = false;
-                    break;
-                };
-                
-                if(!id) {
-                    isValid = false;
-                    break;
-                };
-                
-                break;
-            case 'invitationStatus':
-                const status: unknown = data[key];
+                validationSchema = [
+                    hasType.bind(null, id, 'string'),
+                    Types.ObjectId.isValid.bind(null, id as string)
+                ];
 
-                if(status !== 1 && status !== 2) {
-                    isValid = false;
-                    break;
-                };
+                isValid = validateSchema(validationSchema);
 
                 break;
         };
