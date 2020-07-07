@@ -18,7 +18,7 @@ const validateSchema = (schema: (() => boolean)[]) => {
     return isValid;
 };
 
-export default (data: Record<string, unknown>): boolean => {
+export default (data: Record<string, string>): boolean => {
     let isValid: boolean = true;
     let validationSchema: (() => boolean)[] = [];
 
@@ -27,49 +27,49 @@ export default (data: Record<string, unknown>): boolean => {
 
         switch(key) {
             case 'email':
-                const email: unknown = data[key];
+                const email: string = data[key];
 
                 validationSchema = [
                     hasType.bind(null, email, 'string'),
-                    hasMinLength.bind(null, email as string, 5),
-                    hasMaxLength.bind(null, email as string, 40),
-                    isEmail.bind(null, email as string)
+                    hasMinLength.bind(null, email, 5),
+                    hasMaxLength.bind(null, email, 40),
+                    isEmail.bind(null, email)
                 ];
 
                 isValid = validateSchema(validationSchema);
 
                 break;
             case 'password':
-                const password: unknown = data[key];
+                const password: string = data[key];
 
                 validationSchema = [
                     hasType.bind(null, password, 'string'),
-                    hasMinLength.bind(null, password as string, 6),
-                    hasMaxLength.bind(null, password as string, 32)
+                    hasMinLength.bind(null, password, 6),
+                    hasMaxLength.bind(null, password, 32)
                 ];
 
                 isValid = validateSchema(validationSchema);
 
                 break;
             case 'username':
-                const username: unknown = data[key];
+                const username: string = data[key];
 
                 validationSchema = [
                     hasType.bind(null, username, 'string'),
-                    hasMinLength.bind(null, username as string, 4),
-                    hasMaxLength.bind(null, username as string, 20),
-                    isAlphanumeric.bind(null, username as string)
+                    hasMinLength.bind(null, username, 4),
+                    hasMaxLength.bind(null, username, 20),
+                    isAlphanumeric.bind(null, username)
                 ];
 
                 isValid = validateSchema(validationSchema);
 
                 break;
             case 'id':
-                const id: unknown = data[key];
+                const id: string = data[key];
 
                 validationSchema = [
                     hasType.bind(null, id, 'string'),
-                    Types.ObjectId.isValid.bind(null, id as string)
+                    Types.ObjectId.isValid.bind(null, id)
                 ];
 
                 isValid = validateSchema(validationSchema);
