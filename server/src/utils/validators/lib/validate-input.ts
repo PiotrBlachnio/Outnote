@@ -4,6 +4,7 @@ import isEmail from "./is-email";
 import isAlphanumeric from "./is-alphanumeric";
 import { Types } from 'mongoose';
 import hasType from "./has-type";
+import config from "../../../assets/config";
 
 const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
     let schema: (() => boolean)[] = [];
@@ -12,8 +13,8 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
         case 'email':
             schema = [
                 hasType.bind(null, value, 'string'),
-                hasMinLength.bind(null, value, 5),
-                hasMaxLength.bind(null, value, 40),
+                hasMinLength.bind(null, value, config.validation.email.MIN_LENGTH),
+                hasMaxLength.bind(null, value, config.validation.email.MAX_LENGTH),
                 isEmail.bind(null, value)
             ];
 
@@ -21,8 +22,8 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
         case 'username':
             schema = [
                 hasType.bind(null, value, 'string'),
-                hasMinLength.bind(null, value, 4),
-                hasMaxLength.bind(null, value, 20),
+                hasMinLength.bind(null, value, config.validation.username.MIN_LENGTH),
+                hasMaxLength.bind(null, value, config.validation.username.MAX_LENGTH),
                 isAlphanumeric.bind(null, value)
             ];
 
@@ -30,8 +31,8 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
         case 'password':
             schema = [
                 hasType.bind(null, value, 'string'),
-                hasMinLength.bind(null, value, 6),
-                hasMaxLength.bind(null, value, 32)
+                hasMinLength.bind(null, value, config.validation.password.MIN_LENGTH),
+                hasMaxLength.bind(null, value, config.validation.password.MAX_LENGTH)
             ];
 
             break;

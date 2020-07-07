@@ -19,7 +19,21 @@ const defaults = {
     PORT: '4000',
     DATABASE_NAME: 'main',
     TEST_DATABASE_NAME: 'test',
-    API_PATH: '/api/v1'
+    API_PATH: '/api/v1',
+    validation: {
+        email: {
+            MIN_LENGTH: 5,
+            MAX_LENGTH: 40
+        },
+        username: {
+            MIN_LENGTH: 4,
+            MAX_LENGTH: 20
+        },
+        password: {
+            MIN_LENGTH: 6,
+            MAX_LENGTH: 32
+        }
+    }
 };
 
 export default {
