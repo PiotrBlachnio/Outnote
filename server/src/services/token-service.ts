@@ -1,4 +1,4 @@
-import { IAccessTokenPayload, IRefreshTokenPayload, TokenPayload, IConfirmEmailTokenPayload, IResetPasswordTokenPayload, IConfirmIdentityTokenPayload } from "../types/tokens";
+import { IAccessTokenPayload, TokenPayload, IConfirmEmailTokenPayload, IResetPasswordTokenPayload, IConfirmIdentityTokenPayload } from "../types/tokens";
 import jwt, { VerifyErrors } from 'jsonwebtoken';
 import config from "../assets/config";
 import { Token } from "../assets/enums";
@@ -12,11 +12,8 @@ class TokenService {
         let token: string = '';
 
         switch(type) {
-            case Token.REFRESH:
-                token = jwt.sign(payload, config.REFRESH_TOKEN_SECRET);
-                break;
             case Token.ACCESS:
-                token = jwt.sign(payload, config.ACCESS_TOKEN_SECRET, { expiresIn: '10m' });
+                token = jwt.sign(payload, config.ACCESS_TOKEN_SECRET);
                 break;
             case Token.CONFIRM_EMAIL:
                 token = jwt.sign(payload, config.CONFIRM_EMAIL_TOKEN_SECRET, { expiresIn: '1h' });
@@ -34,7 +31,6 @@ class TokenService {
         return token;
     };
 
-    public verifyToken(type: Token.REFRESH, token: string): IRefreshTokenPayload
     public verifyToken(type: Token.ACCESS, token: string): IAccessTokenPayload
     public verifyToken(type: Token.CONFIRM_EMAIL, token: string): IConfirmEmailTokenPayload
     public verifyToken(type: Token.RESET_PASSWORD, token: string): IResetPasswordTokenPayload
@@ -51,16 +47,6 @@ class TokenService {
         };
 
         switch(type) {
-            case Token.REFRESH:
-                jwt.verify(token, config.REFRESH_TOKEN_SECRET, (err: VerifyErrors | null, payload) => {
-                    if(err) {
-                        data = null;
-                    } else {
-                        data = (payload as IRefreshTokenPayload);
-                    };             
-                });
-
-                break;
             case Token.ACCESS:
                 jwt.verify(token, config.ACCESS_TOKEN_SECRET, (err: VerifyErrors | null, payload) => {
                     if(err) {
@@ -120,14 +106,6 @@ class TokenService {
         };
 
         switch(type) {
-            case Token.REFRESH:
-                jwt.verify(token, config.REFRESH_TOKEN_SECRET, (err: VerifyErrors | null) => {
-                    if(err && err.name === 'TokenExpiredError') {
-                        isExpired = true;
-                    };
-                });
-
-                break;
             case Token.ACCESS:
                 jwt.verify(token, config.ACCESS_TOKEN_SECRET, (err: VerifyErrors | null) => {
                     if(err && err.name === 'TokenExpiredError') {

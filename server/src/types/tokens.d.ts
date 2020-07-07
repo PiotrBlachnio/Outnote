@@ -5,11 +5,6 @@ export interface IAccessTokenPayload {
     ip: string;
 }
 
-export interface IRefreshTokenPayload {
-    id: string;
-    ip: string;
-}
-
 export interface IConfirmEmailTokenPayload {
     id: string;
 }
@@ -25,7 +20,6 @@ export interface IConfirmIdentityTokenPayload {
 
 export type TokenPayload = 
     IAccessTokenPayload |
-    IRefreshTokenPayload | 
     IConfirmEmailTokenPayload | 
     IResetPasswordTokenPayload |
     IConfirmIdentityTokenPayload |
