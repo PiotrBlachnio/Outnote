@@ -9,7 +9,7 @@ async function resetPassword(req: Request, res: Response, next: NextFunction): P
     const { id, token, password } = req.body;
 
     try {
-        if(req.services.token.verifyToken(Token.REFRESH, req.cookies.jid)) {
+        if(req.services.token.verifyToken(Token.ACCESS, req.cookies.jid)) {
             throw new AlreadyLoggedInError();
         };
         

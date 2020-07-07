@@ -11,7 +11,6 @@ export default (app: Application): void => {
         { path: 'confirm-email', router: routes.confirmEmail },
         { path: 'forgot-password', router: routes.forgotPassword },
         { path: 'logout', router: routes.logout },
-        { path: 'refresh-token', router: routes.refreshToken },
         { path: 'reset-password', router: routes.resetPassword },
         { path: 'send-confirmation-mail', router: routes.sendConfirmationMail },
         { path: 'note', router: routes.note },

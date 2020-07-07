@@ -1,113 +1,64 @@
 import hasMinLength from "./has-min-length";
 import hasMaxLength from "./has-max-length";
-import isEmail from "./is-email";
-import isAlphanumeric from "./is-alphanumeric";
-import config from "../../../assets/config";
 import { Types } from 'mongoose';
+import hasType from "./has-type";
+import config from "../../../assets/config";
+import matchRegex from "./match-regex";
 
-export default (data: Record<string, unknown>): boolean => {
-    let isValid: boolean = true;
+const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
+    let schema: (() => boolean)[] = [];
 
-    for(const key of Object.keys(data)) {
-        if(!isValid) return false;
+    switch(schemaType) {
+        case 'email':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                hasMinLength.bind(null, value, config.validation.email.MIN_LENGTH),
+                hasMaxLength.bind(null, value, config.validation.email.MAX_LENGTH),
+                matchRegex.bind(null, value, config.validation.email.REGEX)
+            ];
 
-        switch(key) {
-            case 'email':
-                const email: unknown = data[key];
+            break;
+        case 'username':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                hasMinLength.bind(null, value, config.validation.username.MIN_LENGTH),
+                hasMaxLength.bind(null, value, config.validation.username.MAX_LENGTH),
+                matchRegex.bind(null, value, config.validation.username.REGEX)
+            ];
 
-                if(typeof email !== 'string') {
-                    isValid = false;
-                    break;
-                };
+            break;
+        case 'password':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                hasMinLength.bind(null, value, config.validation.password.MIN_LENGTH),
+                hasMaxLength.bind(null, value, config.validation.password.MAX_LENGTH)
+            ];
 
-                if(!hasMinLength(email, 5)) {
-                    isValid = false;
-                    break;
-                };
+            break;
+        case 'id':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                Types.ObjectId.isValid.bind(null, value)
+            ];
 
-                if(!hasMaxLength(email, 40)) {
-                    isValid = false;
-                    break;
-                };
-
-                if(!isEmail(email)) {
-                    isValid = false;
-                    break;
-                };
-
-                break;
-            case 'password':
-                const password: unknown = data[key];
-
-                if(typeof password !== 'string') {
-                    isValid = false;
-                    break;
-                };
-
-                if(!hasMinLength(password, 6)) {
-                    isValid = false;
-                    break;
-                };
-
-                if(!hasMaxLength(password, 32)) {
-                    isValid = false;
-                    break;
-                };
-
-                break;
-            case 'username':
-                const username: unknown = data[key];
-
-                if(typeof username !== 'string') {
-                    isValid = false;
-                    break;
-                };
-
-                if(!hasMinLength(username, 4)) {
-                    isValid = false;
-                    break;
-                };
-
-                if(!hasMaxLength(username, 20)) {
-                    isValid = false;
-                    break;
-                };
-
-                if(!isAlphanumeric(username) && config.NODE_ENV !== 'test') {
-                    isValid = false;
-                    break;
-                };
-                break;
-            case 'id':
-                const id: unknown = data[key];
-
-                if(typeof id !== 'string') {
-                    isValid = false;
-                    break;
-                };
-                
-                if(!Types.ObjectId.isValid(id)) {
-                    isValid = false;
-                    break;
-                };
-                
-                if(!id) {
-                    isValid = false;
-                    break;
-                };
-                
-                break;
-            case 'invitationStatus':
-                const status: unknown = data[key];
-
-                if(status !== 1 && status !== 2) {
-                    isValid = false;
-                    break;
-                };
-
-                break;
-        };
+            break;
     };
 
-    return isValid;
+    return schema;
+};
+
+const validateSchema = (schemaType: string, value: string) => {
+    for(const validationMethod of createSchema(schemaType, value)) {
+        if(!validationMethod()) return false;
+    };
+
+    return true;
+};
+
+export default (data: Record<string, string>): boolean => {
+    for(const key of Object.keys(data)) {
+        if(!validateSchema(key, data[key])) return false;
+    };
+
+    return true;
 };

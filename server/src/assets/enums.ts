@@ -4,11 +4,10 @@ export enum Roles {
 };
 
 export enum Token {
-    REFRESH = 1,
-    ACCESS = 2,
-    CONFIRM_EMAIL = 3,
-    RESET_PASSWORD = 4,
-    CONFIRM_IDENTITY = 5
+    ACCESS = 1,
+    CONFIRM_EMAIL = 2,
+    RESET_PASSWORD = 3,
+    CONFIRM_IDENTITY = 4
 };
 
 export enum Mail {

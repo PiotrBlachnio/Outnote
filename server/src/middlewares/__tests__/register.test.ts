@@ -43,7 +43,7 @@ describe('Register validator', () => {
     describe('When user is already logged in', () => {
         it('Should throw an error', async (done) => {
             const next: jest.Mock = jest.fn();
-            req.cookies.jid =  services.token.generateToken(Token.REFRESH, { id: faker.random.uuid() });
+            req.cookies.jid =  services.token.generateToken(Token.ACCESS, { id: faker.random.uuid() });
 
             // @ts-ignore-start
             await register(req, {}, next);

@@ -8,17 +8,6 @@ describe('Token service', () => {
     const tokenService: TokenService = new TokenService();
 
     describe('Generate token function', () => {
-        describe('Refresh token', () => {
-            it('Should successfully validate token', (done) => {
-                const token = tokenService.generateToken(Token.REFRESH, { id: faker.random.uuid(), ip: faker.internet.ip() });
-
-                jwt.verify(token, config.REFRESH_TOKEN_SECRET, (err) => {
-                    expect(err).toBeNull();
-                    done();
-                });
-            });
-        });
-
         describe('Access token', () => {
             it('Should successfully validate token', (done) => {
                 const token = tokenService.generateToken(Token.ACCESS, { id: faker.random.uuid(), ip: faker.internet.ip() });
@@ -78,7 +67,7 @@ describe('Token service', () => {
     describe('Verify token function', () => {
         describe('When token does not exist', () => {
             it('Should return null', (done) => {
-                const payload = tokenService.verifyToken(Token.REFRESH, '');
+                const payload = tokenService.verifyToken(Token.ACCESS, '');
                     
                 expect(payload).toBeNull();
                 done();
@@ -88,36 +77,13 @@ describe('Token service', () => {
         describe('When token is not a string', () => {
             it('Should return null', (done) => {
                 //@ts-ignore-start
-                const payload = tokenService.verifyToken(Token.REFRESH, []);
+                const payload = tokenService.verifyToken(Token.ACCESS, []);
                     
                 expect(payload).toBeNull();
                 done();
             });
         });
         
-        describe('Refresh token', () => {
-            describe('When token is valid', () => {
-                it('Should return correct payload', (done) => {
-                    const id = faker.random.uuid();
-                    const token = jwt.sign({ id }, config.REFRESH_TOKEN_SECRET);
-    
-                    const payload = tokenService.verifyToken(Token.REFRESH, token);
-                    
-                    expect(payload).toMatchObject({ id });
-                    done();
-                });
-            });
-
-            describe('When token is not valid', () => {
-                it('Should return null', (done) => {
-                    const payload = tokenService.verifyToken(Token.REFRESH, faker.random.uuid());
-                    
-                    expect(payload).toEqual(null);
-                    done();
-                });
-            });
-        });
-
         describe('Access token', () => {
             describe('When token is valid', () => {
                 it('Should return correct payload', (done) => {
@@ -216,8 +182,8 @@ describe('Token service', () => {
     describe('Is token expired function', () => {
         describe('When token is valid', () => {
             it('Should return false', (done) => {
-                const token: string = jwt.sign({ id: faker.random.uuid() }, config.REFRESH_TOKEN_SECRET);
-                const isExpired: boolean = tokenService.isTokenExpired(Token.REFRESH, token);
+                const token: string = jwt.sign({ id: faker.random.uuid() }, config.ACCESS_TOKEN_SECRET);
+                const isExpired: boolean = tokenService.isTokenExpired(Token.ACCESS, token);
 
                 expect(isExpired).toBeFalsy();
                 done();
@@ -227,7 +193,7 @@ describe('Token service', () => {
         describe('When token is not valid', () => {
             it('Should return false', (done) => {
                 const token: string = jwt.sign({ id: faker.random.uuid() }, faker.random.uuid());
-                const isExpired: boolean = tokenService.isTokenExpired(Token.REFRESH, token);
+                const isExpired: boolean = tokenService.isTokenExpired(Token.ACCESS, token);
 
                 expect(isExpired).toBeFalsy();
                 done();
@@ -236,8 +202,8 @@ describe('Token service', () => {
 
         describe('When token is expired', () => {
             it('Should return true', (done) => {
-                const token: string = jwt.sign({ id: faker.random.uuid() }, config.REFRESH_TOKEN_SECRET, { expiresIn: '0.001s' });
-                const isExpired: boolean = tokenService.isTokenExpired(Token.REFRESH, token);
+                const token: string = jwt.sign({ id: faker.random.uuid() }, config.ACCESS_TOKEN_SECRET, { expiresIn: '0.001s' });
+                const isExpired: boolean = tokenService.isTokenExpired(Token.ACCESS, token);
 
                 expect(isExpired).toBeTruthy();
                 done();
