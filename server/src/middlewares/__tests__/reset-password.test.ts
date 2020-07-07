@@ -42,7 +42,7 @@ describe('Reset password validator', () => {
     describe('When user is already logged in', () => {
         it('Should throw an error', async (done) => {
             const next: jest.Mock = jest.fn();
-            req.cookies.jid = services.token.generateToken(Token.REFRESH, { id: '' });
+            req.cookies.jid = services.token.generateToken(Token.ACCESS, { id: '' });
 
             // @ts-ignore-start
             await resetPassword(req, {}, next);

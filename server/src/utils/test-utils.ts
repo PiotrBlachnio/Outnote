@@ -25,7 +25,7 @@ export async function createUser(data: Record<string, unknown> = {}): Promise<IU
 export async function createNote(data: Record<string, unknown> = {}): Promise<INote> {
     const note: INote = new Note({
         title: faker.random.word(),
-        category: faker.random.word(),
+        categoryId: faker.random.uuid(),
         ownerId: faker.random.uuid(),
         isPrivate: faker.random.boolean()
     });

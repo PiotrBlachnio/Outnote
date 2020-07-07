@@ -4,8 +4,11 @@ import { Roles } from '../assets/enums';
 import auth from '../middlewares/auth';
 import { INote } from '../types/models';
 import { NoteNotFoundError } from '../assets/errors';
+import cookieParser from 'cookie-parser';
 
 const router: Router = Router();
+
+router.use(cookieParser());
 
 /**
  * @route   GET api/v1/note/:id

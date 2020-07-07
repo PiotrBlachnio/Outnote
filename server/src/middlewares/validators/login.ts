@@ -9,7 +9,7 @@ async function login(req: Request, res: Response, next: NextFunction): Promise<v
     const { email, password } = req.body;
 
     try {
-        if(req.services.token.verifyToken(Token.REFRESH, req.cookies.jid)) {
+        if(req.services.token.verifyToken(Token.ACCESS, req.cookies.jid)) {
             throw new AlreadyLoggedInError();
         };
         
