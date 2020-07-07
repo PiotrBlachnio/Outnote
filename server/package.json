@@ -8,6 +8,7 @@
     "build:webpack": "webpack",
     "prod": "node build/server.bundle.js",
     "test:services": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/services",
+    "test:utils": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/utils",
     "test:events": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/events",
     "test:routes": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/routes",
     "test:middlewares": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/middlewares",

@@ -218,6 +218,7 @@ describe('Validator', () => {
     
             describe('When email has invalid type', () => {
                 it('Should return false', (done) => {
+                    //@ts-ignore-start
                     expect(validator.validateInput({ email: [] })).toBeFalsy();
                     done();
                 });
@@ -271,6 +272,7 @@ describe('Validator', () => {
     
             describe('When password has invalid type', () => {
                 it('Should return false', (done) => {
+                    //@ts-ignore-start
                     expect(validator.validateInput({ password: {} })).toBeFalsy();
                     done();
                 });
@@ -303,6 +305,7 @@ describe('Validator', () => {
     
             describe('When username has invalid type', () => {
                 it('Should return false', (done) => {
+                    //@ts-ignore-start
                     expect(validator.validateInput({ username: ['', 123] })).toBeFalsy();
                     done();
                 });
@@ -335,6 +338,7 @@ describe('Validator', () => {
     
             describe('When ID has invalid type', () => {
                 it('Should return false', (done) => {
+                    //@ts-ignore-start
                     expect(validator.validateInput({ id: 12341 })).toBeFalsy();
                     done();
                 });
@@ -347,36 +351,6 @@ describe('Validator', () => {
                 });
             });
         });
-    
-        describe('Invitation status validation', () => {
-            describe('When status equal 1', () => {
-                it('Should return true', (done) => {
-                    expect(validator.validateInput({ invitationStatus: 1 })).toBeTruthy();
-                    done();
-                });
-            });
-    
-            describe('When status equal 2', () => {
-                it('Should return true', (done) => {
-                    expect(validator.validateInput({ invitationStatus: 2 })).toBeTruthy();
-                    done();
-                });
-            });
-    
-            describe('When status does not equal 1 or 2', () => {
-                it('Should return false', (done) => {
-                    expect(validator.validateInput({ invitationStatus: 59 })).toBeFalsy();
-                    done();
-                });
-            });
-    
-            describe('When status is not a number', () => {
-                it('Should return false', (done) => {
-                    expect(validator.validateInput({ invitationStatus: '1' })).toBeFalsy();
-                    done();
-                });
-            });
-        }); 
     });
 
     describe('Validate ip function', () => {

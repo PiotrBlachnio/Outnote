@@ -5,78 +5,60 @@ import isAlphanumeric from "./is-alphanumeric";
 import { Types } from 'mongoose';
 import hasType from "./has-type";
 
-const validateSchema = (schema: (() => boolean)[]) => {
-    let isValid: boolean = true;
+const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
+    let schema: (() => boolean)[] = [];
 
-    for(const validationMethod of schema) {
-        if(!validationMethod()) {
-            isValid = false;
+    switch(schemaType) {
+        case 'email':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                hasMinLength.bind(null, value, 5),
+                hasMaxLength.bind(null, value, 40),
+                isEmail.bind(null, value)
+            ];
+
             break;
-        }
+        case 'username':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                hasMinLength.bind(null, value, 4),
+                hasMaxLength.bind(null, value, 20),
+                isAlphanumeric.bind(null, value)
+            ];
+
+            break;
+        case 'password':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                hasMinLength.bind(null, value, 6),
+                hasMaxLength.bind(null, value, 32)
+            ];
+
+            break;
+        case 'id':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                Types.ObjectId.isValid.bind(null, value)
+            ];
+
+            break;
     };
 
-    return isValid;
+    return schema;
+};
+
+const validateSchema = (schemaType: string, value: string) => {
+    for(const validationMethod of createSchema(schemaType, value)) {
+        if(!validationMethod()) return false;
+    };
+
+    return true;
 };
 
 export default (data: Record<string, string>): boolean => {
-    let isValid: boolean = true;
-    let validationSchema: (() => boolean)[] = [];
-
     for(const key of Object.keys(data)) {
-        if(!isValid) return false;
-
-        switch(key) {
-            case 'email':
-                const email: string = data[key];
-
-                validationSchema = [
-                    hasType.bind(null, email, 'string'),
-                    hasMinLength.bind(null, email, 5),
-                    hasMaxLength.bind(null, email, 40),
-                    isEmail.bind(null, email)
-                ];
-
-                isValid = validateSchema(validationSchema);
-
-                break;
-            case 'password':
-                const password: string = data[key];
-
-                validationSchema = [
-                    hasType.bind(null, password, 'string'),
-                    hasMinLength.bind(null, password, 6),
-                    hasMaxLength.bind(null, password, 32)
-                ];
-
-                isValid = validateSchema(validationSchema);
-
-                break;
-            case 'username':
-                const username: string = data[key];
-
-                validationSchema = [
-                    hasType.bind(null, username, 'string'),
-                    hasMinLength.bind(null, username, 4),
-                    hasMaxLength.bind(null, username, 20),
-                    isAlphanumeric.bind(null, username)
-                ];
-
-                isValid = validateSchema(validationSchema);
-
-                break;
-            case 'id':
-                const id: string = data[key];
-
-                validationSchema = [
-                    hasType.bind(null, id, 'string'),
-                    Types.ObjectId.isValid.bind(null, id)
-                ];
-
-                isValid = validateSchema(validationSchema);
-
-                break;
-        };
+        if(!validateSchema(key, data[key])) return false;
     };
 
-    return isValid;
+    return true;
 };
