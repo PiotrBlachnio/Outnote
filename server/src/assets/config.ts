@@ -23,11 +23,13 @@ const defaults = {
     validation: {
         email: {
             MIN_LENGTH: 5,
-            MAX_LENGTH: 40
+            MAX_LENGTH: 40,
+            REGEX: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         },
         username: {
             MIN_LENGTH: 4,
-            MAX_LENGTH: 20
+            MAX_LENGTH: 20,
+            REGEX: /^[a-zA-Z0-9]+$/
         },
         password: {
             MIN_LENGTH: 6,

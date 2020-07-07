@@ -1,10 +1,9 @@
 import hasMinLength from "./has-min-length";
 import hasMaxLength from "./has-max-length";
-import isEmail from "./is-email";
-import isAlphanumeric from "./is-alphanumeric";
 import { Types } from 'mongoose';
 import hasType from "./has-type";
 import config from "../../../assets/config";
+import matchRegex from "./match-regex";
 
 const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
     let schema: (() => boolean)[] = [];
@@ -15,7 +14,7 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
                 hasType.bind(null, value, 'string'),
                 hasMinLength.bind(null, value, config.validation.email.MIN_LENGTH),
                 hasMaxLength.bind(null, value, config.validation.email.MAX_LENGTH),
-                isEmail.bind(null, value)
+                matchRegex.bind(null, value, config.validation.email.REGEX)
             ];
 
             break;
@@ -24,7 +23,7 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
                 hasType.bind(null, value, 'string'),
                 hasMinLength.bind(null, value, config.validation.username.MIN_LENGTH),
                 hasMaxLength.bind(null, value, config.validation.username.MAX_LENGTH),
-                isAlphanumeric.bind(null, value)
+                matchRegex.bind(null, value, config.validation.username.REGEX)
             ];
 
             break;
