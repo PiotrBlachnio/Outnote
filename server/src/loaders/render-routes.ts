@@ -14,7 +14,8 @@ export default (app: Application): void => {
         { path: 'reset-password', router: routes.resetPassword },
         { path: 'send-confirmation-mail', router: routes.sendConfirmationMail },
         { path: 'note', router: routes.note },
-        { path: 'category', router: routes.category }
+        { path: 'category', router: routes.category },
+        { path: 'user', router: routes.user }
     ];
 
     rootRouter.forEach(object => {

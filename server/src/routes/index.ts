@@ -9,6 +9,7 @@ import logout from './logout';
 import resetPassword from './reset-password';
 import sendConfirmationMail from './send-confirmation-mail';
 import note from './note';
+import user from './user';
 import category from './category';
 
 export default {
@@ -23,5 +24,6 @@ export default {
     resetPassword,
     sendConfirmationMail,
     note,
-    category
+    category,
+    user
 };

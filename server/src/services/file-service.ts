@@ -32,7 +32,7 @@ class FileService {
             await this._cloudStorage.putObject({
                 Bucket: config.CLOUD_STORAGE_BUCKET_NAME,
                 Key: filename,
-                Body: this._prepareImage(image)
+                Body: await this._prepareImage(image)
             }).promise();
 
             return filename;
