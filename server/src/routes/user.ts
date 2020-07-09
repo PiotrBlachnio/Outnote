@@ -1,7 +1,8 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import logger from '../utils/logger';
 import { Roles } from '../assets/enums';
 import auth from '../middlewares/auth';
+import FileService from '../services/file-service';
 
 const router: Router = Router();
 
@@ -10,10 +11,16 @@ const router: Router = Router();
  * @desc    Update user's avatar
  * @access  Protected
 */
-router.patch('/', auth(Roles.USER), async (req: Request, res: Response): Promise<void> => {
-    await logger.log({ type: 'info', message: 'Avatar updated successfully!', place: 'Update avatar route' });
-    
-    res.status(200).end();
+router.patch('/', auth(Roles.USER), new FileService().middleware.single('avatar'), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const filename: string = await req.services.file.uploadImage(req.file.buffer);
+        await req.services.user.updateOne({ _id: req.user!.id }, { avatar: filename });
+
+        await logger.log({ type: 'info', message: 'Avatar updated successfully!', place: 'Update avatar route' });
+        res.status(200).json({ filename });
+    } catch(error) {
+        next(error);
+    };
 });
 
 export default router;

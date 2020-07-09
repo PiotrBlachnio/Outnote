@@ -4,6 +4,7 @@ import TokenService from "../services/token-service";
 import EventEmitter from "../events/event-emitter";
 import NoteService from "../services/note-service";
 import CategoryService from "../services/category-service";
+import FileService from "../services/file-service";
 
 export {};
 
@@ -27,6 +28,7 @@ declare module 'express-serve-static-core' {
            user: UserService;
            note: NoteService;
            category: CategoryService;
+           file: FileService;
        },
        eventEmitter: typeof EventEmitter
     }
