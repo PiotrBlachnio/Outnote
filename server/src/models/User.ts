@@ -30,6 +30,10 @@ const UserSchema: Schema = new Schema({
     role: {
         type: Number,
         default: Roles.USER
+    },
+    avatar: {
+        type: String,
+        default: 'default.jpeg'
     }
 });
 

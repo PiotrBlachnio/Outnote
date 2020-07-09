@@ -8,6 +8,7 @@ export interface IUser extends Document {
     isConfirmed: boolean;
     trustedIPS: string[];
     role: number;
+    avatar: string;
 }
 
 export interface INote extends Document {

@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import logger from '../utils/logger';
-import { Token, Roles } from '../assets/enums';
+import { Roles } from '../assets/enums';
 import auth from '../middlewares/auth';
 
 const router: Router = Router();
