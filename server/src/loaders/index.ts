@@ -1,3 +1,5 @@
+import http from 'http';
+import https from 'https';
 import { Application } from "express";
 import expressLoader from './express';
 import logger from '../utils/logger';
@@ -14,6 +16,9 @@ export default async (app: Application): Promise<void> => {
         await logger.log({ type: 'error', message: error, place: 'UnhandledRejection'});
     });
 
+    http.globalAgent.maxSockets = Infinity;
+    https.globalAgent.maxSockets = Infinity;
+    
     connectDatabase();
 
     await initAgenda();

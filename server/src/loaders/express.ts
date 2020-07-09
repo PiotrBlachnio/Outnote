@@ -1,4 +1,5 @@
 import { Application, json } from 'express';
+import compression from 'compression';
 import renderRoutes from './render-routes';
 import handleErrors from '../middlewares/handle-errors';
 import cors from 'cors';
@@ -7,6 +8,7 @@ import initEvents from './events';
 import { spamLimiter } from '../middlewares/speed-limiter';
 
 export default (app: Application): void => {
+    app.use(compression());
     app.use(cors());
     
     app.use(json({ limit: '10kb' }));
