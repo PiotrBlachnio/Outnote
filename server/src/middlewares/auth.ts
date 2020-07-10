@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { UserNotFoundError, UnknownLocationError, AccessDenied, ExpiredOrInvalidTokenError } from "../assets/errors";
+import { UserNotFoundError, AccessDenied, ExpiredOrInvalidTokenError, UnknownIdentityError } from "../assets/errors";
 import logger from "../utils/logger";
 import { IUser } from "../types/models";
 import { Token, Roles } from "../assets/enums";
@@ -20,9 +20,9 @@ export default (role: Roles) => {
             if(!user) {
                 throw new UserNotFoundError();
             };
-    
+
             if(req.ip !== payload.ip) {
-                throw new UnknownLocationError();
+                throw new UnknownIdentityError();
             };
     
             if(role > user.role) {
@@ -39,6 +39,7 @@ export default (role: Roles) => {
 
             next();
         } catch(error) {
+            error.place = 'Auth middleware';
             next(error);
         };  
     };
