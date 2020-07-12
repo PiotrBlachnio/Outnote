@@ -116,13 +116,19 @@ router.delete('/:id', auth(Roles.USER), async (req: Request, res: Response, next
 */
 router.patch('/:id', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+        const { field, value } = req.body;
+
+        if(!validator.validateInput({ field: field, [field]: value })) {
+            throw new IncorrectInputError;
+        };
+
         const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
 
         if(!note) {
             throw new NoteNotFoundError();
         }
 
-        await req.services.note.updateOne({ _id: note.id }, { [req.body.field]: req.body.value });
+        await req.services.note.updateOne({ _id: note.id }, { [field]: value });
         await logger.log({ type: 'info', message: 'Note updated successfully!', place: 'Update note route' });
         
         res.status(200).end();
