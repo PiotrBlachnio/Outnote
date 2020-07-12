@@ -3,8 +3,9 @@ import logger from '../utils/logger';
 import { Roles } from '../assets/enums';
 import auth from '../middlewares/auth';
 import { ICategory } from '../types/models';
-import { NoteNotFoundError } from '../assets/errors';
+import { NoteNotFoundError, IncorrectInputError } from '../assets/errors';
 import cookieParser from 'cookie-parser';
+import validator from '../utils/validators';
 
 const router: Router = Router();
 
@@ -34,8 +35,14 @@ router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: Next
 */
 router.post('/', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+        const { name } = req.body;
+        
+        if(!validator.validateInput({ name })) {
+            throw new IncorrectInputError;
+        };
+
         const category: ICategory = await req.services.category.create({
-            name: req.body.name,
+            name: name,
             ownerId: req.user!.id
         });
 
@@ -54,6 +61,10 @@ router.post('/', auth(Roles.USER), async (req: Request, res: Response, next: Nex
 */
 router.delete('/:id', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+        if(!validator.validateInput({ id: req.params.id })) {
+            throw new IncorrectInputError;
+        };
+
         const category: ICategory | null = await req.services.category.findOne({ _id: req.params.id, ownerId: req.user!.id });
 
         if(!category) {
@@ -77,6 +88,12 @@ router.delete('/:id', auth(Roles.USER), async (req: Request, res: Response, next
 */
 router.patch('/:id', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+        const { field, value } = req.body;
+
+        if(!validator.validateInput({ field: field, [field]: value, id: req.params.id })) {
+            throw new IncorrectInputError;
+        };
+
         const category: ICategory | null = await req.services.category.findOne({ _id: req.params.id, ownerId: req.user!.id });
 
         if(!category) {

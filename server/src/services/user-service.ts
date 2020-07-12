@@ -3,18 +3,18 @@ import mongoose from 'mongoose';
 import { IUser } from '../types/models';
 
 class UserService {
-    public async find(data: Record<string, unknown>): Promise<IUser[]> {
+    public async find(data: Record<string, unknown>, fields: string = ''): Promise<IUser[]> {
         try {
-            const users: IUser[] = await User.find(data);
+            const users: IUser[] = await User.find(data).select(fields);
             return users;
         } catch(error) {
             throw error;
         };
     };
 
-    public async findOne(data: Record<string, unknown>): Promise<IUser | null> {
+    public async findOne(data: Record<string, unknown>, fields: string = ''): Promise<IUser | null> {
         try {
-            const user: IUser | null = await User.findOne(data);
+            const user: IUser | null = await User.findOne(data).select(fields);
             return user;
         } catch(error) {
             if(error.name === 'CastError') return null;
@@ -23,12 +23,12 @@ class UserService {
         };
     };
 
-    public async findById(id: string): Promise<IUser | null> {
+    public async findById(id: string, fields: string = ''): Promise<IUser | null> {
         if(!mongoose.Types.ObjectId.isValid(id)) {
             return null;
         };
 
-        const user: IUser | null = await User.findById(id);
+        const user: IUser | null = await User.findById(id).select(fields);
         return user;
     };
 

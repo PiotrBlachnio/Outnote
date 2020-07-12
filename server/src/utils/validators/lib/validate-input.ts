@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 import hasType from "./has-type";
 import config from "../../../assets/config";
 import matchRegex from "./match-regex";
+import isCorrectField from "./is-correct-field";
 
 const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
     let schema: (() => boolean)[] = [];
@@ -39,6 +40,39 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
             schema = [
                 hasType.bind(null, value, 'string'),
                 Types.ObjectId.isValid.bind(null, value)
+            ];
+
+            break;
+        case 'name':
+        case 'title':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                hasMinLength.bind(null, value, 1),
+            ];
+
+            break;
+        case 'isPrivate':
+            schema = [
+                hasType.bind(null, value, 'boolean'),
+            ];
+
+            break;
+        case 'content':
+            schema = [
+                hasType.bind(null, value, 'string'),
+            ];
+
+            break;
+        case 'tags':
+            schema = [
+                Array.isArray.bind(null, value)
+            ];
+
+            break;
+        case 'field':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                isCorrectField.bind(null, value)
             ];
 
             break;
