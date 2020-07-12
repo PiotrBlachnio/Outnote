@@ -5,7 +5,6 @@ import auth from '../middlewares/auth';
 import FileService from '../services/file-service';
 import cookieParser from 'cookie-parser';
 import { IUser } from '../types/models';
-import User from '../models/User';
 
 const router: Router = Router();
 
