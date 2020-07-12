@@ -6,35 +6,38 @@ import VuexPersistence from 'vuex-persist';
 Vue.use(Vuex);
 
 const vuexLocal = new VuexPersistence({
-  key: 'vuex',
+  key: 'cache',
   storage: window.localStorage,
-  reducer: state => ({ auth: state.auth, user: state.user })
+  reducer: state => ({
+    user: state.user,
+    notes: state.notes,
+    isAuthenticated: state.isAuthenticated
+  })
 });
 
 export default new Vuex.Store({
   state: {
-    auth: {
-      status: null,
-      token: localStorage.getItem('accessToken') || null
-    },
     notification: {
       active: false,
       content: null,
       type: null
     },
-    user: {}
+    cache: {
+      categories: []
+    },
+    user: null,
+    isAuthenticated: null
   },
   mutations: {
-    authSuccess(state, token) {
-      state.auth.token = token;
-      state.auth.status = true;
-    },
-    authError(state) {
-      state.auth.status = false;
+    authSuccess(state) {
+      state.isAuthenticated = true;
     },
     authLogout(state) {
-      state.auth.status = false;
-      state.auth.token = null;
+      state.user = null;
+      state.isAuthenticated = false;
+    },
+    authFetchUser(state, data) {
+      state.user = data;
     },
     notificationShow(state, data) {
       state.notification.active = true;
@@ -46,26 +49,37 @@ export default new Vuex.Store({
       state.notification.active = false;
       state.notification.content = null;
       state.notification.type = null;
+    },
+    notesCategoriesCache(state, data) {
+      state.cache.categories = data;
+    },
+    notesCache(state, data) {
+      state.cache.notes = data;
+    },
+    notesClear(state) {
+      state.cache.categories = [];
+      state.cache.notes = [];
     }
   },
   actions: {
     async authSignIn({ commit }, user) {
       try {
-        const response = await axios({
+        const res = await axios({
           url: '/login',
           method: 'post',
           data: user
         });
 
-        commit('authSuccess', response.data.token);
-        return { ...response, success: true };
+        console.log(res);
+        commit('authSuccess');
+        return { success: true };
       } catch (error) {
-        commit('authError');
         return { ...error.response, success: false };
       }
     },
     authSignOut({ commit }) {
       commit('authLogout');
+      commit('notesClear');
     },
     notificationActivate({ commit, state }, data) {
       let closeDelay = data.time || 4500;
@@ -84,11 +98,35 @@ export default new Vuex.Store({
       setTimeout(() => {
         commit('notificationHide');
       }, closeDelay);
+    },
+    async notesCategoriesCache({ commit }) {
+      try {
+        const response = await axios({
+          url: '/category',
+          method: 'get'
+        });
+
+        commit('notesCategoriesCache', response.data.categories);
+        return { data: response.data.categories, success: true };
+      } catch (error) {
+        return { ...error.response, success: false };
+      }
+    },
+    async notesCache({ commit }) {
+      try {
+        const response = await axios({
+          url: '/note',
+          method: 'get'
+        });
+
+        commit('notesCache', response.data.notes);
+        return { ...response.data.notes, success: true };
+      } catch (error) {
+        return { ...error.response, success: false };
+      }
     }
   },
   modules: {},
-  getters: {
-    isAuthenticated: state => !!state.auth.token
-  },
+  getters: {},
   plugins: [vuexLocal.plugin]
 });

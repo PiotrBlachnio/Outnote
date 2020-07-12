@@ -3,7 +3,7 @@
     <div
       class="logs__box"
       v-for="log in logs"
-      :key="log.time"
+      :key="log"
       :class="`logs__box--${log.type}`"
     >
       <p class="logs__message">
@@ -54,6 +54,8 @@ export default {
 <style lang="scss" scoped>
 .logs {
   padding: 2rem;
+  max-height: 100vh;
+  overflow-y: scroll;
 
   &__box {
     color: #eee;

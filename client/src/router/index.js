@@ -128,12 +128,12 @@ router.beforeEach((to, from, next) => {
 
   if (
     to.matched.some(record => record.meta.requiresAuth) &&
-    !store.getters.isAuthenticated
+    !store.state.isAuthenticated
   ) {
     next('/auth/login');
   } else if (
     to.matched.some(record => record.meta.type === 'auth') &&
-    store.getters.isAuthenticated
+    store.state.isAuthenticated
   ) {
     next('/dashboard');
   }

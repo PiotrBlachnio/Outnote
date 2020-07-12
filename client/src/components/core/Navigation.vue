@@ -2,7 +2,7 @@
   <nav class="navigation" :class="{ 'navigation--active': isMenuActive }">
     <button
       class="navigation__hamburger"
-      @click="isMenuActive = !isMenuActive"
+      @click="closeNavigation"
       :class="{ 'navigation__hamburger--active': isMenuActive }"
     >
       <span class="navigation__hamburger-line"></span>
@@ -14,11 +14,16 @@
       <li
         class="navigation__element"
         v-for="category in categories"
-        :key="category"
+        :key="category.name"
         v-show="isMenuActive"
       >
-        <router-link to="#" class="navigation__link">
-          {{ category }}
+        <router-link
+          to="#"
+          class="navigation__link"
+          @click.native="$emit('selectedCategory', category)"
+        >
+          {{ category.name }}
+          <button class="navigation__add-button">+</button>
         </router-link>
       </li>
     </ul>
@@ -75,6 +80,12 @@ export default {
       ];
 
       if (state) animations.every(x => x.play());
+    }
+  },
+  methods: {
+    closeNavigation() {
+      this.isMenuActive = !this.isMenuActive;
+      this.$emit('navigationClosed');
     }
   }
 };
@@ -144,7 +155,7 @@ export default {
   }
 
   &__link {
-    display: block;
+    display: flex;
     color: $navigationLinkColor;
     padding: 0.5rem;
     font-weight: bold;
@@ -154,6 +165,17 @@ export default {
     &:hover {
       border-left: 2px solid $navigationLinkActiveBorderColor;
     }
+  }
+
+  &__add-button {
+    opacity: 0;
+    font-weight: bold;
+    margin-left: auto;
+    transition: opacity 0.1s;
+  }
+
+  &__link:hover &__add-button {
+    opacity: 1;
   }
 
   &__bottom {

@@ -1,7 +1,7 @@
 <template>
   <div class="note-thumbnail">
     <span class="note-thumbnail__title">{{ title }}</span>
-    <span class="note-thumbnail__description">{{ description }}</span>
+    <span class="note-thumbnail__content">{{ content }}</span>
 
     <div class="note-thumbnail__tags">
       <span class="note-thumbnail__tag" v-for="tag in tags" :key="tag">
@@ -18,7 +18,7 @@ export default {
       type: String,
       required: true
     },
-    description: {
+    content: {
       type: String,
       required: true
     },
@@ -50,7 +50,7 @@ export default {
     font-weight: bold;
   }
 
-  &__description {
+  &__content {
     color: #bdbdbd;
   }
 
