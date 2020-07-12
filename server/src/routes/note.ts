@@ -2,9 +2,10 @@ import { Router, Request, Response, NextFunction } from 'express';
 import logger from '../utils/logger';
 import { Roles } from '../assets/enums';
 import auth from '../middlewares/auth';
-import { INote } from '../types/models';
-import { NoteNotFoundError } from '../assets/errors';
+import { INote, ICategory } from '../types/models';
+import { NoteNotFoundError, IncorrectInputError, CategoryNotFoundError } from '../assets/errors';
 import cookieParser from 'cookie-parser';
+import validator from '../utils/validators';
 
 const router: Router = Router();
 
@@ -17,6 +18,10 @@ router.use(cookieParser());
 */
 router.get('/:id', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+        if(!validator.validateInput({ id: req.params.id })) {
+            throw new NoteNotFoundError();
+        };
+
         const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
 
         if(!note) {
@@ -55,11 +60,22 @@ router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: Next
 */
 router.post('/', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+        const { title, categoryId, isPrivate } = req.body;
+
+        if(!validator.validateInput({ id: categoryId, title, isPrivate })) {
+            throw new IncorrectInputError;
+        };
+
+        const category: ICategory | null = await req.services.category.findById(categoryId);
+        if(!category) {
+            throw new CategoryNotFoundError;
+        };
+
         const note: INote = await req.services.note.create({
-            title: req.body.title,
-            categoryId: req.body.categoryId,
+            title,
+            categoryId,
+            isPrivate,
             ownerId: req.user!.id,
-            isPrivate: req.body.isPrivate
         });
 
         await logger.log({ type: 'info', message: 'Note create successfully!', place: 'Create note route' });

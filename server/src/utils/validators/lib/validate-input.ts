@@ -42,6 +42,19 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
             ];
 
             break;
+        case 'title':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                hasMinLength.bind(null, value, config.validation.title.MIN_LENGTH),
+            ];
+
+            break;
+        case 'isPrivate':
+            schema = [
+                hasType.bind(null, value, 'boolean'),
+            ];
+        default:
+            throw new Error('Validation field is invalid!');
     };
 
     return schema;

@@ -38,6 +38,9 @@ const defaults = {
         password: {
             MIN_LENGTH: 6,
             MAX_LENGTH: 32
+        },
+        title: {
+            MIN_LENGTH: 1
         }
     }
 };
