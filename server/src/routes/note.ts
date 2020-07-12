@@ -93,6 +93,10 @@ router.post('/', auth(Roles.USER), async (req: Request, res: Response, next: Nex
 */
 router.delete('/:id', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+        if(!validator.validateInput({ id: req.params.id })) {
+            throw new IncorrectInputError;
+        };
+
         const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
 
         if(!note) {
@@ -118,7 +122,7 @@ router.patch('/:id', auth(Roles.USER), async (req: Request, res: Response, next:
     try {
         const { field, value } = req.body;
 
-        if(!validator.validateInput({ field: field, [field]: value })) {
+        if(!validator.validateInput({ field: field, [field]: value, id: req.params.id })) {
             throw new IncorrectInputError;
         };
 
