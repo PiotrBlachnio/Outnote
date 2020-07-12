@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 import hasType from "./has-type";
 import config from "../../../assets/config";
 import matchRegex from "./match-regex";
+import isCorrectField from "./is-correct-field";
 
 const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
     let schema: (() => boolean)[] = [];
@@ -42,10 +43,11 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
             ];
 
             break;
+        case 'name':
         case 'title':
             schema = [
                 hasType.bind(null, value, 'string'),
-                hasMinLength.bind(null, value, config.validation.title.MIN_LENGTH),
+                hasMinLength.bind(null, value, 1),
             ];
 
             break;
@@ -53,8 +55,27 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
             schema = [
                 hasType.bind(null, value, 'boolean'),
             ];
-        default:
-            throw new Error('Validation field is invalid!');
+
+            break;
+        case 'content':
+            schema = [
+                hasType.bind(null, value, 'string'),
+            ];
+
+            break;
+        case 'tags':
+            schema = [
+                Array.isArray.bind(null, value)
+            ];
+
+            break;
+        case 'field':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                isCorrectField.bind(null, value)
+            ];
+
+            break;
     };
 
     return schema;
