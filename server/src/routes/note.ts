@@ -6,6 +6,7 @@ import { INote, ICategory } from '../types/models';
 import { NoteNotFoundError, IncorrectInputError, CategoryNotFoundError } from '../assets/errors';
 import cookieParser from 'cookie-parser';
 import validator from '../utils/validators';
+import validate from '../middlewares/validators/index';
 
 const router: Router = Router();
 
@@ -16,24 +17,9 @@ router.use(cookieParser());
  * @desc    Get a single note by providing a valid id
  * @access  Protected
 */
-router.get('/:id', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        if(!validator.validateInput({ id: req.params.id })) {
-            throw new NoteNotFoundError();
-        };
-
-        const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
-
-        if(!note) {
-            throw new NoteNotFoundError();
-        }
-
-        await logger.log({ type: 'info', message: 'Note retrieved successfully!', place: 'Get note by id route' });
-        res.status(200).json({ note });
-    } catch(error) {
-        error.place = 'Get note by id route';
-        next(error);
-    };
+router.get('/:id', auth(Roles.USER), validate.note.getById, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    await logger.log({ type: 'info', message: 'Note retrieved successfully!', place: 'Get note by id route' });
+    res.status(200).json({ note: req.context?.note });
 });
 
 /**
