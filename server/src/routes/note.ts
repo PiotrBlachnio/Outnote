@@ -28,15 +28,10 @@ router.get('/:id', auth(Roles.USER), validate.note.getById, async (req: Request,
  * @access  Protected
 */
 router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const notes: INote[] = await req.services.note.find({ ownerId: req.user!.id });
+    const notes: INote[] = await req.services.note.find({ ownerId: req.user!.id });
 
-        await logger.log({ type: 'info', message: 'Notes retrieved successfully!', place: 'Get all notes route' });
-        res.status(200).json({ notes });
-    } catch(error) {
-        error.place = 'Get all notes route';
-        next(error);
-    };
+    await logger.log({ type: 'info', message: 'Notes retrieved successfully!', place: 'Get all notes route' });
+    res.status(200).json({ notes });
 });
 
 /**
@@ -45,31 +40,8 @@ router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: Next
  * @access  Protected
 */
 router.post('/', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const { title, categoryId, isPrivate } = req.body;
-
-        if(!validator.validateInput({ id: categoryId, title, isPrivate })) {
-            throw new IncorrectInputError;
-        };
-
-        const category: ICategory | null = await req.services.category.findById(categoryId);
-        if(!category) {
-            throw new CategoryNotFoundError;
-        };
-
-        const note: INote = await req.services.note.create({
-            title,
-            categoryId,
-            isPrivate,
-            ownerId: req.user!.id,
-        });
-
-        await logger.log({ type: 'info', message: 'Note create successfully!', place: 'Create note route' });
-        res.status(201).json({ note });
-    } catch(error) {
-        error.place = 'Create note route';
-        next(error);
-    };
+    await logger.log({ type: 'info', message: 'Note create successfully!', place: 'Create note route' });
+    res.status(201).json({ note: req.context?.note });
 });
 
 /**
