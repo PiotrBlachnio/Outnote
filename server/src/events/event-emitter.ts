@@ -25,6 +25,8 @@ export class EventEmitter extends NodeEventEmitter {
         this.on('SEND_CONFIRMATION_MAIL_SUCCESS', this._events.sendConfirmationMailSuccess);
 
         this.on('DELETE_NOTE_SUCCESS', this._events.deleteNoteSuccess);
+
+        this.on('UPDATE_NOTE_SUCCESS', this._events.updateNoteSuccess);
     };
 };
 
