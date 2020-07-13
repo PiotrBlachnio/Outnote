@@ -23,6 +23,7 @@ declare module 'express-serve-static-core' {
            id?: string;
            banId?: string;
            note?: INote;
+           updatedData?: Record<string, unknown>;
        },
        services: {
            email: EmailService;
