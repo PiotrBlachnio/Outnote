@@ -39,7 +39,7 @@ router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: Next
  * @desc    Create new note
  * @access  Protected
 */
-router.post('/', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.post('/', auth(Roles.USER), validate.note.create, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     await logger.log({ type: 'info', message: 'Note create successfully!', place: 'Create note route' });
     res.status(201).json({ note: req.context?.note });
 });
@@ -49,26 +49,12 @@ router.post('/', auth(Roles.USER), async (req: Request, res: Response, next: Nex
  * @desc    Delete single note by providing valid id
  * @access  Protected
 */
-router.delete('/:id', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        if(!validator.validateInput({ id: req.params.id })) {
-            throw new IncorrectInputError;
-        };
+router.delete('/:id', auth(Roles.USER), validate.note.delete, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 
-        const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
+    await logger.log({ type: 'info', message: 'Note deleted successfully!', place: 'Delete note route' });
+    req.eventEmitter.emit('DELETE_NOTE_SUCCESS', req.context?.id);
 
-        if(!note) {
-            throw new NoteNotFoundError();
-        }
-
-        await req.services.note.deleteOne({ _id: note.id });
-        await logger.log({ type: 'info', message: 'Note deleted successfully!', place: 'Delete note route' });
-
-        res.status(200).end();
-    } catch(error) {
-        error.place = 'Delete note route';
-        next(error);
-    };
+    res.status(200).end();
 });
 
 /**

@@ -49,7 +49,27 @@ async function create(req: Request, res: Response, next: NextFunction): Promise<
     };
 };
 
+async function deleteById(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+        if(!validator.validateInput({ id: req.params.id })) {
+            throw new IncorrectInputError;
+        };
+
+        const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
+
+        if(!note) {
+            throw new NoteNotFoundError();
+        }
+
+        req.context = { id: req.params.id };
+    } catch(error) {
+        error.place = 'Get note by id route';
+        next(error);
+    };
+};
+
 export default {
     getById,
-    create
+    create,
+    delete: deleteById
 }
