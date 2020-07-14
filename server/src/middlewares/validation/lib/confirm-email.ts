@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { IncorrectInputError, ExpiredOrInvalidTokenError, InvalidUserError, UserNotFoundError, EmailAlreadyConfirmedError } from "../../assets/errors";
-import validator from '../../utils/validators';
-import { IUser } from "../../types/models";
-import { IConfirmEmailTokenPayload } from "../../types/tokens";
-import { Token } from "../../assets/enums";
+import { IncorrectInputError, ExpiredOrInvalidTokenError, InvalidUserError, UserNotFoundError, EmailAlreadyConfirmedError } from "../../../assets/errors";
+import validator from '../../../utils/validators';
+import { IUser } from "../../../types/models";
+import { IConfirmEmailTokenPayload } from "../../../types/tokens";
+import { Token } from "../../../assets/enums";
 
 async function confirmEmail(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id, token } = req.body;

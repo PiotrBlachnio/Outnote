@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import validator from '../../utils/validators';
-import { IncorrectInputError, NoteNotFoundError } from "../../assets/errors";
-import { ICategory } from "../../types/models";
+import validator from '../../../utils/validators';
+import { IncorrectInputError, NoteNotFoundError } from "../../../assets/errors";
+import { ICategory } from "../../../types/models";
 
 async function create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

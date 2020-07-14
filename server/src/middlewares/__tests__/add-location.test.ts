@@ -1,7 +1,7 @@
 import { clearDatabase, connectDatabase, createUser } from "../../utils/test-utils";
 import TokenService from "../../services/token-service";
 import UserService from "../../services/user-service";
-import addLocation from '../validators/add-location';
+import addLocation from '../validation/lib/add-location';
 import { IncorrectInputError, ExpiredOrInvalidTokenError, InvalidUserError, UserNotFoundError, InvalidPasswordError, EmailNotConfirmedError, LocationAlreadyAddedError } from "../../assets/errors";
 import faker from 'faker';
 import { Token } from "../../assets/enums";

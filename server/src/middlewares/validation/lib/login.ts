@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import validator from '../../utils/validators';
-import { AlreadyLoggedInError, IncorrectInputError, InvalidEmailOrPasswordError, EmailNotConfirmedError, UnknownLocationError } from "../../assets/errors";
+import validator from '../../../utils/validators';
+import { AlreadyLoggedInError, IncorrectInputError, InvalidEmailOrPasswordError, EmailNotConfirmedError, UnknownLocationError } from "../../../assets/errors";
 import bcrypt from 'bcryptjs';
-import { IUser } from "../../types/models";
-import { Token, Mail } from "../../assets/enums";
+import { IUser } from "../../../types/models";
+import { Token, Mail } from "../../../assets/enums";
 
 async function login(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { email, password } = req.body;

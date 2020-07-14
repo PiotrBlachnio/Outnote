@@ -4,7 +4,7 @@ import TokenService from '../../services/token-service';
 import { IncorrectInputError, ExpiredOrInvalidTokenError, InvalidUserError, UserNotFoundError, AlreadyLoggedInError, EmailNotConfirmedError } from '../../assets/errors';
 import { Token } from '../../assets/enums';
 import { IUser } from '../../types/models';
-import resetPassword from '../validators/reset-password';
+import resetPassword from '../validation/lib/reset-password';
 import faker from 'faker';
 
 beforeAll(async () => {

@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import validate from '../middlewares/validators/index';
+import validate from '../middlewares/validation/index';
 import logger from '../utils/logger';
 
 const router: Router = Router();
