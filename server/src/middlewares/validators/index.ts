@@ -6,6 +6,7 @@ import forgotPassword from './forgot-password';
 import resetPassword from './reset-password';
 import sendConfirmationMail from './send-confirmation-mail';
 import note from './note';
+import category from './category';
 
 export default {
     login,
@@ -15,5 +16,6 @@ export default {
     forgotPassword,
     resetPassword,
     sendConfirmationMail,
-    note
+    note,
+    category
 };
