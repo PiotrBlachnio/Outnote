@@ -1,6 +1,6 @@
 import faker from 'faker';
 import { Token, Mail } from '../../assets/enums';
-import registerSuccess from '../lib/register-success';
+import auth from '../lib/auth-handlers';
 
 describe('Register success event', () => {
     const id: string = faker.random.uuid();
@@ -27,7 +27,7 @@ describe('Register success event', () => {
 
     it('Should call create function', async (done) => {
         //@ts-ignore-start
-        await registerSuccess(data, services);
+        await auth.registerSuccessHandler(data, services);
 
         expect(services.userService.create).toHaveBeenCalled();
         done();
