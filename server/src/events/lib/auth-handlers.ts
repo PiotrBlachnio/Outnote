@@ -11,7 +11,7 @@ const defaultServices = {
     email: new EmailService()
 };
 
-export default async (data: { username: string, email: string, password: string, ip: string }, services: typeof defaultServices = defaultServices): Promise<void> => {
+async function registerSuccessHandler(data: { username: string, email: string, password: string, ip: string }, services: typeof defaultServices = defaultServices): Promise<void> {
     const hashedPassword: string = await bcrypt.hash(data.password, 12);
     const hashedIP: string = await bcrypt.hash(data.ip, 12);
 
@@ -29,4 +29,8 @@ export default async (data: { username: string, email: string, password: string,
         id: user.id,
         token: token 
     });
+};
+
+export default {
+    registerSuccessHandler
 };
