@@ -11,7 +11,7 @@ const router: Router = Router();
  * @desc    Register new user
  * @access  Public
  */
-router.post('/register', cookieParser(), validate.register, async (req: Request, res: Response): Promise<void> => {
+router.post('/register', cookieParser(), validate.auth.register, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Registered successfully!', place: 'Register route' });
     
     req.eventEmitter.emit('REGISTER_SUCCESS', {
@@ -29,7 +29,7 @@ router.post('/register', cookieParser(), validate.register, async (req: Request,
  * @desc    Auth user
  * @access  Public
 */
-router.post('/login', cookieParser(), validate.login, async (req: Request, res: Response): Promise<void> => {
+router.post('/login', cookieParser(), validate.auth.login, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Logged in successfully!', place: 'Login route' });
     
     const accessToken: string = req.services.token.generateToken(Token.ACCESS, {
