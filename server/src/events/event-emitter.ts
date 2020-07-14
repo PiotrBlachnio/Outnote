@@ -28,9 +28,9 @@ export class EventEmitter extends NodeEventEmitter {
 
         this.on('UPDATE_NOTE_SUCCESS', this._events.updateNoteSuccess);
 
-        this.on('DELETE_CATEGORY_SUCCESS', this._events.deleteCategorySuccess);
+        this.on('DELETE_CATEGORY_SUCCESS', this._events.category.deleteCategorySuccessHandler);
 
-        this.on('UPDATE_CATEGORY_SUCCESS', this._events.updateCategorySuccess);
+        this.on('UPDATE_CATEGORY_SUCCESS', this._events.category.updateCategorySuccessHandler);
 
         this.on('UPDATE_USER_SUCCESS', this._events.updateUserSuccess);
     };
