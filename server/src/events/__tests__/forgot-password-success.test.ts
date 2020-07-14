@@ -1,5 +1,5 @@
 import faker from 'faker';
-import forgotPasswordSuccess from '../lib/forgot-password-success';
+import account from '../lib/account-handlers';
 import { Token, Mail } from '../../assets/enums';
 
 describe('Forgot password success event', () => {
@@ -19,7 +19,7 @@ describe('Forgot password success event', () => {
 
     it('Should call generate token function', async (done) => {
         //@ts-ignore-start
-        await forgotPasswordSuccess({ id, email }, services);
+        await account.forgotPasswordSuccessHandler({ id, email }, services);
 
         expect(services.tokenService.generateToken).toHaveBeenCalled();
         done();

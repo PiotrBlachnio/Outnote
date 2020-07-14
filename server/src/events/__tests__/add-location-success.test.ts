@@ -1,5 +1,5 @@
 import faker from 'faker';
-import addLocationSuccess from "../lib/add-location-success";
+import account from "../lib/account-handlers";
 
 describe('Add location success event', () => {
     const services = {
@@ -13,7 +13,7 @@ describe('Add location success event', () => {
 
     it('Should call update one function', async (done) => {
         //@ts-ignore-start
-        await addLocationSuccess({ userId, ip }, services);
+        await account.addLocationSuccessHandler({ userId, ip }, services);
 
         expect(services.userService.updateOne).toHaveBeenCalled();
         done();

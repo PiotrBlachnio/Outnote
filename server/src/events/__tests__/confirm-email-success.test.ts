@@ -1,5 +1,5 @@
 import faker from 'faker';
-import confirmEmailSuccess from '../lib/confirm-email-success';
+import account from '../lib/account-handlers';
 
 describe('Confirm email success event', () => {
     const services = {
@@ -12,7 +12,7 @@ describe('Confirm email success event', () => {
 
     it('Should call update one function', async (done) => {
         //@ts-ignore-start
-        await confirmEmailSuccess(userId, services);
+        await account.confirmEmailSuccessHandler(userId, services);
 
         expect(services.userService.updateOne).toHaveBeenCalled();
         done();
