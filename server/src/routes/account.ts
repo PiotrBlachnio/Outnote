@@ -10,7 +10,7 @@ const router: Router = Router();
  * @desc    Add new location to user's trusted locations
  * @access  Protected
  */
-router.post('/add-location', validate.addLocation, async (req: Request, res: Response): Promise<void> => {
+router.post('/add-location', validate.account.addLocation, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Location has been added successfully!', place: 'Add location route' });
 
     req.eventEmitter.emit('ADD_LOCATION_SUCCESS', {
@@ -26,7 +26,7 @@ router.post('/add-location', validate.addLocation, async (req: Request, res: Res
  * @desc    Confirm user account
  * @access  Public
  */
-router.post('/confirm-email', validate.confirmEmail, async (req: Request, res: Response): Promise<void> => {
+router.post('/confirm-email', validate.account.confirmEmail, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Email confirmed successfully!', place: 'Confirm email route' });
     
     req.eventEmitter.emit('CONFIRM_EMAIL_SUCCESS', req.context!.id);
@@ -39,7 +39,7 @@ router.post('/confirm-email', validate.confirmEmail, async (req: Request, res: R
  * @desc    Get reset password link
  * @access  Public
  */
-router.post('/forgot-password', cookieParser(), validate.forgotPassword, async (req: Request, res: Response): Promise<void> => {
+router.post('/forgot-password', cookieParser(), validate.account.forgotPassword, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Mail sent successfully!', place: 'Forgot password route' });
 
     req.eventEmitter.emit('FORGOT_PASSWORD_SUCCESS', {
@@ -55,7 +55,7 @@ router.post('/forgot-password', cookieParser(), validate.forgotPassword, async (
  * @desc    Reset user's password
  * @access  Public
  */
-router.post('/reset-password', cookieParser(), validate.resetPassword, async (req: Request, res: Response): Promise<void> => {
+router.post('/reset-password', cookieParser(), validate.account.resetPassword, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Password reseted successfully!', place: 'Reset password route' });
 
     req.eventEmitter.emit('RESET_PASSWORD_SUCCESS', {
@@ -71,7 +71,7 @@ router.post('/reset-password', cookieParser(), validate.resetPassword, async (re
  * @desc    Send confirmation mail to user
  * @access  Public
 */
-router.post('/send-confirmation-mail', cookieParser(), validate.sendConfirmationMail, async (req: Request, res: Response): Promise<void> => {
+router.post('/send-confirmation-mail', cookieParser(), validate.account.sendConfirmationMail, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Sent confirmation mail successfully!', place: 'Send confirmation mail route' });
     
     req.eventEmitter.emit('SEND_CONFIRMATION_MAIL_SUCCESS', {
