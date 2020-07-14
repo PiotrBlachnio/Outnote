@@ -14,15 +14,15 @@ export class EventEmitter extends NodeEventEmitter {
     private initEvents(): void {
         this.on('REGISTER_SUCCESS', this._events.auth.registerSuccessHandler);
 
-        this.on('ADD_LOCATION_SUCCESS', this._events.addLocationSuccess);
+        this.on('ADD_LOCATION_SUCCESS', this._events.account.addLocationSuccessHandler);
 
-        this.on('FORGOT_PASSWORD_SUCCESS', this._events.forgotPasswordSuccess);
+        this.on('FORGOT_PASSWORD_SUCCESS', this._events.account.forgotPasswordSuccessHandler);
 
-        this.on('CONFIRM_EMAIL_SUCCESS', this._events.confirmEmailSuccess);
+        this.on('CONFIRM_EMAIL_SUCCESS', this._events.account.confirmEmailSuccessHandler);
 
-        this.on('RESET_PASSWORD_SUCCESS', this._events.resetPasswordSuccess);
+        this.on('RESET_PASSWORD_SUCCESS', this._events.account.resetPasswordSuccessHandler);
 
-        this.on('SEND_CONFIRMATION_MAIL_SUCCESS', this._events.sendConfirmationMailSuccess);
+        this.on('SEND_CONFIRMATION_MAIL_SUCCESS', this._events.account.sendConfirmationMailSuccessHandler);
 
         this.on('DELETE_NOTE_SUCCESS', this._events.note.deleteNoteSuccessHandler);
 
