@@ -4,7 +4,7 @@ import TokenService from '../../services/token-service';
 import { IncorrectInputError, UserNotFoundError, AlreadyLoggedInError, EmailAlreadyConfirmedError } from '../../assets/errors';
 import { Token } from '../../assets/enums';
 import { IUser } from '../../types/models';
-import sendConfirmationMail from '../validation/lib/send-confirmation-mail';
+import account from '../validation/lib/account-validators';
 import faker from 'faker';
 
 beforeAll(async () => {
@@ -43,7 +43,7 @@ describe('Send confirmation mail validator', () => {
             req.cookies.jid = services.token.generateToken(Token.ACCESS, { id: '' });
 
             // @ts-ignore-start
-            await sendConfirmationMail(req, {}, next);
+            await account.sendConfirmationMail(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError);
             done();
@@ -56,7 +56,7 @@ describe('Send confirmation mail validator', () => {
             req.cookies.jid = '';
 
             // @ts-ignore-start
-            await sendConfirmationMail(req, {}, next);
+            await account.sendConfirmationMail(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
@@ -70,7 +70,7 @@ describe('Send confirmation mail validator', () => {
             req.body.email = faker.internet.email();
 
             // @ts-ignore-start
-            await sendConfirmationMail(req, {}, next);
+            await account.sendConfirmationMail(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new UserNotFoundError);
             done();
@@ -85,7 +85,7 @@ describe('Send confirmation mail validator', () => {
             req.body.email = user.email;
 
             // @ts-ignore-start
-            await sendConfirmationMail(req, {}, next);
+            await account.sendConfirmationMail(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new EmailAlreadyConfirmedError);
             done();
@@ -98,7 +98,7 @@ describe('Send confirmation mail validator', () => {
             await services.user.updateOne({ _id: user.id }, { isConfirmed: false });
 
             // @ts-ignore-start
-            await sendConfirmationMail(req, {}, next);
+            await account.sendConfirmationMail(req, {}, next);
 
             expect(req.context.id).toEqual(user.id);
             expect(req.context.email).toEqual(req.body.email);
