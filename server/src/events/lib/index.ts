@@ -4,9 +4,8 @@ import confirmEmailSuccess from './confirm-email-success';
 import forgotPasswordSuccess from './forgot-password-success';
 import resetPasswordSuccess from './reset-password-success';
 import sendConfirmationMailSuccess from './send-confirmation-mail-success';
-import deleteNoteSuccess from './delete-note-success';
-import updateNoteSuccess from './update-note-success';
-import category from './category';
+import note from './note-handlers';
+import category from './category-handlers';
 import updateUserSuccess from './update-user-success';
 
 const events = {
@@ -16,8 +15,7 @@ const events = {
     forgotPasswordSuccess,
     resetPasswordSuccess,
     sendConfirmationMailSuccess,
-    deleteNoteSuccess,
-    updateNoteSuccess,
+    note,
     category,
     updateUserSuccess
 };
