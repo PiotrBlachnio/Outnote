@@ -32,7 +32,7 @@ export class EventEmitter extends NodeEventEmitter {
 
         this.on('UPDATE_CATEGORY_SUCCESS', this._events.category.updateCategorySuccessHandler);
 
-        this.on('UPDATE_USER_SUCCESS', this._events.updateUserSuccess);
+        this.on('UPDATE_USER_SUCCESS', this._events.user.updateUserSuccessHandler);
     };
 };
 
