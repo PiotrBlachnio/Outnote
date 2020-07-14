@@ -6,6 +6,7 @@ import { ICategory } from '../types/models';
 import { NoteNotFoundError, IncorrectInputError } from '../assets/errors';
 import cookieParser from 'cookie-parser';
 import validator from '../utils/validators';
+import validate from '../middlewares/validators/index';
 
 const router: Router = Router();
 
@@ -33,25 +34,9 @@ router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: Next
  * @desc    Create new category
  * @access  Protected
 */
-router.post('/', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        const { name } = req.body;
-        
-        if(!validator.validateInput({ name })) {
-            throw new IncorrectInputError;
-        };
-
-        const category: ICategory = await req.services.category.create({
-            name: name,
-            ownerId: req.user!.id
-        });
-
-        await logger.log({ type: 'info', message: 'Category create successfully!', place: 'Create category route' });
-        res.status(201).json({ category });
-    } catch(error) {
-        error.place = 'Create category route';
-        next(error);
-    };
+router.post('/', auth(Roles.USER), validate.category.create ,async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    await logger.log({ type: 'info', message: 'Category create successfully!', place: 'Create category route' });
+    res.status(201).json({ category: req.context?.category });
 });
 
 /**
