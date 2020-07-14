@@ -3,7 +3,7 @@ import account from "../lib/account-handlers";
 
 describe('Add location success event', () => {
     const services = {
-        userService: {
+        user: {
             updateOne: jest.fn() 
         }
     };
@@ -15,12 +15,12 @@ describe('Add location success event', () => {
         //@ts-ignore-start
         await account.addLocationSuccessHandler({ userId, ip }, services);
 
-        expect(services.userService.updateOne).toHaveBeenCalled();
+        expect(services.user.updateOne).toHaveBeenCalled();
         done();
     });
 
     it('Should pass correct parameters to the update one function', async (done) => {
-        expect(services.userService.updateOne.mock.calls[0][0]).toEqual({ _id: userId });
+        expect(services.user.updateOne.mock.calls[0][0]).toEqual({ _id: userId });
         done();
     });
 });

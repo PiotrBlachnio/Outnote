@@ -6,10 +6,10 @@ describe('Forgot password success event', () => {
     const token: string = faker.random.uuid();
 
     const services = {
-        tokenService: {
+        token: {
             generateToken: jest.fn().mockReturnValue(token)
         },
-        emailService: {
+        email: {
             sendMail: jest.fn() 
         }
     };
@@ -21,22 +21,22 @@ describe('Forgot password success event', () => {
         //@ts-ignore-start
         await account.forgotPasswordSuccessHandler({ id, email }, services);
 
-        expect(services.tokenService.generateToken).toHaveBeenCalled();
+        expect(services.token.generateToken).toHaveBeenCalled();
         done();
     });
 
     it('Should pass correct parameters to the generate token function', async (done) => {
-        expect(services.tokenService.generateToken.mock.calls[0]).toEqual([Token.RESET_PASSWORD, { id }]);
+        expect(services.token.generateToken.mock.calls[0]).toEqual([Token.RESET_PASSWORD, { id }]);
         done();
     });
 
     it('Should call send mail function', (done) => {
-        expect(services.emailService.sendMail).toHaveBeenCalled();
+        expect(services.email.sendMail).toHaveBeenCalled();
         done();
     });
 
     it('Should pass correct parameters to the send mail function', (done) => {
-        expect(services.emailService.sendMail.mock.calls[0]).toEqual([Mail.RESET_PASSWORD, { id, email, token }]);
+        expect(services.email.sendMail.mock.calls[0]).toEqual([Mail.RESET_PASSWORD, { id, email, token }]);
         done();
     });
 });
