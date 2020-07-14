@@ -7,6 +7,7 @@ import sendConfirmationMailSuccess from './send-confirmation-mail-success';
 import deleteNoteSuccess from './delete-note-success';
 import updateNoteSuccess from './update-note-success';
 import deleteCategorySuccess from './delete-category-success';
+import updateCategorySuccess from './update-category-success';
 
 const events = {
     registerSuccess,
@@ -17,7 +18,8 @@ const events = {
     sendConfirmationMailSuccess,
     deleteNoteSuccess,
     updateNoteSuccess,
-    deleteCategorySuccess
+    deleteCategorySuccess,
+    updateCategorySuccess
 };
 
 export type TEvents = typeof events;

@@ -44,7 +44,27 @@ async function deleteById(req: Request, res: Response, next: NextFunction): Prom
 };
 
 async function update(req: Request, res: Response, next: NextFunction): Promise<void> {
-    
+    try {
+        const { field, value } = req.body;
+
+        if(!validator.validateInput({ field: field, [field]: value, id: req.params.id })) {
+            throw new IncorrectInputError;
+        };
+
+        const category: ICategory | null = await req.services.category.findOne({ _id: req.params.id, ownerId: req.user!.id });
+
+        if(!category) {
+            throw new NoteNotFoundError();
+        }
+
+        req.context = {
+            id: category.id,
+            updatedData: { [req.body.field]: req.body.value }
+        };
+    } catch(error) {
+        error.place = 'Update category route';
+        next(error);
+    };
 };
 
 export default {
