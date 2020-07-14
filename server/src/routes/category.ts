@@ -44,26 +44,11 @@ router.post('/', auth(Roles.USER), validate.category.create ,async (req: Request
  * @desc    Delete single create by providing valid id
  * @access  Protected
 */
-router.delete('/:id', auth(Roles.USER), async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        if(!validator.validateInput({ id: req.params.id })) {
-            throw new IncorrectInputError;
-        };
+router.delete('/:id', auth(Roles.USER), validate.category.delete, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    await logger.log({ type: 'info', message: 'Category deleted successfully!', place: 'Delete category route' });
+    req.eventEmitter.emit('DELETE_CATEGORY_SUCCESS', req.context?.id);
 
-        const category: ICategory | null = await req.services.category.findOne({ _id: req.params.id, ownerId: req.user!.id });
-
-        if(!category) {
-            throw new NoteNotFoundError();
-        }
-
-        await req.services.category.deleteOne({ _id: category.id });
-        await logger.log({ type: 'info', message: 'Category deleted successfully!', place: 'Delete category route' });
-
-        res.status(200).end();
-    } catch(error) {
-        error.place = 'Delete category route';
-        next(error);
-    };
+    res.status(200).end();
 });
 
 /**
