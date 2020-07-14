@@ -1,4 +1,3 @@
-import registerSuccess from './register-success';
 import addLocationSuccess from './add-location-success';
 import confirmEmailSuccess from './confirm-email-success';
 import forgotPasswordSuccess from './forgot-password-success';
@@ -7,9 +6,9 @@ import sendConfirmationMailSuccess from './send-confirmation-mail-success';
 import note from './note-handlers';
 import category from './category-handlers';
 import user from './user-handlers';
+import auth from './auth-handlers';
 
 const events = {
-    registerSuccess,
     addLocationSuccess,
     confirmEmailSuccess,
     forgotPasswordSuccess,
@@ -17,7 +16,8 @@ const events = {
     sendConfirmationMailSuccess,
     note,
     category,
-    user
+    user,
+    auth
 };
 
 export type TEvents = typeof events;

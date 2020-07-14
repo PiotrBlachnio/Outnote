@@ -12,7 +12,7 @@ export class EventEmitter extends NodeEventEmitter {
     };
 
     private initEvents(): void {
-        this.on('REGISTER_SUCCESS', this._events.registerSuccess);
+        this.on('REGISTER_SUCCESS', this._events.auth.registerSuccessHandler);
 
         this.on('ADD_LOCATION_SUCCESS', this._events.addLocationSuccess);
 
