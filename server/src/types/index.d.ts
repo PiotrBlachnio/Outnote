@@ -5,6 +5,7 @@ import EventEmitter from "../events/event-emitter";
 import NoteService from "../services/note-service";
 import CategoryService from "../services/category-service";
 import FileService from "../services/file-service";
+import { INote, ICategory } from "./models";
 
 export {};
 
@@ -21,6 +22,9 @@ declare module 'express-serve-static-core' {
            password?: string;
            id?: string;
            banId?: string;
+           note?: INote;
+           category?: ICategory;
+           updatedData?: Record<string, unknown>;
        },
        services: {
            email: EmailService;

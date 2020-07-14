@@ -4,7 +4,7 @@ import TokenService from '../../services/token-service';
 import { IncorrectInputError, AlreadyLoggedInError, UsernameAlreadyExistError, EmailAlreadyExistError } from '../../assets/errors';
 import { Token } from '../../assets/enums';
 import { IUser } from '../../types/models';
-import register from '../validators/register';
+import auth from '../validation/lib/auth-validators';
 import faker from 'faker';
 
 beforeAll(async () => {
@@ -46,7 +46,7 @@ describe('Register validator', () => {
             req.cookies.jid =  services.token.generateToken(Token.ACCESS, { id: faker.random.uuid() });
 
             // @ts-ignore-start
-            await register(req, {}, next);
+            await auth.register(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError);
             done();
@@ -59,7 +59,7 @@ describe('Register validator', () => {
             req.cookies.jid = '';
 
             // @ts-ignore-start
-            await register(req, {}, next);
+            await auth.register(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
@@ -75,7 +75,7 @@ describe('Register validator', () => {
             req.body.email = user.email;
             
             // @ts-ignore-start
-            await register(req, {}, next);
+            await auth.register(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new UsernameAlreadyExistError);
             done();
@@ -88,7 +88,7 @@ describe('Register validator', () => {
             req.body.username = 'Jeff1234';
 
             // @ts-ignore-start
-            await register(req, {}, next);
+            await auth.register(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new EmailAlreadyExistError);
             done();
@@ -101,7 +101,7 @@ describe('Register validator', () => {
             req.body.email = 'Jeff2@gmail.com';
 
             // @ts-ignore-start
-            await register(req, {}, next);
+            await auth.register(req, {}, next);
 
             expect(req.context.username).toEqual('Jeff1234');
             expect(req.context.email).toEqual('Jeff2@gmail.com');

@@ -1,19 +1,19 @@
 import faker from 'faker';
 import { Token, Mail } from '../../assets/enums';
-import registerSuccess from '../lib/register-success';
+import auth from '../lib/auth-handlers';
 
 describe('Register success event', () => {
     const id: string = faker.random.uuid();
     const token: string = faker.random.uuid();
 
     const services = {
-        userService: {
+        user: {
             create: jest.fn().mockReturnValue({ id })
         },
-        tokenService: {
+        token: {
             generateToken: jest.fn() .mockReturnValue(token)
         },
-        emailService: {
+        email: {
             sendMail: jest.fn() 
         }
     };
@@ -27,29 +27,29 @@ describe('Register success event', () => {
 
     it('Should call create function', async (done) => {
         //@ts-ignore-start
-        await registerSuccess(data, services);
+        await auth.registerSuccessHandler(data, services);
 
-        expect(services.userService.create).toHaveBeenCalled();
+        expect(services.user.create).toHaveBeenCalled();
         done();
     });
 
     it('Should call generate token function', async (done) => {
-        expect(services.tokenService.generateToken).toHaveBeenCalled();
+        expect(services.token.generateToken).toHaveBeenCalled();
         done();
     });
 
     it('Should pass correct parameters to the generate token function', async (done) => {
-        expect(services.tokenService.generateToken.mock.calls[0]).toEqual([Token.CONFIRM_EMAIL, { id }]);
+        expect(services.token.generateToken.mock.calls[0]).toEqual([Token.CONFIRM_EMAIL, { id }]);
         done();
     });
 
     it('Should call send mail function', (done) => {
-        expect(services.emailService.sendMail).toHaveBeenCalled();
+        expect(services.email.sendMail).toHaveBeenCalled();
         done();
     });
 
     it('Should pass correct parameters to the send mail function', (done) => {
-        expect(services.emailService.sendMail.mock.calls[0]).toEqual([Mail.CONFIRM_EMAIL, {
+        expect(services.email.sendMail.mock.calls[0]).toEqual([Mail.CONFIRM_EMAIL, {
             email: data.email,
             id: id,
             token: token 
