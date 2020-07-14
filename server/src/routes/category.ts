@@ -4,7 +4,7 @@ import { Roles } from '../assets/enums';
 import auth from '../middlewares/auth';
 import { ICategory } from '../types/models';
 import cookieParser from 'cookie-parser';
-import validate from '../middlewares/validators/index';
+import validate from '../middlewares/validation/index';
 
 const router: Router = Router();
 

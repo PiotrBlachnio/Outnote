@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { AlreadyLoggedInError, IncorrectInputError, ExpiredOrInvalidTokenError, InvalidUserError, UserNotFoundError, EmailNotConfirmedError } from "../../assets/errors";
-import validator from '../../utils/validators';
-import { IUser } from "../../types/models";
-import { IResetPasswordTokenPayload } from "../../types/tokens";
-import { Token } from "../../assets/enums";
+import { AlreadyLoggedInError, IncorrectInputError, ExpiredOrInvalidTokenError, InvalidUserError, UserNotFoundError, EmailNotConfirmedError } from "../../../assets/errors";
+import validator from '../../../utils/validators';
+import { IUser } from "../../../types/models";
+import { IResetPasswordTokenPayload } from "../../../types/tokens";
+import { Token } from "../../../assets/enums";
 
 async function resetPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { id, token, password } = req.body;

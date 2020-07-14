@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import validator from '../../utils/validators';
-import { NoteNotFoundError, IncorrectInputError, CategoryNotFoundError } from "../../assets/errors";
-import { INote, ICategory } from "../../types/models";
+import validator from '../../../utils/validators';
+import { NoteNotFoundError, IncorrectInputError, CategoryNotFoundError } from "../../../assets/errors";
+import { INote, ICategory } from "../../../types/models";
 
 async function getById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

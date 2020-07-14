@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import cookieParser from 'cookie-parser';
-import validate from '../middlewares/validators/index';
+import validate from '../middlewares/validation/index';
 import logger from '../utils/logger';
 import { Token } from '../assets/enums';
 

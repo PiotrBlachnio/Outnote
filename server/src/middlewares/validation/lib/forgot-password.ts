@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { AlreadyLoggedInError, IncorrectInputError, UserNotFoundError, EmailNotConfirmedError } from "../../assets/errors";
-import validator from '../../utils/validators';
-import { IUser } from "../../types/models";
-import { Token } from "../../assets/enums";
+import { AlreadyLoggedInError, IncorrectInputError, UserNotFoundError, EmailNotConfirmedError } from "../../../assets/errors";
+import validator from '../../../utils/validators';
+import { IUser } from "../../../types/models";
+import { Token } from "../../../assets/enums";
 
 async function forgotPassword(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { email } = req.body;

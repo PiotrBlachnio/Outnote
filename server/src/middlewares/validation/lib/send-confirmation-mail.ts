@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { AlreadyLoggedInError, IncorrectInputError, UserNotFoundError, EmailAlreadyConfirmedError } from "../../assets/errors";
-import { IUser } from "../../types/models";
-import validator from '../../utils/validators';
-import { Token } from "../../assets/enums";
+import { AlreadyLoggedInError, IncorrectInputError, UserNotFoundError, EmailAlreadyConfirmedError } from "../../../assets/errors";
+import { IUser } from "../../../types/models";
+import validator from '../../../utils/validators';
+import { Token } from "../../../assets/enums";
 
 async function sendConfirmationMail(req: Request, res: Response, next: NextFunction): Promise<void> {
     const email: string = req.body.email;

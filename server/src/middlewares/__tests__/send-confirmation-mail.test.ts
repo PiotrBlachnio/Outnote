@@ -4,7 +4,7 @@ import TokenService from '../../services/token-service';
 import { IncorrectInputError, UserNotFoundError, AlreadyLoggedInError, EmailAlreadyConfirmedError } from '../../assets/errors';
 import { Token } from '../../assets/enums';
 import { IUser } from '../../types/models';
-import sendConfirmationMail from '../validators/send-confirmation-mail';
+import sendConfirmationMail from '../validation/lib/send-confirmation-mail';
 import faker from 'faker';
 
 beforeAll(async () => {

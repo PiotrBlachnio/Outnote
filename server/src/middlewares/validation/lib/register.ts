@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import validator from '../../utils/validators';
-import { AlreadyLoggedInError, IncorrectInputError, UsernameAlreadyExistError, EmailAlreadyExistError } from "../../assets/errors";
-import { IUser } from "../../types/models";
-import { Token } from "../../assets/enums";
+import validator from '../../../utils/validators';
+import { AlreadyLoggedInError, IncorrectInputError, UsernameAlreadyExistError, EmailAlreadyExistError } from "../../../assets/errors";
+import { IUser } from "../../../types/models";
+import { Token } from "../../../assets/enums";
 
 async function register(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { username, email, password } = req.body;

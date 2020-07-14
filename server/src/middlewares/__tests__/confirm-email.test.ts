@@ -4,7 +4,7 @@ import TokenService from '../../services/token-service';
 import { IncorrectInputError, ExpiredOrInvalidTokenError, InvalidUserError, UserNotFoundError, EmailAlreadyConfirmedError } from '../../assets/errors';
 import { Token } from '../../assets/enums';
 import { IUser } from '../../types/models';
-import confirmEmail from '../validators/confirm-email';
+import confirmEmail from '../validation/lib/confirm-email';
 
 beforeAll(async () => {
     await connectDatabase();

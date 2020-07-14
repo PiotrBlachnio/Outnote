@@ -4,7 +4,7 @@ import TokenService from '../../services/token-service';
 import { IncorrectInputError, AlreadyLoggedInError, EmailNotConfirmedError, InvalidEmailOrPasswordError, UnknownLocationError } from '../../assets/errors';
 import { Token, Mail } from '../../assets/enums';
 import { IUser } from '../../types/models';
-import login from '../validators/login';
+import login from '../validation/lib/login';
 import faker from 'faker';
 import bcrypt from 'bcryptjs';
 
