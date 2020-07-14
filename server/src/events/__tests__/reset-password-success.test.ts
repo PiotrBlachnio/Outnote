@@ -1,5 +1,5 @@
 import faker from 'faker';
-import resetPasswordSuccess from '../lib/reset-password-success';
+import account from '../lib/account-handlers';
 
 describe('Reset password success event', () => {
     const services = {
@@ -12,7 +12,7 @@ describe('Reset password success event', () => {
 
     it('Should call update one function', async (done) => {
         //@ts-ignore-start
-        await resetPasswordSuccess({ userId: userId, password: faker.internet.password() }, services);
+        await account.resetPasswordSuccessHandler({ userId: userId, password: faker.internet.password() }, services);
 
         expect(services.userService.updateOne).toHaveBeenCalled();
         done();
