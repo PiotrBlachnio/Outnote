@@ -64,8 +64,8 @@ const routes = [
         beforeEnter: (to, from, next) => {
           const { user, token } = to.query;
 
-          if (!(user && token)) next('/auth/login');
-          else next();
+          if (user && token) next();
+          else next('/auth/login');
         }
       },
       {
@@ -76,10 +76,24 @@ const routes = [
         },
         component: () => import('@/views/auth/ConfirmEmail'),
         beforeEnter: (to, from, next) => {
-          const { user, token } = to.query;
+          const { user, token, uniqueKey } = to.query;
 
-          if (!(user && token)) next('/auth/login');
-          else next();
+          if (user && token && uniqueKey) next();
+          else next('/auth/login');
+        }
+      },
+      {
+        path: 'confirm-identity',
+        name: 'Confirm Identity',
+        meta: {
+          title: 'Notes App | Confirm Identity'
+        },
+        component: () => import('@/views/auth/ConfirmIdentity'),
+        beforeEnter: (to, from, next) => {
+          const { user, token, uniqueKey } = to.query;
+
+          if (user && token && uniqueKey) next();
+          else next('/auth/login');
         }
       },
       {
