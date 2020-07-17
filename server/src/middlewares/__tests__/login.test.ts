@@ -4,7 +4,7 @@ import TokenService from '../../services/token-service';
 import { IncorrectInputError, AlreadyLoggedInError, EmailNotConfirmedError, InvalidEmailOrPasswordError, UnknownLocationError } from '../../assets/errors';
 import { Token, Mail } from '../../assets/enums';
 import { IUser } from '../../types/models';
-import login from '../validators/login';
+import auth from '../validation/lib/auth-validators';
 import faker from 'faker';
 import bcrypt from 'bcryptjs';
 
@@ -61,7 +61,7 @@ describe('Login validator', () => {
             req.cookies.jid =  services.token.generateToken(Token.ACCESS, { id: faker.random.uuid() });
 
             // @ts-ignore-start
-            await login(req, {}, next);
+            await auth.login(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError);
             done();
@@ -74,7 +74,7 @@ describe('Login validator', () => {
             req.cookies.jid = '';
 
             // @ts-ignore-start
-            await login(req, {}, next);
+            await auth.login(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
@@ -88,7 +88,7 @@ describe('Login validator', () => {
             req.body.password = 'Jeff1234';
 
             // @ts-ignore-start
-            await login(req, {}, next);
+            await auth.login(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new InvalidEmailOrPasswordError);
             done();
@@ -104,7 +104,7 @@ describe('Login validator', () => {
             req.body.password = password + '5';
 
             // @ts-ignore-start
-            await login(req, {}, next);
+            await auth.login(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new InvalidEmailOrPasswordError);
             done();
@@ -117,7 +117,7 @@ describe('Login validator', () => {
             req.body.password = password;
 
             // @ts-ignore-start
-            await login(req, {}, next);
+            await auth.login(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError);
             done();
@@ -130,7 +130,7 @@ describe('Login validator', () => {
             await services.user.updateOne({ _id: user.id }, { isConfirmed: true });
 
             // @ts-ignore-start
-            await login(req, {}, next);
+            await auth.login(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new UnknownLocationError);
             done();
@@ -168,7 +168,7 @@ describe('Login validator', () => {
             await services.user.updateOne({ _id: user.id }, { trustedIPS: [await bcrypt.hash(req.ip, 12)] });
 
             // @ts-ignore-start
-            await login(req, {}, next);
+            await auth.login(req, {}, next);
 
             expect(req.context.ban).toBeUndefined();
             expect(req.context.email).toEqual(user.email);

@@ -1,9 +1,9 @@
 import faker from 'faker';
-import addLocationSuccess from "../lib/add-location-success";
+import account from "../lib/account-handlers";
 
 describe('Add location success event', () => {
     const services = {
-        userService: {
+        user: {
             updateOne: jest.fn() 
         }
     };
@@ -13,14 +13,14 @@ describe('Add location success event', () => {
 
     it('Should call update one function', async (done) => {
         //@ts-ignore-start
-        await addLocationSuccess({ userId, ip }, services);
+        await account.addLocationSuccessHandler({ userId, ip }, services);
 
-        expect(services.userService.updateOne).toHaveBeenCalled();
+        expect(services.user.updateOne).toHaveBeenCalled();
         done();
     });
 
     it('Should pass correct parameters to the update one function', async (done) => {
-        expect(services.userService.updateOne.mock.calls[0][0]).toEqual({ _id: userId });
+        expect(services.user.updateOne.mock.calls[0][0]).toEqual({ _id: userId });
         done();
     });
 });

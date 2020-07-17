@@ -4,7 +4,7 @@ import TokenService from '../../services/token-service';
 import { IncorrectInputError, ExpiredOrInvalidTokenError, InvalidUserError, UserNotFoundError, AlreadyLoggedInError, EmailNotConfirmedError } from '../../assets/errors';
 import { Token } from '../../assets/enums';
 import { IUser } from '../../types/models';
-import resetPassword from '../validators/reset-password';
+import account from '../validation/lib/account-validators';
 import faker from 'faker';
 
 beforeAll(async () => {
@@ -45,7 +45,7 @@ describe('Reset password validator', () => {
             req.cookies.jid = services.token.generateToken(Token.ACCESS, { id: '' });
 
             // @ts-ignore-start
-            await resetPassword(req, {}, next);
+            await account.resetPassword(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new AlreadyLoggedInError);
             done();
@@ -58,7 +58,7 @@ describe('Reset password validator', () => {
             req.cookies.jid = '';
 
             // @ts-ignore-start
-            await resetPassword(req, {}, next);
+            await account.resetPassword(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
@@ -73,7 +73,7 @@ describe('Reset password validator', () => {
             req.body.password = faker.random.alphaNumeric(10);
 
             // @ts-ignore-start
-            await resetPassword(req, {}, next);
+            await account.resetPassword(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new ExpiredOrInvalidTokenError);
             done();
@@ -86,7 +86,7 @@ describe('Reset password validator', () => {
             req.body.token = services.token.generateToken(Token.RESET_PASSWORD, { id: (await createUser()).id });
 
             // @ts-ignore-start
-            await resetPassword(req, {}, next);
+            await account.resetPassword(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new InvalidUserError);
             done();
@@ -101,7 +101,7 @@ describe('Reset password validator', () => {
             req.body.token = services.token.generateToken(Token.RESET_PASSWORD, { id: req.body.id });
 
             // @ts-ignore-start
-            await resetPassword(req, {}, next);
+            await account.resetPassword(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new UserNotFoundError);
             done();
@@ -117,7 +117,7 @@ describe('Reset password validator', () => {
             req.body.token = services.token.generateToken(Token.RESET_PASSWORD, { id: user.id });
 
             // @ts-ignore-start
-            await resetPassword(req, {}, next);
+            await account.resetPassword(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError);
             done();
@@ -130,7 +130,7 @@ describe('Reset password validator', () => {
             await services.user.updateOne({ _id: user.id }, { isConfirmed: true });
 
             // @ts-ignore-start
-            await resetPassword(req, {}, next);
+            await account.resetPassword(req, {}, next);
 
             expect(req.context.id).toEqual(user.id);
             expect(req.context.password).toEqual(req.body.password);

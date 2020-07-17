@@ -1,7 +1,7 @@
 import { clearDatabase, connectDatabase, createUser } from "../../utils/test-utils";
 import TokenService from "../../services/token-service";
 import UserService from "../../services/user-service";
-import addLocation from '../validators/add-location';
+import account from '../validation/lib/account-validators';
 import { IncorrectInputError, ExpiredOrInvalidTokenError, InvalidUserError, UserNotFoundError, InvalidPasswordError, EmailNotConfirmedError, LocationAlreadyAddedError } from "../../assets/errors";
 import faker from 'faker';
 import { Token } from "../../assets/enums";
@@ -44,7 +44,7 @@ describe('Add location validator', () => {
             const next: jest.Mock = jest.fn();
 
             //@ts-ignore-start
-            await addLocation(req, {}, next);
+            await account.addLocation(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new IncorrectInputError);
             done();
@@ -62,7 +62,7 @@ describe('Add location validator', () => {
             };
 
             //@ts-ignore-start
-            await addLocation(req, {}, next);
+            await account.addLocation(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new ExpiredOrInvalidTokenError);
             done();
@@ -75,7 +75,7 @@ describe('Add location validator', () => {
             req.body.token = services.token.generateToken(Token.CONFIRM_IDENTITY, { id: faker.random.alphaNumeric(10) });
 
             //@ts-ignore-start
-            await addLocation(req, {}, next);
+            await account.addLocation(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new InvalidUserError);
             done();
@@ -88,7 +88,7 @@ describe('Add location validator', () => {
             req.body.token = services.token.generateToken(Token.CONFIRM_IDENTITY, { id: req.body.id })
 
             //@ts-ignore-start
-            await addLocation(req, {}, next);
+            await account.addLocation(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new UserNotFoundError);
             done();
@@ -104,7 +104,7 @@ describe('Add location validator', () => {
             req.body.token = services.token.generateToken(Token.CONFIRM_IDENTITY, { id: user.id, ip: ip })
 
             //@ts-ignore-start
-            await addLocation(req, {}, next);
+            await account.addLocation(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new InvalidPasswordError);
             done();
@@ -117,7 +117,7 @@ describe('Add location validator', () => {
             req.body.password = password;
 
             //@ts-ignore-start
-            await addLocation(req, {}, next);
+            await account.addLocation(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new EmailNotConfirmedError);
             done();
@@ -132,7 +132,7 @@ describe('Add location validator', () => {
             await services.user.updateOne({ _id: user.id }, { isConfirmed: true, trustedIPS: [hashedIP] });
 
             //@ts-ignore-start
-            await addLocation(req, {}, next);
+            await account.addLocation(req, {}, next);
 
             expect(next).toHaveBeenCalledWith(new LocationAlreadyAddedError);
             done();
@@ -145,7 +145,7 @@ describe('Add location validator', () => {
             await services.user.updateOne({ _id: user.id }, { trustedIPS: [] });
 
             //@ts-ignore-start
-            await addLocation(req, {}, next);
+            await account.addLocation(req, {}, next);
 
             expect(req.context.id).toEqual(user.id);
             done();
