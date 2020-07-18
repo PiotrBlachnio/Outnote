@@ -9,7 +9,14 @@ import { spamLimiter } from '../middlewares/speed-limiter';
 
 export default (app: Application): void => {
     app.use(compression());
-    app.use(cors({ credentials: true }));
+
+    const corsConfig = {
+        credentials: true,
+        origin: true
+    };
+
+    app.use(cors(corsConfig));
+    app.options('*', cors(corsConfig));
     
     app.use(json({ limit: '10kb' }));
     app.set('trust proxy', 'uniquelocal');
