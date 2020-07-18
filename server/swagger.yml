@@ -1,0 +1,309 @@
+openapi: 3.0.0
+info:
+  title: Chat API
+  description: REST API documentation
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: https://stark-anchorage-00347.herokuapp.com/
+    description: Internal staging server for testing
+paths:
+  /api/v1/login:
+    post:
+      tags:
+        - API
+      summary: Authenticate user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                  Successfully logged in: 
+                    value:
+                      success: true
+                      id: string
+                      token: string
+          headers:
+            Set-Cookie:
+              type: string
+              description: Set authorization cookie
+        400:
+          content:
+            application/json:
+              examples:
+                Incorrect request body:
+                  value:
+                    success: false
+                    error:
+                      message: Incorrect input!
+                      id: 1
+        401:
+          content:
+            application/json:
+              examples:
+                Invalid username or password:
+                  value:
+                    success: false
+                    error:
+                      message: Invalid username or password!
+                      id: 2
+                Login from the unknown IP:
+                  value:
+                    success: false
+                    error:
+                      message: Detected login attempt from the unknown IP!
+                      id: 5
+        403:
+          content:
+            application/json:
+              examples:
+                Email not confirmed:
+                  value:
+                    success: false
+                    error:
+                      message: Email has not been confirmed yet!
+                      id: 3
+                Account banned:
+                  value:
+                    success: false
+                    error:
+                      message: The account has been suspended due to [reason]
+                      id: 4
+                Already logged in:
+                  value:
+                    success: false
+                    error:
+                      message: You are already logged in!
+                      id: 6
+  /api/v1/register:
+    post:
+      tags:
+        - API
+      summary: Create new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                  Successfully registered: 
+                    value:
+                      success: true
+        400:
+          content:
+            application/json:
+              examples:
+                Incorrect request body:
+                  value:
+                    success: false
+                    error:
+                      message: Incorrect input!
+                      id: 1
+        401:
+          content:
+            application/json:
+              examples:
+                Username already exists:
+                  value:
+                    success: false
+                    error:
+                      message: Username already exists!
+                      id: 2
+                Email already exists:
+                  value:
+                    success: false
+                    error:
+                      message: Email already exists!
+                      id: 3
+        403:
+          content:
+            application/json:
+              examples:
+                Already logged in:
+                  value:
+                    success: false
+                    error:
+                      message: You cannot register while you are already logged in!
+                      id: 1
+  /api/v1/confirm-email:
+    post:
+      tags:
+        - API
+      summary: Confirm user's account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                confirmationCode:
+                  type: string
+      responses:
+        202:
+          content:
+            application/json:
+              examples:
+                  Successfully confirmed: 
+                    value:
+                      success: true
+        400:
+          content:
+            application/json:
+              examples:
+                Incorrect request body:
+                  value:
+                    success: false
+                    error:
+                      message: Incorrect input!
+                      id: 1
+        401:
+          content:
+            application/json:
+              examples:
+                User not exists:
+                  value:
+                    success: false
+                    error:
+                      message: User with that email does not exist!
+                      id: 2
+                Email already confirmed:
+                  value:
+                    success: false
+                    error:
+                      message: Email has already been confirmed!
+                      id: 3
+                Invalid confirmation code:
+                  value:
+                    success: false
+                    error:
+                      message: Confirmation code is invalid!
+                      id: 4
+                Confirmation code already expired:
+                  value:
+                    success: false
+                    error:
+                      message: Confirmation code expired!
+                      id: 5
+  /api/v1/refresh-token:
+    parameters:
+      - in: cookie
+        name: jid
+        description: JWT refresh token
+        schema:
+          type: string
+    get:
+      tags:
+        - API
+      summary: Get access token by providing valid refresh token
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                  Successfully refreshed: 
+                    value:
+                      success: true
+                      token: string
+        401:
+          content:
+            application/json:
+              examples:
+                Invalid token:
+                  value:
+                    success: false
+                    error:
+                      message: Token is invalid!
+                      id: 1
+                User not exists:
+                  value:
+                    success: false
+                    error:
+                      message: The user assigned to this token does not exist!
+                      id: 1
+                IP not valid:
+                  value:
+                    success: false
+                    error:
+                      message: IP is not valid!
+                      id: 1
+  /api/v1/logout:
+    post:
+      tags:
+        - API
+      summary: Remove user's refresh token
+      responses:
+        202:
+          content:
+            application/json:
+              examples:
+                  Successfully logged out: 
+                    value:
+                      success: true
+  /api/v1/send-confirmation-mail:
+    post:
+      tags:
+        - API
+      summary: Send confirmation mail to user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                  Successfully sent: 
+                    value:
+                      success: true
+        400:
+          content:
+            application/json:
+              examples:
+                Incorrect request body:
+                  value:
+                    success: false
+                    error:
+                      message: Incorrect input!
+                      id: 1
+        401:
+          content:
+            application/json:
+              examples:
+                User not exists:
+                  value:
+                    success: false
+                    error:
+                      message: User with that email does not exist!
+                      id: 2
+                Email already confirmed:
+                  value:
+                    success: false
+                    error:
+                      message: Account has already been confirmed!
+                      id: 3
