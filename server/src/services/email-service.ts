@@ -25,6 +25,7 @@ class EmailService {
 
         this._transporter.verify(async (error) => {
             if(error) {
+                console.log(error);
                 await logger.log({ type: 'error', message: error.message, place: 'Send mail function' });
             };
         });
