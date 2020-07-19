@@ -3,7 +3,7 @@ import validator from '../../../utils/validators';
 import { IncorrectInputError, NoteNotFoundError } from "../../../assets/errors";
 import { ICategory } from "../../../types/models";
 
-async function create(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function validateCreateCategoryRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
         const { name } = req.body;
         
@@ -23,7 +23,7 @@ async function create(req: Request, res: Response, next: NextFunction): Promise<
     };
 };
 
-async function deleteById(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function validateDeleteCategoryRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
         if(!validator.validateInput({ id: req.params.id })) {
             throw new IncorrectInputError;
@@ -42,7 +42,7 @@ async function deleteById(req: Request, res: Response, next: NextFunction): Prom
     };
 };
 
-async function update(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function validateUpdateCategoryRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
         const { field, value } = req.body;
 
@@ -67,7 +67,7 @@ async function update(req: Request, res: Response, next: NextFunction): Promise<
 };
 
 export default {
-    create,
-    update,
-    delete: deleteById
+    create: validateCreateCategoryRoute,
+    update: validateUpdateCategoryRoute,
+    delete: validateDeleteCategoryRoute
 }
