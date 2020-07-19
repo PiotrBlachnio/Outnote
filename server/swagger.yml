@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Chat API
+  title: Note App API
   description: REST API documentation
   version: 1.0.0
   license:
@@ -10,7 +10,7 @@ servers:
   - url: https://stark-anchorage-00347.herokuapp.com/
     description: Internal staging server for testing
 paths:
-  /api/v1/login:
+  /api/v1/auth/login:
     post:
       tags:
         - API
@@ -25,15 +25,7 @@ paths:
                 password:
                   type: string
       responses:
-        201:
-          content:
-            application/json:
-              examples:
-                  Successfully logged in: 
-                    value:
-                      success: true
-                      id: string
-                      token: string
+        200:
           headers:
             Set-Cookie:
               type: string
