@@ -14,7 +14,7 @@ router.post('/add-location', validate.account.addLocation, async (req: Request, 
     await logger.log({ type: 'info', message: 'Location has been added successfully!', place: 'Add location route' });
 
     req.eventEmitter.emit('ADD_LOCATION_SUCCESS', {
-        userId: req.context!.id,
+        id: req.context!.id,
         ip: req.ip
     });
 

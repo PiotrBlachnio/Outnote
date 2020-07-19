@@ -13,14 +13,14 @@ const secondaryDefaultServices = {
     email: new EmailService()
 };
 
-async function addLocationSuccessHandler(data: { userId: string, ip: string }, services: typeof defaultServices = defaultServices): Promise<void> {
+async function addLocationSuccessHandler(data: { id: string, ip: string }, services: typeof defaultServices = defaultServices): Promise<void> {
     const hashedIP: string = await bcrypt.hash(data.ip, 12);
 
-    await services.user.updateOne({ _id: data.userId }, { $push: { trustedIPS: hashedIP }});
+    await services.user.updateOne({ _id: data.id }, { $push: { trustedIPS: hashedIP }});
 };
 
-async function confirmEmailSuccessHandler(userId: string, services: typeof defaultServices = defaultServices): Promise<void> {
-    await services.user.updateOne({ _id: userId }, { isConfirmed: true });
+async function confirmEmailSuccessHandler(id: string, services: typeof defaultServices = defaultServices): Promise<void> {
+    await services.user.updateOne({ id }, { isConfirmed: true });
 };
 
 async function forgotPasswordSuccessHandler(data: { id: string, email: string }, services: typeof secondaryDefaultServices = secondaryDefaultServices): Promise<void> {
@@ -33,10 +33,10 @@ async function forgotPasswordSuccessHandler(data: { id: string, email: string },
     });
 };
 
-async function resetPasswordSuccessHandler(data: { userId: string, password: string }, services: typeof defaultServices = defaultServices): Promise<void> {
+async function resetPasswordSuccessHandler(data: { id: string, password: string }, services: typeof defaultServices = defaultServices): Promise<void> {
     const hashedPassword: string = await bcrypt.hash(data.password, 12);
 
-    await services.user.updateOne({ _id: data.userId }, { password: hashedPassword });
+    await services.user.updateOne({ _id: data.id }, { password: hashedPassword });
 };
 
 async function sendConfirmationMailSuccessHandler(data: { email: string, id: string }, services: typeof secondaryDefaultServices = secondaryDefaultServices): Promise<void> {
