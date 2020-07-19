@@ -5,13 +5,13 @@ export default {
     type: null
   },
   mutations: {
-    notificationShow(state, data) {
+    NOTIFICATION_SHOW(state, data) {
       state.active = true;
       state.content = data.content;
       state.type = data.type;
       if (data.time) state.time = data.time;
     },
-    notificationHide(state) {
+    NOTIFICATION_HIDE(state) {
       state.active = false;
       state.content = null;
       state.type = null;
@@ -22,18 +22,18 @@ export default {
       let closeDelay = data.time || 4500;
 
       if (state.active) {
-        commit('notificationHide');
+        commit('NOTIFICATION_HIDE');
         closeDelay = data.time || 4500;
 
         setTimeout(() => {
-          commit('notificationShow', data);
+          commit('NOTIFICATION_SHOW', data);
         }, 500);
       } else {
-        commit('notificationShow', data);
+        commit('NOTIFICATION_SHOW', data);
       }
 
       setTimeout(() => {
-        commit('notificationHide');
+        commit('NOTIFICATION_HIDE');
       }, closeDelay);
     }
   }

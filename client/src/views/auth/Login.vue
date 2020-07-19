@@ -70,7 +70,7 @@ export default {
       if (!this.validateForm()) return;
 
       this.enableFormLoading();
-      const execute = await this.$store.dispatch('authSignIn', this.form);
+      const execute = await this.$store.dispatch('signIn', this.form);
       this.disableFormLoading();
 
       if (!execute.success) {
@@ -95,11 +95,6 @@ export default {
           this.activateInputsError();
         }
       } else {
-        this.$store.dispatch('notificationActivate', {
-          content: 'Signed In successfully!',
-          type: 'success'
-        });
-
         this.$router.push('/dashboard');
       }
     },

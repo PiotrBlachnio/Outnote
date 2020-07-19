@@ -2,40 +2,42 @@ import axios from 'axios';
 
 export default {
   state: {
-    user: null,
-    isAuthenticated: null
+    status: null
   },
   mutations: {
-    authSuccess(state) {
-      state.isAuthenticated = true;
+    AUTH_SUCCESS(state) {
+      state.status = true;
     },
-    authLogout(state) {
+    AUTH_FAIL(state) {
+      state.status = false;
+    },
+    AUTH_LOGOUT(state) {
       state.user = null;
-      state.isAuthenticated = false;
-    },
-    authFetchUser(state, data) {
-      state.user = data;
+      state.status = false;
     }
   },
   actions: {
-    async authSignIn({ commit }, user) {
+    async signIn({ commit }, user) {
       try {
-        const res = await axios({
+        await axios({
           url: '/auth/login',
           method: 'post',
           data: user
         });
 
-        console.log(res);
-        commit('authSuccess');
+        commit('AUTH_SUCCESS');
         return { success: true };
       } catch (error) {
+        commit('AUTH_FAIL');
         return { ...error.response, success: false };
       }
     },
     authSignOut({ commit }) {
-      commit('authLogout');
+      commit('AUTH_LOGOUT');
       commit('notesClear');
     }
+  },
+  getters: {
+    isAuthenticated: state => !!state.status
   }
 };

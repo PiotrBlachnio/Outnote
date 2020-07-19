@@ -5,13 +5,13 @@ export default {
     categories: []
   },
   mutations: {
-    notesCategoriesCache(state, data) {
+    NOTES_FETCH_CATEGORIES(state, data) {
       state.cache.categories = data;
     },
-    notesCache(state, data) {
+    NOTES_FETCH_NOTES(state, data) {
       state.cache.notes = data;
     },
-    notesClear(state) {
+    NOTES_CLEAR(state) {
       state.cache.categories = [];
       state.cache.notes = [];
     }
@@ -24,7 +24,7 @@ export default {
           method: 'get'
         });
 
-        commit('notesCategoriesCache', response.data.categories);
+        commit('NOTES_FETCH_CATEGORIES', response.data.categories);
         return { data: response.data.categories, success: true };
       } catch (error) {
         return { ...error.response, success: false };
@@ -37,7 +37,7 @@ export default {
           method: 'get'
         });
 
-        commit('notesCache', response.data.notes);
+        commit('NOTES_FETCH_NOTES', response.data.notes);
         return { ...response.data.notes, success: true };
       } catch (error) {
         return { ...error.response, success: false };

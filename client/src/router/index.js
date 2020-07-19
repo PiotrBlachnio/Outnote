@@ -28,13 +28,13 @@ const routes = [
         return c('router-view');
       }
     },
+    meta: { type: 'auth' },
     children: [
       {
         path: 'login',
         name: 'Login',
         meta: {
-          title: 'Notes App | Login',
-          type: 'auth'
+          title: 'Notes App | Login'
         },
         component: () => import('@/views/auth/Login')
       },
@@ -142,12 +142,12 @@ router.beforeEach((to, from, next) => {
 
   if (
     to.matched.some(record => record.meta.requiresAuth) &&
-    !store.state.isAuthenticated
+    !store.getters.isAuthenticated
   ) {
     next('/auth/login');
   } else if (
     to.matched.some(record => record.meta.type === 'auth') &&
-    store.state.isAuthenticated
+    store.getters.isAuthenticated
   ) {
     next('/dashboard');
   }
