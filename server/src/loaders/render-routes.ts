@@ -1,6 +1,10 @@
 import { Application, Router } from 'express';
 import routes from '../routes';
 import config from '../assets/config';
+import swaggerUI, { JsonObject } from 'swagger-ui-express';
+import yaml from 'yamljs';
+import path from 'path';
+
 
 export default (app: Application): void => {
     const rootRouter: { path: string, router: Router }[] = [
@@ -16,5 +20,8 @@ export default (app: Application): void => {
         app.use(`${config.API_PATH}/${object.path}`, object.router);
     });
     
+    const swaggerDocs: JsonObject = yaml.load(path.join(__dirname, '/../../swagger.yml'));
+    app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
     app.use('*', routes.defaultRoute);
 };
