@@ -33,6 +33,8 @@ class NoteService {
     };
 
     public async updateOne(searchData: Record<string, unknown>, updateData: Record<string, unknown>): Promise<void> {
+        if('content' in updateData) updateData = { ...updateData, lastEditedAt: Date.now() };
+        
         await Note.updateOne(searchData, updateData);
     };
 
