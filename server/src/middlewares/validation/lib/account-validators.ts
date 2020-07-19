@@ -7,10 +7,10 @@ import bcrypt from 'bcryptjs';
 import { Token } from "../../../assets/enums";
 
 async function validateAddLocationRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const { id, token, password } = req.body;
+    const { id, token } = req.body;
 
     try {
-        if(!validator.validateInput({ id, password })) {
+        if(!validator.validateInput({ id })) {
             throw new IncorrectInputError();
         };
 
@@ -28,12 +28,7 @@ async function validateAddLocationRoute(req: Request, res: Response, next: NextF
         if(!user) {
             throw new UserNotFoundError();
         };
-
-        const isPasswordCorrect: boolean = await bcrypt.compare(password, user.password);
-        if(!isPasswordCorrect) {
-            throw new InvalidPasswordError();
-        };
-
+        
         if(!user.isConfirmed) {
             throw new EmailNotConfirmedError();
         };
