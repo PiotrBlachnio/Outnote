@@ -67,7 +67,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: fixed;
+  position: absolute;
   z-index: 5;
   transition: width 0.2s;
   background-color: lighten($navigationBackground, 1%);
@@ -80,7 +80,10 @@ export default {
   &--active {
     padding: 1rem;
 
-    width: 420px;
+    @include mq {
+      width: 420px;
+      flex-shrink: 0;
+    }
   }
 
   &__input {

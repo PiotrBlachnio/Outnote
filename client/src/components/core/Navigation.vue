@@ -14,7 +14,7 @@
       <li
         class="navigation__element"
         v-for="category in categories"
-        :key="category.name"
+        :key="category._id"
         v-show="isMenuActive"
       >
         <router-link
@@ -34,7 +34,9 @@
         src="https://image.flaticon.com/icons/svg/848/848006.svg"
         alt=""
       />
-      <span class="navigation__user-name">{{ $store.state.user.data.username }}</span>
+      <span class="navigation__user-name">{{
+        $store.state.user.data.username
+      }}</span>
 
       <button class="navigation__settings-button" @click="logout">
         <img
@@ -99,12 +101,13 @@ export default {
   padding: 24px;
   width: 80px;
   height: 0;
-  position: relative;
+  position: absolute;
   background-color: transparent;
   transition: background 0.2s ease-in-out;
 
   @include mq {
     height: 100vh;
+    position: relative;
     transition: width 0.2s ease-in-out;
     background-color: $navigationBackground;
   }
@@ -116,7 +119,7 @@ export default {
 
     @include mq {
       width: 20rem;
-      height: 100vh;
+      flex-shrink: 0;
     }
   }
 

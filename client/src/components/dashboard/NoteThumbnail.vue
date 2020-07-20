@@ -4,7 +4,7 @@
     :to="`/dashboard/note/${note.categoryId}/${note._id}`"
   >
     <span class="note-thumbnail__title">{{ note.title }}</span>
-    <span class="note-thumbnail__content">{{ note.content }}</span>
+    <span class="note-thumbnail__content">{{ noteContent }}</span>
 
     <div class="note-thumbnail__tags">
       <span class="note-thumbnail__tag" v-for="tag in note.tags" :key="tag">
@@ -20,6 +20,15 @@ export default {
     note: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    noteContent() {
+      const { content } = this.note;
+
+      return content.length > 64
+        ? content.substr(0, 64).concat(' [...]')
+        : content;
     }
   }
 };
