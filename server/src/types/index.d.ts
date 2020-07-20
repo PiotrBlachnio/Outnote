@@ -23,6 +23,7 @@ declare module 'express-serve-static-core' {
            id?: string;
            banId?: string;
            note?: INote;
+           notes?: INote[];
            category?: ICategory;
            updatedData?: Record<string, unknown>;
        },

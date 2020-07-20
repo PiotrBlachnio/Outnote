@@ -22,14 +22,12 @@ router.get('/:id', auth(Roles.USER), validate.note.getById, async (req: Request,
 
 /**
  * @route   GET api/v1/note
- * @desc    Get all user's notes
+ * @desc    Get all notes in the specific category
  * @access  Protected
 */
-router.get('/', auth(Roles.USER), async (req: Request, res: Response): Promise<void> => {
-    const notes: INote[] = await req.services.note.find({ ownerId: req.user!.id });
-
+router.get('/', auth(Roles.USER), validate.note.getAll, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Notes retrieved successfully!', place: 'Get all notes route' });
-    res.status(200).json({ notes });
+    res.status(200).json({ notes: req.context?.notes });
 });
 
 /**

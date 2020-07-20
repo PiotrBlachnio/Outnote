@@ -22,6 +22,28 @@ async function validateGetNoteByIdRoute(req: Request, res: Response, next: NextF
     };
 };
 
+async function validateGetAllNotesRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+        const { id } = req.body;
+
+        if(!validator.validateInput({ id })) {
+            throw new NoteNotFoundError();
+        };
+
+        const category: ICategory | null = await req.services.category.findById(id);
+        if(!category) {
+            throw new CategoryNotFoundError;
+        };
+
+        const notes: INote[] = await req.services.note.find({ categoryId: id, ownerId: req.user!.id });
+
+        req.context = { notes };
+    } catch(error) {
+        error.place = 'Get note by id route';
+        next(error);
+    };
+};
+
 async function validateCreateNoteRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
         const { title, categoryId, isPrivate } = req.body;
@@ -95,6 +117,7 @@ async function validateUpdateNoteRoute(req: Request, res: Response, next: NextFu
 
 export default {
     getById: validateGetNoteByIdRoute,
+    getAll: validateGetAllNotesRoute,
     create: validateCreateNoteRoute,
     update: validateUpdateNoteRoute,
     delete: validateDeleteNoteRoute
