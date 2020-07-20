@@ -51,7 +51,7 @@ router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: Next
  * @desc    Update user's data
  * @access  Protected
 */
-router.patch('/', auth(Roles.USER), validate.user.update, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+router.patch('/', auth(Roles.USER), validate.user.update, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'User\'s data retrieved successfully!', place: 'Update user route' });
     req.eventEmitter.emit('UPDATE_USER_SUCCESS', req.user!.id, req.context?.updatedData);
 

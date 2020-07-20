@@ -1,8 +1,8 @@
-import { clearDatabase, connectDatabase, createUser } from "../../utils/test-utils";
+import { clearDatabase, connectDatabase } from "../../utils/test-utils";
 import TokenService from "../../services/token-service";
 import UserService from "../../services/user-service";
 import account from '../validation/lib/account-validators';
-import { IncorrectInputError, ExpiredOrInvalidTokenError, InvalidUserError, UserNotFoundError, InvalidPasswordError, EmailNotConfirmedError, LocationAlreadyAddedError } from "../../assets/errors";
+import { IncorrectInputError, ExpiredOrInvalidTokenError, InvalidUserError, UserNotFoundError, EmailNotConfirmedError, LocationAlreadyAddedError } from "../../assets/errors";
 import faker from 'faker';
 import { Token } from "../../assets/enums";
 import { IUser } from "../../types/models";
@@ -33,9 +33,7 @@ describe('Add location validator', () => {
         services: services
     };
 
-    const password: string = faker.random.alphaNumeric(10);
     const ip: string = faker.internet.ip();
-
     let user: IUser;
 
     describe('When input is not valid', () => {

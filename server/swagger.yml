@@ -13,7 +13,7 @@ paths:
   /api/v1/auth/login:
     post:
       tags:
-        - API
+        - AUTH
       summary: Authenticate user
       requestBody:
         content:
@@ -63,10 +63,10 @@ paths:
                     error:
                       message: Email has not been confirmed yet
                       id: 500
-  /api/v1/register:
+  /api/v1/auth/register:
     post:
       tags:
-        - API
+        - AUTH
       summary: Create new user
       requestBody:
         content:
@@ -84,9 +84,8 @@ paths:
           content:
             application/json:
               examples:
-                  Successfully registered: 
+                  Successfully registered:
                     value:
-                      success: true
         400:
           content:
             application/json:
