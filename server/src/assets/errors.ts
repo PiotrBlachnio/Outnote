@@ -7,7 +7,7 @@
  * 102 - Token has already expired or is invalid
  * 103 - Token has not expired yet or is invalid
  * 
- * ? Forbidden actions
+ * ? Forbidden action errors
  * 200 - Provided data did not pass the validation proccess
  * 201 - You must log out before performing this action
  * 202 - You do not have required permissions to perform this action
@@ -21,16 +21,17 @@
  * 400 - User does not exist
  * 401 - Provided user does not match the decoded user
  * 
- * ? Email & Userame errors
+ * ? Email & userame errors
  * 500 - Email has not been confirmed yet
  * 501 - Email has already been confirmed
  * 502 - Email already exists
  * 503 - Username already exists
  * 
- * ? Note & Categories errors
+ * ? Notes & categories errors
  * 600 - Note does not exist
  * 601 - Category does not exist
  */
+
 export class GenericError extends Error {
     public id: number = 0;
     public statusCode: number = 500;
