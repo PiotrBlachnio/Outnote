@@ -114,7 +114,7 @@ export default {
     align-self: center;
     justify-content: center;
     border-radius: 50%;
-    color: #eee;
+    color: $dashboardAddNoteButtonColor;
     font-size: 3rem;
     padding: 1rem;
     background-color: $success;

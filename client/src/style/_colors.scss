@@ -1,37 +1,78 @@
-// Main colors
+//? Main colors
 $primary: #2196F3;
 $secondary: #fff; // MVP
 $info: #33b5e5;
 $error: #ff4444;
 $success: #00c851;
 
-$backgroundColor: hsl(0, 0%, 15%);
+$color1: #eee;
+$color2: #b8b8b8;
+$color3: #444;
+$color4: #272727;
+$color5: #1d1d1d;
+$color6: #121212;
 
-// AuthForm
-$authHrBackground: #444;
-$authHeadingColor: #eee;
-$authButtonColor: #eee;
-$authButtonDisabledColor: #999;
-$authSpanColor: #ddd;
+//? App
+$appBackgroundColor: $color5;
+
+//? AuthForm
+$authHrBackground: $color3;
+$authHeadingColor: $color1;
+$authButtonColor: $color1;
+$authButtonDisabledColor: $color3;
+$authSpanColor: $color1;
 $authButtonDiscordBackground: #7289da;
-$authRouteHeadingColor: rgba(255, 255, 255, 0.05);
+$authRouteHeadingColor: $color4;
 
-// AuthInput
-$authInputLabelColor: rgb(199, 199, 199);
-$authInputLabelActiveColor: #aaa;
-$authInputFieldColor: #eee;
-$authInputFieldBackground: rgba(255, 255, 255, 0.05);
-$authInputShowPasswordButtonColor: rgb(189, 189, 189);
+//? AuthInput
+$authInputLabelColor: $color1;
+$authInputLabelActiveColor: $color2;
+$authInputFieldColor: $color1;
+$authInputFieldBackground: $color5;
+$authInputShowPasswordButtonColor: $color2;
 
-// Notification
-$notificationBackground: #313131;
-$notificationContentColor: #ddd;
+//? AuthResponsePage
+$authResponsePageWaitingColor: $color2;
+$authResponsePageHeading: $color2;
+
+//? AuthRegister
+$authRegisterHeadingColor: $color1;
+
+//? AuthResendEmail
+$authResendEmailColor: $color1;
+
+//? Notification
+$notificationBackground: $color6;
+$notificationContentColor: $color1;
 $notificationBorderInfo: $info;
 $notificationBorderError: $error;
 $notificationBorderSuccess: $success;
 
-// Navigation
-$navigationLinkColor: #eee;
-$navigationLinkActiveBorderColor: #eee;
-$navigationBackground: #161616;
-$navigationHamburgerColor: #eee;
+//? Navigation
+$navigationLinkColor: $color1;
+$navigationLinkActiveBorderColor: $color1;
+$navigationBackground: $color6;
+$navigationHamburgerColor: $color1;
+$navigationUserNameColor: $color1;
+
+//? NoteThumbnail
+$noteThumbnailRedirectColor: $color1;
+$noteThumbnailBackgroundColor: $color5;
+$noteThumbnailTitleColor: $color1;
+$noteThumbnailContentColor: $color2;
+$noteThumbnailTagBackground: purple; // todo: change it
+$noteThumbnailTagColor: $color1;
+$noteThumbnailDropdownButtonBackground: $color1;
+$noteThumbnailDropdownElementColor: $color1;
+$noteThumbnailDropdownElementBackground: $color4;
+
+//? SubNavigation
+$subNavigationSearchbarColor: $color1;
+$subNavigationSearchbarBackground: $color5;
+$subNavigationBorderLeftColor: $color4;
+
+//? 404Page
+$page404Color: $color1;
+
+//? Dashboard
+$dashboardAddNoteButtonColor: $color1;

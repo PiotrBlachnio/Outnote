@@ -67,30 +67,34 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: fixed;
+  position: absolute;
   z-index: 5;
   transition: width 0.2s;
-  background-color: lighten($navigationBackground, 1%);
+  background-color: $navigationBackground;
 
   @include mq {
     width: 0;
     position: inherit;
+    border-left: 1px solid $subNavigationBorderLeftColor;
   }
 
   &--active {
     padding: 1rem;
 
-    width: 420px;
+    @include mq {
+      width: 420px;
+      flex-shrink: 0;
+    }
   }
 
   &__input {
     width: 100%;
-    color: #eee;
+    color: $subNavigationSearchbarColor;
     border-radius: 0.25rem;
     padding: 0.5rem 1rem;
     margin-bottom: 1rem;
     border: 1px solid transparent;
-    background-color: #1c1c1c;
+    background-color: $subNavigationSearchbarBackground;
     transition: border-color 0.2s;
 
     &:focus {
@@ -105,10 +109,6 @@ export default {
     &::-webkit-scrollbar {
       display: none;
     }
-  }
-
-  &__note-thumbnail {
-    // opacity: 0;
   }
 }
 

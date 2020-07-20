@@ -12,7 +12,7 @@ export default {};
 <style lang="scss" scoped>
 .page-404 {
   height: 100vh;
-  color: #eee;
+  color: $page404Color;
   display: flex;
   align-items: center;
   justify-content: center;

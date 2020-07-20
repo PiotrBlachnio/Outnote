@@ -69,7 +69,7 @@ export default {
   text-align: center;
 
   &__waiting {
-    color: #ddd;
+    color: $authResponsePageWaitingColor;
     font-size: 2rem;
     margin-bottom: 1rem;
   }
@@ -79,7 +79,7 @@ export default {
   }
 
   &__heading {
-    color: #ddd;
+    color: $authResponsePageHeading;
     margin-bottom: 4rem;
   }
 
