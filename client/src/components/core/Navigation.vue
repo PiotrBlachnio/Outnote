@@ -186,11 +186,14 @@ export default {
 
   &__bottom {
     width: calc(100% - 3rem);
-    color: #eee;
     position: absolute;
     bottom: 1rem;
     display: flex;
     align-items: center;
+  }
+
+  &__user-name {
+    color: $navigationUserNameColor;
   }
 
   &__user-avatar {

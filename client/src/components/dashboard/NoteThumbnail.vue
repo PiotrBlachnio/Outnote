@@ -115,14 +115,14 @@ export default {
   &__redirect {
     cursor: pointer;
     width: 100%;
-    color: #eee;
+    color: $noteThumbnailRedirectColor;
     display: flex;
     flex-direction: column;
     padding: 1rem;
     position: relative;
     margin-bottom: 1rem;
     border-radius: 0.25rem;
-    background-color: #141414;
+    background-color: $noteThumbnailBackgroundColor;
 
     &:first-of-type {
       margin-top: 1rem;
@@ -130,13 +130,13 @@ export default {
   }
 
   &__title {
-    color: #e0e0e0;
+    color: $noteThumbnailTitleColor;
     font-weight: bold;
   }
 
   &__content {
     margin-top: 1rem;
-    color: #bdbdbd;
+    color: $noteThumbnailContentColor;
     font-size: 0.85rem;
   }
 
@@ -149,7 +149,8 @@ export default {
     padding: 0.05rem 0.25rem;
     margin-right: 0.25rem;
     border-radius: 0.25rem;
-    background-color: purple;
+    color: $noteThumbnailTagColor;
+    background-color: $noteThumbnailTagBackground;
   }
 
   &__dropdown {
@@ -168,7 +169,7 @@ export default {
   }
 
   &__dropdown-toggle-button {
-    color: #eee;
+    color: $noteThumbnailDropdownButtonBackground;
   }
 
   &__dropdown-menu {
@@ -181,12 +182,12 @@ export default {
   }
 
   &__dropdown-element {
-    color: #eee;
+    color: $noteThumbnailDropdownElementColor;
     text-align: left;
     font-size: 0.75rem;
     border-radius: 0.25rem;
     margin-bottom: 1px;
-    background-color: rgb(34, 34, 34);
+    background-color: $noteThumbnailDropdownElementBackground;
   }
 
   &__dropdown-button {

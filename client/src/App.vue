@@ -28,6 +28,6 @@ export default {};
 
 #app {
   height: 100vh;
-  background-color: #1c1c1c;
+  background-color: $appBackgroundColor;
 }
 </style>

@@ -80,7 +80,7 @@ export default {
   }
 
   &__heading {
-    color: #ddd;
+    color: $authResendEmailColor;
     margin-bottom: 4rem;
   }
 

@@ -136,7 +136,7 @@ export default {
   }
 
   &__heading {
-    color: #ddd;
+    color: $authRegisterHeadingColor;
     margin-bottom: 4rem;
   }
 
