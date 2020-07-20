@@ -32,7 +32,7 @@ router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: Next
  * @desc    Create new category
  * @access  Protected
 */
-router.post('/', auth(Roles.USER), validate.category.create ,async (req: Request, res: Response): Promise<void> => {
+router.post('/', auth(Roles.USER), validate.category.create, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Category create successfully!', place: 'Create category route' });
     res.status(201).json({ category: req.context?.category });
 });
