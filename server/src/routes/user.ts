@@ -5,6 +5,7 @@ import auth from '../middlewares/auth';
 import FileService from '../services/file-service';
 import cookieParser from 'cookie-parser';
 import { IUser } from '../types/models';
+import validate from '../middlewares/validation';
 
 const router: Router = Router();
 
@@ -43,6 +44,18 @@ router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: Next
         error.place = "Get user route";
         next(error);
     };
+});
+
+/**
+ * @route   PATCH api/v1/user
+ * @desc    Update user's data
+ * @access  Protected
+*/
+router.patch('/', auth(Roles.USER), validate.user.update, async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    await logger.log({ type: 'info', message: 'User\'s data retrieved successfully!', place: 'Update user route' });
+    req.eventEmitter.emit('UPDATE_USER_SUCCESS', req.user!.id, req.context?.updatedData);
+
+    res.status(200).end();
 });
 
 export default router;

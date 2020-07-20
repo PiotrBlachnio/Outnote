@@ -3,7 +3,7 @@ import validator from '../../../utils/validators';
 import { NoteNotFoundError, IncorrectInputError, CategoryNotFoundError } from "../../../assets/errors";
 import { INote, ICategory } from "../../../types/models";
 
-async function getById(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function validateGetNoteByIdRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
         if(!validator.validateInput({ id: req.params.id })) {
             throw new NoteNotFoundError();
@@ -22,7 +22,7 @@ async function getById(req: Request, res: Response, next: NextFunction): Promise
     };
 };
 
-async function create(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function validateCreateNoteRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
         const { title, categoryId, isPrivate } = req.body;
 
@@ -49,7 +49,7 @@ async function create(req: Request, res: Response, next: NextFunction): Promise<
     };
 };
 
-async function deleteById(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function validateDeleteNoteRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
         if(!validator.validateInput({ id: req.params.id })) {
             throw new IncorrectInputError;
@@ -68,7 +68,7 @@ async function deleteById(req: Request, res: Response, next: NextFunction): Prom
     };
 };
 
-async function update(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function validateUpdateNoteRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
         const { field, value } = req.body;
 
@@ -94,8 +94,8 @@ async function update(req: Request, res: Response, next: NextFunction): Promise<
 };
 
 export default {
-    getById,
-    create,
-    update,
-    delete: deleteById
+    getById: validateGetNoteByIdRoute,
+    create: validateCreateNoteRoute,
+    update: validateUpdateNoteRoute,
+    delete: validateDeleteNoteRoute
 }

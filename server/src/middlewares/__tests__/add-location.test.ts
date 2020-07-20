@@ -28,8 +28,7 @@ describe('Add location validator', () => {
         },
         body: {
             token: '',
-            id: '',
-            password: ''
+            id: ''
         },
         services: services
     };
@@ -57,7 +56,6 @@ describe('Add location validator', () => {
 
             req.body = {
                 id: '5ef4429ccc4ff01ad85c009a',
-                password: faker.random.alphaNumeric(10),
                 token: ''
             };
 
@@ -95,26 +93,9 @@ describe('Add location validator', () => {
         });
     });
 
-    describe('When password is invalid', () => {
-        it('Should throw an error', async (done) => {
-            const next: jest.Mock = jest.fn();
-            user = await createUser({ password: await bcrypt.hash(password, 12) });
-
-            req.body.id = user.id;
-            req.body.token = services.token.generateToken(Token.CONFIRM_IDENTITY, { id: user.id, ip: ip })
-
-            //@ts-ignore-start
-            await account.addLocation(req, {}, next);
-
-            expect(next).toHaveBeenCalledWith(new InvalidPasswordError);
-            done();
-        });
-    });
-
     describe('When email is not confirmed', () => {
         it('Should throw an error', async (done) => {
             const next: jest.Mock = jest.fn();
-            req.body.password = password;
 
             //@ts-ignore-start
             await account.addLocation(req, {}, next);
