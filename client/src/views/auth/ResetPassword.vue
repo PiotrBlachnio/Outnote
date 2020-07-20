@@ -27,7 +27,7 @@
 
 <script>
 import axios from 'axios';
-import { errors } from './consts';
+import { errors } from '@/assets/consts';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthForm from '@/components/auth/AuthForm';
 import authLoadingMixin from '@/mixins/AuthLoadingMixin';

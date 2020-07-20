@@ -1,4 +1,4 @@
-import { validator } from './consts';
+import { validator } from '@/assets/consts';
 
 export default function(fields) {
   const formFields = fields.map(field => {

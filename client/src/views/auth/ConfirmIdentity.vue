@@ -1,7 +1,7 @@
 <template>
   <auth-response-page
     error-message="Error! Confirmation token is not valid."
-    success-message="Your e-mail address has been confirmed."
+    success-message="Your IP address is trusted right now."
     :is-success="isSuccess"
   />
 </template>
@@ -27,11 +27,12 @@ export default {
       try {
         await axios({
           method: 'post',
-          url: '/confirm-email',
+          url: '/account/add-location',
           data: {
             id: this.$route.query.user,
             token: this.$route.query.token,
-            uniqueKey: this.$route.query.uniqueKey
+            uniqueKey: this.$route.query.uniqueKey,
+            password: '7nm#VxkG'
           }
         });
 
