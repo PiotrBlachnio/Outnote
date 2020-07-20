@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import validator from '../../../utils/validators';
-import { IncorrectInputError, NoteNotFoundError } from "../../../assets/errors";
+import { IncorrectInputError, NoteNotFoundError, CategoryNotFoundError } from "../../../assets/errors";
 import { ICategory } from "../../../types/models";
 
 async function validateCreateCategoryRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -32,7 +32,7 @@ async function validateDeleteCategoryRoute(req: Request, res: Response, next: Ne
         const category: ICategory | null = await req.services.category.findOne({ _id: req.params.id, ownerId: req.user!.id });
 
         if(!category) {
-            throw new NoteNotFoundError();
+            throw new CategoryNotFoundError();
         }
 
         req.context = { id: category.id };
@@ -53,7 +53,7 @@ async function validateUpdateCategoryRoute(req: Request, res: Response, next: Ne
         const category: ICategory | null = await req.services.category.findOne({ _id: req.params.id, ownerId: req.user!.id });
 
         if(!category) {
-            throw new NoteNotFoundError();
+            throw new CategoryNotFoundError();
         }
 
         req.context = {
