@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { errors } from './consts';
+import { errors } from '@/assets/consts';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthCheckbox from '@/components/auth/AuthCheckbox';
 import AuthForm from '@/components/auth/AuthForm';

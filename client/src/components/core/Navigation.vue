@@ -34,9 +34,9 @@
         src="https://image.flaticon.com/icons/svg/848/848006.svg"
         alt=""
       />
-      <span class="navigation__user-name">Username</span>
+      <span class="navigation__user-name">{{ $store.state.user.data.username }}</span>
 
-      <button class="navigation__settings-button">
+      <button class="navigation__settings-button" @click="logout">
         <img
           class="navigation__settings-icon"
           src="https://image.flaticon.com/icons/svg/2919/2919706.svg"
@@ -86,6 +86,9 @@ export default {
     closeNavigation() {
       this.isMenuActive = !this.isMenuActive;
       this.$emit('navigationClosed');
+    },
+    logout() {
+      this.$store.dispatch('signOut');
     }
   }
 };

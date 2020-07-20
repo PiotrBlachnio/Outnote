@@ -31,7 +31,8 @@ export default {
           data: {
             id: this.$route.query.user,
             token: this.$route.query.token,
-            uniqueKey: this.$route.query.uniqueKey
+            uniqueKey: this.$route.query.uniqueKey,
+            password: '7nm#VxkG'
           }
         });
 

@@ -1,30 +1,25 @@
 <template>
-  <div class="note-thumbnail">
-    <span class="note-thumbnail__title">{{ title }}</span>
-    <span class="note-thumbnail__content">{{ content }}</span>
+  <router-link
+    class="note-thumbnail"
+    :to="`/dashboard/note/${note.categoryId}/${note._id}`"
+  >
+    <span class="note-thumbnail__title">{{ note.title }}</span>
+    <span class="note-thumbnail__content">{{ note.content }}</span>
 
     <div class="note-thumbnail__tags">
-      <span class="note-thumbnail__tag" v-for="tag in tags" :key="tag">
+      <span class="note-thumbnail__tag" v-for="tag in note.tags" :key="tag">
         #{{ tag }}
       </span>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
 export default {
   props: {
-    title: {
-      type: String,
+    note: {
+      type: Object,
       required: true
-    },
-    content: {
-      type: String,
-      required: true
-    },
-    tags: {
-      type: Array,
-      required: false
     }
   }
 };
@@ -32,6 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 .note-thumbnail {
+  cursor: pointer;
   width: 100%;
   color: #eee;
   display: flex;
@@ -51,11 +47,14 @@ export default {
   }
 
   &__content {
+    margin-top: 1rem;
     color: #bdbdbd;
+    font-size: 0.85rem;
   }
 
-  &__tags {}
-
+  &__tags {
+    margin-top: 0.5rem;
+  }
 
   &__tag {
     font-size: 0.75rem;

@@ -1,20 +1,22 @@
 <template>
   <transition name="width">
-    <div class="sub-navigation" v-show="isActive">
+    <div class="sub-navigation" :class="{ 'sub-navigation--active': isActive }">
       <input
         type="text"
         class="sub-navigation__input"
         placeholder="Search..."
+        v-show="isActive"
       />
 
-      <note-thumbnail
-        class="sub-navigation__note-thumbnail"
-        v-for="note in notes"
-        :key="note._id"
-        :title="note.title"
-        :tags="note.tags"
-        :content="note.content"
-      />
+      <div class="sub-navigation__notes" v-show="isActive">
+        <note-thumbnail
+          ref="note"
+          class="sub-navigation__note-thumbnail"
+          v-for="note in notes"
+          :key="note._id"
+          :note="note"
+        />
+      </div>
     </div>
   </transition>
 </template>
@@ -42,15 +44,17 @@ export default {
     return {};
   },
   watch: {
-    notes(state) {
-      if (state.length > 0) {
-        gsap.fromTo(
-          '.sub-navigation__note-thumbnail',
-          state ? 0.5 : 0,
-          { opacity: 0, x: '-2rem' },
-          { stagger: 0.1, x: 0, opacity: 1, delay: 0.2 }
-        );
-      }
+    async isActive(state) {
+      this.$nextTick(() => {
+        gsap
+          .fromTo(
+            '.sub-navigation__note-thumbnail',
+            state ? 0.5 : 0,
+            { opacity: 0, x: '-2rem' },
+            { stagger: 0.2, x: 0, opacity: 1, delay: 0.2 }
+          )
+          .play();
+      });
     }
   }
 };
@@ -59,18 +63,24 @@ export default {
 <style lang="scss" scoped>
 .sub-navigation {
   width: 100%;
-  height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
   position: fixed;
   z-index: 5;
+  transition: width 0.2s;
   background-color: lighten($navigationBackground, 1%);
 
   @include mq {
-    width: 420px;
+    width: 0;
     position: inherit;
+  }
+
+  &--active {
+    padding: 1rem;
+
+    width: 420px;
   }
 
   &__input {
@@ -78,6 +88,7 @@ export default {
     color: #eee;
     border-radius: 0.25rem;
     padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
     border: 1px solid transparent;
     background-color: #1c1c1c;
     transition: border-color 0.2s;
@@ -87,8 +98,17 @@ export default {
     }
   }
 
+  &__notes {
+    width: 100%;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   &__note-thumbnail {
-    opacity: 0;
+    // opacity: 0;
   }
 }
 

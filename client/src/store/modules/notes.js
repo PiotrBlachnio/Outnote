@@ -6,18 +6,27 @@ export default {
   },
   mutations: {
     NOTES_FETCH_CATEGORIES(state, data) {
-      state.cache.categories = data;
-    },
-    NOTES_FETCH_NOTES(state, data) {
-      state.cache.notes = data;
+      state.categories = data;
+      state.categories.forEach(category => {
+        category.notes = [];
+      });
     },
     NOTES_CLEAR(state) {
-      state.cache.categories = [];
-      state.cache.notes = [];
+      state.categories = [];
+    },
+    NOTES_CATEGORIZE(state, notes) {
+      state.categories.forEach(category => {
+        notes.forEach(note => {
+          if (note.categoryId === category._id) {
+            category.notes.push(note);
+          }
+        });
+      });
     }
   },
+
   actions: {
-    async notesCategoriesCache({ commit }) {
+    async fetchNotesCategories({ commit }) {
       try {
         const response = await axios({
           url: '/category',
@@ -30,18 +39,21 @@ export default {
         return { ...error.response, success: false };
       }
     },
-    async notesCache({ commit }) {
+    async fetchNotes({ commit }) {
       try {
         const response = await axios({
           url: '/note',
           method: 'get'
         });
 
-        commit('NOTES_FETCH_NOTES', response.data.notes);
+        commit('NOTES_CATEGORIZE', response.data.notes);
         return { ...response.data.notes, success: true };
       } catch (error) {
         return { ...error.response, success: false };
       }
     }
+  },
+  getters: {
+    areCategoriesCached: state => state.categories.length > 0
   }
 };

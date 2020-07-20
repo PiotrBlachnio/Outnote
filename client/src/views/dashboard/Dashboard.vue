@@ -8,14 +8,16 @@
     />
     <sub-navigation :is-active="submenuActive" :notes="notes" />
 
-    <div class="dashboard__content"></div>
+    <div class="dashboard__content">
+      <router-view />
+    </div>
 
     <button class="dashboard__add-button"><span>+</span></button>
   </div>
 </template>
 
 <script>
-import { errors } from '../auth/consts';
+import { errors } from '@/assets/consts';
 import Navigation from '@/components/core/Navigation';
 import SubNavigation from '@/components/dashboard/SubNavigation.vue';
 
@@ -24,9 +26,9 @@ export default {
     Navigation,
     SubNavigation
   },
-  created() {
-    // this.fetchCategories();
-    this.fetchNotes();
+  async created() {
+    this.fetchUser();
+    this.fetchCategories();
   },
   data() {
     return {
@@ -37,30 +39,50 @@ export default {
   },
   methods: {
     showSubmenu(category) {
-      this.notes = this.$store.state.notes.notes.filter(
-        note => note.categoryId === category._id
-      );
+      this.$store.state.notes.categories.filter(cat => {
+        if (category._id === cat._id) {
+          this.notes = cat.notes;
+        }
+      });
+
       this.submenuActive = true;
     },
-    async fetchCategories() {
-      const execute = await this.$store.dispatch('notesCategoriesCache');
+    async fetchUser() {
+      if (!this.$store.getters.exist) {
+        const execute = await this.$store.dispatch('fetchUserData');
 
-      if (execute.success) {
-        this.categories = execute.data;
-      } else {
-        console.log(execute);
-        if (execute.data.error.id === 101) {
-          this.$store.dispatch('authSignOut');
+        if (!execute.success) {
+          this.$store.dispatch('notificationActivate', {
+            content: errors[execute.data.error.id].message,
+            type: 'error'
+          });
         }
+      }
+    },
+    async fetchCategories() {
+      if (!this.$store.getters.areCategoriesCached) {
+        const execute = await this.$store.dispatch('fetchNotesCategories');
 
-        this.$store.dispatch('notificationActivate', {
-          content: errors[execute.data.error.id].message,
-          type: 'error'
-        });
+        if (execute.success) {
+          this.categories = execute.data;
+          this.fetchNotes();
+        } else {
+          console.log(execute);
+          if (execute.data.error.id === 101) {
+            this.$store.dispatch('signOut');
+          }
+
+          this.$store.dispatch('notificationActivate', {
+            content: errors[execute.data.error.id].message,
+            type: 'error'
+          });
+        }
+      } else {
+        this.categories = this.$store.state.notes.categories;
       }
     },
     async fetchNotes() {
-      const execute = await this.$store.dispatch('notesCache');
+      const execute = await this.$store.dispatch('fetchNotes');
 
       if (!execute.success) {
         this.$store.dispatch('notificationActivate', {
@@ -79,7 +101,10 @@ export default {
   position: relative;
 
   &__content {
-    width: auto;
+    // width: 100%;
+    flex-grow: 1;
+    padding: 2rem;
+    max-width: 100%;
   }
 
   &__add-button {

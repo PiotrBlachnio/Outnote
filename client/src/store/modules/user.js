@@ -23,5 +23,8 @@ export default {
         return { ...error.response, success: false };
       }
     }
+  },
+  getters: {
+    exist: state => !!state.data
   }
 };

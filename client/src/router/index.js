@@ -116,7 +116,17 @@ const routes = [
       requiresAuth: true,
       title: 'User Dashboard'
     },
-    component: () => import('@/views/dashboard/Dashboard')
+    component: () => import('@/views/dashboard/Dashboard'),
+    children: [
+      // {
+      //   path: 'settings',
+      //   component: () => import('@/views/dashboard/Settings')
+      // },
+      {
+        path: 'note/:categoryId/:noteId',
+        component: () => import('@/views/dashboard/Note')
+      }
+    ]
   },
   {
     path: '/logs',

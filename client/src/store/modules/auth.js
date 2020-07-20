@@ -32,9 +32,18 @@ export default {
         return { ...error.response, success: false };
       }
     },
-    authSignOut({ commit }) {
-      commit('AUTH_LOGOUT');
-      commit('notesClear');
+    async signOut({ commit }) {
+      try {
+        await axios({
+          url: '/auth/logout',
+          method: 'post'
+        });
+
+        commit('AUTH_LOGOUT');
+        commit('NOTES_CLEAR');
+      } catch (error) {
+        return { ...error.response, success: false };
+      }
     }
   },
   getters: {
