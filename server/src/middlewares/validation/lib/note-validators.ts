@@ -16,6 +16,7 @@ async function validateGetNoteByIdRoute(req: Request, res: Response, next: NextF
         }
 
         req.context = { note };
+        next();
     } catch(error) {
         error.place = 'Get note by id route';
         next(error);
@@ -38,6 +39,7 @@ async function validateGetAllNotesRoute(req: Request, res: Response, next: NextF
         const notes: INote[] = await req.services.note.find({ categoryId: id, ownerId: req.user!.id });
 
         req.context = { notes };
+        next();
     } catch(error) {
         error.place = 'Get note by id route';
         next(error);
@@ -65,6 +67,7 @@ async function validateCreateNoteRoute(req: Request, res: Response, next: NextFu
         });
 
         req.context = { note };
+        next();
     } catch(error) {
         error.place = 'Create note route';
         next(error);
@@ -84,6 +87,7 @@ async function validateDeleteNoteRoute(req: Request, res: Response, next: NextFu
         }
 
         req.context = { id: req.params.id };
+        next();
     } catch(error) {
         error.place = 'Delete note route';
         next(error);
@@ -108,7 +112,7 @@ async function validateUpdateNoteRoute(req: Request, res: Response, next: NextFu
             updatedData: { [field]: value },
             id: req.params.id
         };
-
+        next();
     } catch(error) {
         error.place = 'Update note route';
         next(error);
