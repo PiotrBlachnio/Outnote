@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { IncorrectInputError, InvalidUserError, ExpiredOrInvalidTokenError, UserNotFoundError, InvalidPasswordError, EmailNotConfirmedError, LocationAlreadyAddedError, EmailAlreadyConfirmedError, AlreadyLoggedInError } from "../../../assets/errors";
+import { IncorrectInputError, InvalidUserError, ExpiredOrInvalidTokenError, UserNotFoundError, EmailNotConfirmedError, LocationAlreadyAddedError, EmailAlreadyConfirmedError, AlreadyLoggedInError } from "../../../assets/errors";
 import validator from '../../../utils/validators';
 import { IUser } from "../../../types/models";
 import { IConfirmIdentityTokenPayload, IConfirmEmailTokenPayload, IResetPasswordTokenPayload } from "../../../types/tokens";
-import bcrypt from 'bcryptjs';
 import { Token } from "../../../assets/enums";
 
 async function validateAddLocationRoute(req: Request, res: Response, next: NextFunction): Promise<void> {

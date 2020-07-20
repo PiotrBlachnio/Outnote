@@ -16,7 +16,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
 
 /**
  * @route   /logs
- * @desc    Return all server logs
+ * @desc    Delete all logs
  * @access  Public
 */
 router.delete('/', async (req: Request, res: Response): Promise<void> => {
