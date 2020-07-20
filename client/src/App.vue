@@ -1,6 +1,5 @@
 <template>
   <div id="app" data-theme="dark">
-    <!-- <navigation /> -->
     <transition name="fade">
       <router-view />
     </transition>
@@ -8,14 +7,7 @@
 </template>
 
 <script>
-// import Navigation from './components/core/Navigation';
-// TODO: move navigation to other view/component
-
-export default {
-  components: {
-    // Navigation
-  }
-};
+export default {};
 </script>
 
 <style lang="scss">
@@ -36,6 +28,6 @@ export default {
 
 #app {
   height: 100vh;
-  background-color: #1c1c1c;
+  background-color: $appBackgroundColor;
 }
 </style>

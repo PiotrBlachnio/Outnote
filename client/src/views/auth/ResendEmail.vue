@@ -25,7 +25,7 @@
 
 <script>
 import axios from 'axios';
-import { errors } from './consts';
+import { errors } from '@/assets/consts';
 
 export default {
   data() {
@@ -80,7 +80,7 @@ export default {
   }
 
   &__heading {
-    color: #ddd;
+    color: $authResendEmailColor;
     margin-bottom: 4rem;
   }
 

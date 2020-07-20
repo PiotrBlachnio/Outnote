@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { errors } from './consts';
+import { errors } from '@/assets/consts';
 import AuthInput from '@/components/auth/AuthInput';
 import AuthCheckbox from '@/components/auth/AuthCheckbox';
 import AuthForm from '@/components/auth/AuthForm';
@@ -70,7 +70,7 @@ export default {
       if (!this.validateForm()) return;
 
       this.enableFormLoading();
-      const execute = await this.$store.dispatch('authSignIn', this.form);
+      const execute = await this.$store.dispatch('signIn', this.form);
       this.disableFormLoading();
 
       if (!execute.success) {
@@ -79,20 +79,22 @@ export default {
             name: 'Resend Email',
             params: { email: this.form.email }
           });
+        } else if (execute.data.error.id === 201) {
+          this.$store.dispatch('notificationActivate', {
+            content:
+              "Looks like you're trying to log in from a different location.<br />" +
+              'Please confirm your identity by clicking a link in your email.',
+            type: 'info'
+          });
         } else {
           this.$store.dispatch('notificationActivate', {
             content: errors[execute.data.error.id].message,
             type: 'error'
           });
+
+          this.activateInputsError();
         }
-
-        this.activateInputsError();
       } else {
-        this.$store.dispatch('notificationActivate', {
-          content: 'Signed In successfully!',
-          type: 'success'
-        });
-
         this.$router.push('/dashboard');
       }
     },
