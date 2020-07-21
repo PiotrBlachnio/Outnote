@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import validator from '../../../utils/validators';
-import { IncorrectInputError, NoteNotFoundError, CategoryNotFoundError } from "../../../assets/errors";
+import { IncorrectInputError, CategoryNotFoundError } from "../../../assets/errors";
 import { ICategory } from "../../../types/models";
 
 async function validateCreateCategoryRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -17,6 +17,7 @@ async function validateCreateCategoryRoute(req: Request, res: Response, next: Ne
         });
 
         req.context = { category };
+        next();
     } catch(error) {
         error.place = 'Create category route';
         next(error);
@@ -36,6 +37,7 @@ async function validateDeleteCategoryRoute(req: Request, res: Response, next: Ne
         }
 
         req.context = { id: category.id };
+        next();
     } catch(error) {
         error.place = 'Delete category route';
         next(error);
@@ -60,6 +62,7 @@ async function validateUpdateCategoryRoute(req: Request, res: Response, next: Ne
             id: category.id,
             updatedData: { [req.body.field]: req.body.value }
         };
+        next();
     } catch(error) {
         error.place = 'Update category route';
         next(error);
