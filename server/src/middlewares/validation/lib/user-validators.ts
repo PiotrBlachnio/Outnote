@@ -19,6 +19,7 @@ async function validateUpdateUserRoute(req: Request, res: Response, next: NextFu
         req.context = { 
             updatedData: { [field]: value }
         };
+        next();
     } catch(error) {
         error.place = "Update user route";
         next(error);
