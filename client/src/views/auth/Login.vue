@@ -8,13 +8,13 @@
       @submit="signIn"
       :loading="formLoading"
     >
-      <auth-input
+      <base-input
         id="email"
         label="Email"
         v-model="form.email"
         :error="error.emailInput"
       />
-      <auth-input
+      <base-input
         id="Password"
         label="Password"
         type="password"
@@ -39,7 +39,7 @@
 
 <script>
 import { errors } from '@/assets/consts';
-import AuthInput from '@/components/auth/AuthInput';
+import BaseInput from '@/components/core/BaseInput';
 import AuthCheckbox from '@/components/auth/AuthCheckbox';
 import AuthForm from '@/components/auth/AuthForm';
 import authLoadingMixin from '@/mixins/AuthLoadingMixin';
@@ -48,7 +48,7 @@ import authValidator from '@/mixins/AuthValidatorMixin';
 export default {
   components: {
     AuthForm,
-    AuthInput,
+    BaseInput,
     AuthCheckbox
   },
   mixins: [authLoadingMixin, authValidator],

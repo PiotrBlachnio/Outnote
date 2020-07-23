@@ -9,7 +9,7 @@
       :loading="formLoading"
       show-back-to-login
     >
-      <auth-input id="email" label="Email" v-model="form.email" />
+      <base-input id="email" label="Email" v-model="form.email" />
     </auth-form>
   </div>
 </template>
@@ -17,7 +17,7 @@
 <script>
 import axios from 'axios';
 import { errors } from '@/assets/consts';
-import AuthInput from '@/components/auth/AuthInput';
+import BaseInput from '@/components/core/BaseInput';
 import AuthForm from '@/components/auth/AuthForm';
 import authLoadingMixin from '@/mixins/AuthLoadingMixin';
 import authValidator from '@/mixins/AuthValidatorMixin';
@@ -25,7 +25,7 @@ import authValidator from '@/mixins/AuthValidatorMixin';
 export default {
   components: {
     AuthForm,
-    AuthInput
+    BaseInput
   },
   mixins: [authLoadingMixin, authValidator],
   data() {
