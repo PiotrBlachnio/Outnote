@@ -20,7 +20,12 @@ router.get('/', auth(Roles.USER), async (req: Request, res: Response, next: Next
         const categories: ICategory[] = await req.services.category.find({ ownerId: req.user!.id });
 
         await logger.log({ type: 'info', message: 'Categories retrieved successfully!', place: 'Get all categories route' });
-        res.status(200).json({ categories });
+        res.status(200).json({ categories: categories.reduce((obj, item) => {
+            return {
+                ...obj,
+                [item.id]: item
+            };
+        }, {})});
     } catch(error) {
         error.place = 'Get all categories route';
         next(error);
