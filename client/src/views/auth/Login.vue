@@ -74,12 +74,12 @@ export default {
       this.disableFormLoading();
 
       if (!execute.success) {
-        if (execute.data.error.id === 304) {
+        if (execute.data.error.id === 500) {
           this.$router.push({
             name: 'Resend Email',
             params: { email: this.form.email }
           });
-        } else if (execute.data.error.id === 201) {
+        } else if (execute.data.error.id === 300) {
           this.$store.dispatch('notificationActivate', {
             content:
               "Looks like you're trying to log in from a different location.<br />" +

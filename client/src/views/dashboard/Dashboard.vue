@@ -33,17 +33,13 @@ export default {
   data() {
     return {
       submenuActive: false,
-      categories: [],
-      notes: []
+      categories: {},
+      notes: {}
     };
   },
   methods: {
     showSubmenu(category) {
-      this.$store.state.notes.categories.filter(cat => {
-        if (category._id === cat._id) {
-          this.notes = cat.notes;
-        }
-      });
+      this.notes = this.$store.state.cache.categories[category._id].notes;
 
       this.submenuActive = true;
     },
@@ -64,10 +60,8 @@ export default {
         const execute = await this.$store.dispatch('fetchNotesCategories');
 
         if (execute.success) {
-          this.categories = execute.data;
-          this.fetchNotes();
+          this.categories = this.$store.state.cache.categories;
         } else {
-          console.log(execute);
           if (execute.data.error.id === 101) {
             this.$store.dispatch('signOut');
           }
@@ -78,17 +72,7 @@ export default {
           });
         }
       } else {
-        this.categories = this.$store.state.notes.categories;
-      }
-    },
-    async fetchNotes() {
-      const execute = await this.$store.dispatch('fetchNotes');
-
-      if (!execute.success) {
-        this.$store.dispatch('notificationActivate', {
-          content: errors[execute.data.error.id].message,
-          type: 'error'
-        });
+        this.categories = this.$store.state.cache.categories;
       }
     }
   }
@@ -103,8 +87,12 @@ export default {
   &__content {
     // width: 100%;
     flex-grow: 1;
-    padding: 2rem;
+    padding: 4rem 2rem;
     max-width: 100%;
+
+    @include mq {
+      padding: 2rem;
+    }
   }
 
   &__add-button {

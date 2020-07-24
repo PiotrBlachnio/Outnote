@@ -2,17 +2,17 @@ import axios from 'axios';
 
 export default {
   state: {
-    categories: []
+    categories: {}
   },
   mutations: {
     NOTES_FETCH_CATEGORIES(state, data) {
-      state.categories = data;
-      state.categories.forEach(category => {
-        category.notes = [];
+      data.forEach(category => {
+        state.categories[category._id] = category;
+        state.categories[category._id].notes = new Object();
       });
     },
     NOTES_CLEAR(state) {
-      state.categories = [];
+      state.categories = {};
     },
     NOTES_CATEGORIZE(state, notes) {
       state.categories.forEach(category => {
@@ -22,9 +22,11 @@ export default {
           }
         });
       });
+    },
+    NOTES_CACHE_NEW_CATEGORY(state, category) {
+      state.categories[category._id] = category;
     }
   },
-
   actions: {
     async fetchNotesCategories({ commit }) {
       try {
@@ -51,9 +53,25 @@ export default {
       } catch (error) {
         return { ...error.response, success: false };
       }
+    },
+    async addNewCategory({ commit }, name) {
+      try {
+        const response = await axios({
+          url: '/category',
+          method: 'post',
+          data: {
+            name: name
+          }
+        });
+
+        commit('NOTES_CACHE_NEW_CATEGORY', response.data.category);
+        return { success: true };
+      } catch (error) {
+        return { ...error.response, success: false };
+      }
     }
   },
   getters: {
-    areCategoriesCached: state => state.categories.length > 0
+    areCategoriesCached: state => !!Object.entries(state.categories).length
   }
 };
