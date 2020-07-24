@@ -6,10 +6,7 @@ export default {
   },
   mutations: {
     NOTES_FETCH_CATEGORIES(state, data) {
-      data.forEach(category => {
-        state.categories[category._id] = category;
-        state.categories[category._id].notes = new Object();
-      });
+      state.categories = data;
     },
     NOTES_CLEAR(state) {
       state.categories = {};
