@@ -30,6 +30,7 @@
  * ? Notes & categories errors
  * 600 - Note does not exist
  * 601 - Category does not exist
+ * 602 - You do not have access to this note
  */
 
 export class GenericError extends Error {
@@ -220,5 +221,15 @@ export class CategoryNotFoundError extends GenericError {
         this.id = 601;
         this.statusCode = 404;
         this.message = 'Category does not exist';
+    };
+};
+
+export class InaccessibleNoteError extends GenericError {
+    constructor() {
+        super();
+
+        this.id = 601;
+        this.statusCode = 404;
+        this.message = 'You do not have access to this note';
     };
 };

@@ -64,3 +64,4 @@ npm run dev
   
  - 600 - Note does not exist
  - 601 - Category does not exist
+ - 602 - You do not have access to this note
