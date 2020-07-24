@@ -44,7 +44,7 @@ export default {
       this.submenuActive = true;
     },
     async fetchUser() {
-      if (!this.$store.getters.exist) {
+      if (!this.$store.getters.doesUserExist) {
         const execute = await this.$store.dispatch('fetchUserData');
 
         if (!execute.success) {

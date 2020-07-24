@@ -25,6 +25,6 @@ export default {
     }
   },
   getters: {
-    exist: state => !!state.data
+    doesUserExist: state => !!state.data
   }
 };
