@@ -38,7 +38,13 @@ async function validateGetAllNotesRoute(req: Request, res: Response, next: NextF
 
         const notes: INote[] = await req.services.note.find({ categoryId: id, ownerId: req.user!.id });
 
-        req.context = { notes };
+        req.context = { notes: notes.reduce((obj, item) => {
+            return {
+                ...obj,
+                [item.id]: item
+            }
+        }, {})};
+        
         next();
     } catch(error) {
         error.place = 'Get note by id route';
