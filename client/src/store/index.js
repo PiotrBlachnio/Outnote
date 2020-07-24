@@ -5,7 +5,7 @@ import VuexPersistence from 'vuex-persist';
 import auth from './modules/auth';
 import user from './modules/user';
 import notification from './modules/notification';
-import notes from './modules/notes';
+import cache from './modules/cache';
 
 Vue.use(Vuex);
 
@@ -15,7 +15,7 @@ const vuexLocal = new VuexPersistence({
   reducer: state => ({
     auth: state.auth,
     user: state.user,
-    notes: state.notes
+    cache: state.cache
   })
 });
 
@@ -24,7 +24,7 @@ const store = new Vuex.Store({
     auth,
     user,
     notification,
-    notes
+    cache
   },
   plugins: [vuexLocal.plugin]
 });

@@ -11,19 +11,19 @@
         @submit="signUp"
         :loading="formLoading"
       >
-        <auth-input
+        <base-input
           id="username"
           label="Username"
           v-model="form.username"
           :error="isInputInvalid"
         />
-        <auth-input
+        <base-input
           id="email"
           label="Email"
           v-model="form.email"
           :error="isInputInvalid"
         />
-        <auth-input
+        <base-input
           id="Password"
           label="Password"
           type="password"
@@ -60,7 +60,7 @@
 <script>
 import axios from 'axios';
 import { errors } from '@/assets/consts';
-import AuthInput from '@/components/auth/AuthInput';
+import BaseInput from '@/components/core/BaseInput';
 import AuthForm from '@/components/auth/AuthForm';
 import authLoadingMixin from '@/mixins/AuthLoadingMixin';
 import authValidator from '@/mixins/AuthValidatorMixin';
@@ -68,7 +68,7 @@ import authValidator from '@/mixins/AuthValidatorMixin';
 export default {
   components: {
     AuthForm,
-    AuthInput
+    BaseInput
   },
   mixins: [authLoadingMixin, authValidator],
   data() {

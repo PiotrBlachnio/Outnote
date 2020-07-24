@@ -1,9 +1,12 @@
 <template>
-  <div class="auth__input">
+  <div class="base__input">
     <label
       :for="id"
-      class="auth__label"
-      :class="{ 'auth__label--active': inputValue || isInputActive }"
+      class="base__label"
+      :class="{
+        'base__label--active': inputValue || isInputActive,
+        'base__label--smaller': lessPadding
+      }"
     >
       {{ label }}
     </label>
@@ -11,20 +14,24 @@
       :type="passwordVisible ? 'text' : type"
       :id="id"
       v-model="inputValue"
-      class="auth__field"
+      class="base__field"
       spellcheck="false"
       autocomplete="off"
-      :class="{ 'auth__field--error': error }"
+      :class="{
+        'base__field--error': error,
+        'base__field--less-padding': lessPadding
+      }"
       @focus="isInputActive = true"
       @blur="isInputActive = false"
       @input="$emit('input', inputValue)"
+      @keypress.enter="$emit('keypressEnter')"
     />
 
     <transition name="fade-password">
       <button
         type="button"
-        class="auth__show-password"
-        :class="{ 'auth__show-password--active': passwordVisible }"
+        class="base__show-password"
+        :class="{ 'base__show-password--active': passwordVisible }"
         @click="passwordVisible = !passwordVisible"
         v-if="inputValue.length > 0 && type === 'password'"
       >
@@ -59,6 +66,11 @@ export default {
       type: Number,
       required: false,
       default: 3000
+    },
+    lessPadding: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   data() {
@@ -72,7 +84,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.auth__input {
+.base__input {
   display: flex;
   width: 100%;
   position: relative;
@@ -80,11 +92,11 @@ export default {
   flex-direction: column;
 }
 
-.auth__label {
+.base__label {
   cursor: text;
   position: absolute;
   transform: translate(1rem, 1.5rem);
-  color: $authInputLabelColor;
+  color: $baseInputLabelColor;
   transition: all 0.2s ease-in-out;
 
   &::selection {
@@ -92,23 +104,37 @@ export default {
   }
 
   &--active {
-    color: $authInputLabelActiveColor;
+    color: $baseInputLabelActiveColor;
     font-size: 0.75rem;
     transform: translate(1rem, 0.5rem);
   }
+
+  &--smaller {
+    font-size: 0.85rem;
+    transform: translate(0.5rem, 0.85rem);
+  }
+
+  &--active.base__label--smaller {
+    font-size: 0.65rem;
+    transform: translate(0.5rem, 0.2rem);
+  }
 }
 
-.auth__field {
-  color: $authInputFieldColor;
+.base__field {
+  color: $baseInputFieldColor;
   border: none;
   padding: 2rem 1rem 1rem;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out;
   border: 1px solid transparent;
-  background-color: $authInputFieldBackground;
+  background-color: $baseInputFieldBackground;
 
   &:focus {
     border-color: $primary;
+  }
+
+  &--less-padding {
+    padding: 1rem 0.5rem 0.5rem;
   }
 
   &--error {
@@ -121,11 +147,11 @@ export default {
   }
 }
 
-.auth__show-password {
+.base__show-password {
   position: absolute;
   right: 1rem;
   top: 50%;
-  color: $authInputShowPasswordButtonColor;
+  color: $baseInputShowPasswordButtonColor;
   font-size: 2rem;
   transform: translateY(-50%);
   cursor: pointer;
@@ -136,7 +162,7 @@ export default {
     position: absolute;
     width: 3px;
     height: 2rem;
-    background-color: $authInputShowPasswordButtonColor;
+    background-color: $baseInputShowPasswordButtonColor;
     transform: translate(0.9rem, -2.1rem) rotate(45deg);
   }
 }

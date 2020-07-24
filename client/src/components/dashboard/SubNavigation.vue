@@ -8,7 +8,11 @@
         v-show="isActive"
       />
 
-      <div class="sub-navigation__notes" v-show="isActive">
+      <div
+        class="sub-navigation__notes"
+        v-show="isActive"
+        v-if="notes.length > 0"
+      >
         <note-thumbnail
           ref="note"
           class="sub-navigation__note-thumbnail"
@@ -17,6 +21,10 @@
           :note="note"
         />
       </div>
+
+      <i class="sub-navigation__empty-string" v-else v-show="isActive">
+        Nothing to show...
+      </i>
     </div>
   </transition>
 </template>
@@ -33,7 +41,7 @@ export default {
       default: false
     },
     notes: {
-      type: Array,
+      type: Object,
       required: true
     }
   },
@@ -44,14 +52,14 @@ export default {
     return {};
   },
   watch: {
-    async isActive(state) {
+    async notes(state) {
       this.$nextTick(() => {
         gsap
           .fromTo(
             '.sub-navigation__note-thumbnail',
             state ? 0.5 : 0,
             { opacity: 0, x: '-2rem' },
-            { stagger: 0.2, x: 0, opacity: 1, delay: 0.2 }
+            { stagger: 0.1, x: 0, opacity: 1, delay: 0.2 }
           )
           .play();
       });
@@ -68,7 +76,7 @@ export default {
   flex-direction: column;
   align-items: center;
   position: absolute;
-  z-index: 5;
+  z-index: 100;
   transition: width 0.2s;
   background-color: $navigationBackground;
 
@@ -80,6 +88,7 @@ export default {
 
   &--active {
     padding: 1rem;
+    height: 100vh;
 
     @include mq {
       width: 420px;
@@ -109,6 +118,10 @@ export default {
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+
+  &__empty-string {
+    color: $color3;
   }
 }
 

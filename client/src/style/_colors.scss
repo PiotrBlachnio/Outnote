@@ -1,5 +1,5 @@
 //? Main colors
-$primary: #2196F3;
+$primary: #2196f3;
 $secondary: #fff; // MVP
 $info: #33b5e5;
 $error: #ff4444;
@@ -24,12 +24,12 @@ $authSpanColor: $color1;
 $authButtonDiscordBackground: #7289da;
 $authRouteHeadingColor: $color4;
 
-//? AuthInput
-$authInputLabelColor: $color1;
-$authInputLabelActiveColor: $color2;
-$authInputFieldColor: $color1;
-$authInputFieldBackground: $color5;
-$authInputShowPasswordButtonColor: $color2;
+//? BaseInput
+$baseInputLabelColor: $color1;
+$baseInputLabelActiveColor: $color2;
+$baseInputFieldColor: $color1;
+$baseInputFieldBackground: $color5;
+$baseInputShowPasswordButtonColor: $color2;
 
 //? AuthResponsePage
 $authResponsePageWaitingColor: $color2;
@@ -54,6 +54,8 @@ $navigationLinkActiveBorderColor: $color1;
 $navigationBackground: $color6;
 $navigationHamburgerColor: $color1;
 $navigationUserNameColor: $color1;
+$navigationAddLinkColor: $color1;
+$navigationAddLinkBorderColor: $color1;
 
 //? NoteThumbnail
 $noteThumbnailRedirectColor: $color1;

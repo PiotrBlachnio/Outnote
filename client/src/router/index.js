@@ -123,6 +123,7 @@ const routes = [
       //   component: () => import('@/views/dashboard/Settings')
       // },
       {
+        meta: { title: 'Your Notes | Note App' },
         path: 'note/:categoryId/:noteId',
         component: () => import('@/views/dashboard/Note')
       }

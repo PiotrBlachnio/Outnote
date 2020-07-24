@@ -18,7 +18,6 @@ export default {
       );
     }
   },
-
   computed: {
     note() {
       return this.$store.state.notes.categories
