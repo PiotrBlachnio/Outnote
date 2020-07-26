@@ -18,6 +18,7 @@ export interface INote extends Document {
     tags: string[];
     createdAt: number;
     lastEditedAt: number;
+    isPrivate: boolean;
     ownerId: string;
 }
 

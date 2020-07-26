@@ -2,7 +2,6 @@ import { Router, Request, Response } from 'express';
 import logger from '../utils/logger';
 import { Roles } from '../assets/enums';
 import auth from '../middlewares/auth';
-import { INote } from '../types/models';
 import cookieParser from 'cookie-parser';
 import validate from '../middlewares/validation/index';
 
@@ -17,6 +16,16 @@ router.use(cookieParser());
 */
 router.get('/:id', auth(Roles.USER), validate.note.getById, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Note retrieved successfully!', place: 'Get note by id route' });
+    res.status(200).json({ note: req.context?.note });
+});
+
+/**
+ * @route   GET api/v1/note/public/:userId/:noteId
+ * @desc    Get a note's data which must have a public access
+ * @access  Public
+*/
+router.get('/public/:userId/:noteId', validate.note.getPublic, async (req: Request, res: Response): Promise<void> => {
+    await logger.log({ type: 'info', message: 'Public note retrieved successfully!', place: 'Get public note route' });
     res.status(200).json({ note: req.context?.note });
 });
 
