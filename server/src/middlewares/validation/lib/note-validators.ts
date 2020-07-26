@@ -1,18 +1,18 @@
 import { NextFunction, Request, Response } from "express";
 import validator from '../../../utils/validators';
-import { NoteNotFoundError, IncorrectInputError, CategoryNotFoundError } from "../../../assets/errors";
+import { NoteNotFoundError, IncorrectInputError, CategoryNotFoundError, InaccessibleNoteError } from "../../../assets/errors";
 import { INote, ICategory } from "../../../types/models";
 
 async function validateGetNoteByIdRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
         if(!validator.validateInput({ id: req.params.id })) {
-            throw new NoteNotFoundError();
+            throw new NoteNotFoundError;
         };
 
         const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
 
         if(!note) {
-            throw new NoteNotFoundError();
+            throw new NoteNotFoundError;
         }
 
         req.context = { note };
@@ -23,12 +23,36 @@ async function validateGetNoteByIdRoute(req: Request, res: Response, next: NextF
     };
 };
 
+async function validateGetPublicNoteRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+        if(!validator.validateInput({ id: req.params.noteId })) {
+            throw new NoteNotFoundError();
+        };
+
+        const note: INote | null = await req.services.note.findOne({ _id: req.params.noteId, ownerId: req.params.userId });
+
+        if(!note) {
+            throw new NoteNotFoundError;
+        }
+
+        if(note.isPrivate) {
+            throw new InaccessibleNoteError;
+        };
+
+        req.context = { note };
+        next();
+    } catch(error) {
+        error.place = 'Get public note route';
+        next(error);
+    };
+};
+
 async function validateGetAllNotesRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
         const { id } = req.body;
 
         if(!validator.validateInput({ id })) {
-            throw new NoteNotFoundError();
+            throw new NoteNotFoundError;
         };
 
         const category: ICategory | null = await req.services.category.findById(id);
@@ -89,7 +113,7 @@ async function validateDeleteNoteRoute(req: Request, res: Response, next: NextFu
         const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
 
         if(!note) {
-            throw new NoteNotFoundError();
+            throw new NoteNotFoundError;
         }
 
         req.context = { id: req.params.id };
@@ -111,7 +135,7 @@ async function validateUpdateNoteRoute(req: Request, res: Response, next: NextFu
         const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
 
         if(!note) {
-            throw new NoteNotFoundError();
+            throw new NoteNotFoundError;
         }
 
         req.context = { 
@@ -127,6 +151,7 @@ async function validateUpdateNoteRoute(req: Request, res: Response, next: NextFu
 
 export default {
     getById: validateGetNoteByIdRoute,
+    getPublic: validateGetPublicNoteRoute,
     getAll: validateGetAllNotesRoute,
     create: validateCreateNoteRoute,
     update: validateUpdateNoteRoute,
