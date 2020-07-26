@@ -47,8 +47,8 @@
           @click.native="$emit('selectedCategory', category)"
         >
           {{ category.name }}
-          <button class="navigation__add-button">+</button>
         </router-link>
+        <base-dropdown :options="dropdownOptions"></base-dropdown>
       </li>
     </ul>
 
@@ -77,13 +77,22 @@
 import gsap from 'gsap';
 import { errors } from '@/assets/consts';
 import BaseInput from '@/components/core/BaseInput';
+import BaseDropdown from '@/components/core/BaseDropdown';
 
 export default {
   data() {
     return {
       isMenuActive: true,
       isAddCategoryActive: false,
-      newCategoryName: ''
+      newCategoryName: '',
+      dropdownOptions: [
+        {
+          label: 'Rename'
+        },
+        {
+          label: 'Remove'
+        }
+      ]
     };
   },
   props: {
@@ -93,7 +102,8 @@ export default {
     }
   },
   components: {
-    BaseInput
+    BaseInput,
+    BaseDropdown
   },
   watch: {
     isMenuActive(state) {
@@ -276,6 +286,7 @@ export default {
 
   &__list {
     margin-top: 1rem;
+    min-height: 35vh;
     max-height: 50vh;
     overflow-y: scroll;
 
@@ -290,8 +301,12 @@ export default {
     }
   }
 
-  &__link {
+  &__element {
     display: flex;
+  }
+
+  &__link {
+    width: 100%;
     color: $navigationLinkColor;
     padding: 0.5rem;
     font-weight: bold;
