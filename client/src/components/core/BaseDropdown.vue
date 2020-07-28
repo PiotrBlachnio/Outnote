@@ -1,5 +1,8 @@
 <template>
-  <div class="base-dropdown">
+  <div
+    class="base-dropdown"
+    v-click-outside="() => (isDropdownMenuActive = false)"
+  >
     <button
       class="base-dropdown__main-button"
       @click="isDropdownMenuActive = !isDropdownMenuActive"
@@ -21,6 +24,8 @@
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside';
+
 export default {
   props: {
     options: {
@@ -32,6 +37,9 @@ export default {
     return {
       isDropdownMenuActive: false
     };
+  },
+  directives: {
+    ClickOutside
   }
 };
 </script>

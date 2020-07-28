@@ -48,7 +48,10 @@
         >
           {{ category.name }}
         </router-link>
-        <base-dropdown :options="dropdownOptions"></base-dropdown>
+        <base-dropdown
+          :options="dropdownOptions"
+          @dropdownRemove="removeCategory(category._id)"
+        ></base-dropdown>
       </li>
     </ul>
 
@@ -170,6 +173,11 @@ export default {
           });
         }
       }
+    },
+    async removeCategory(categoryId) {
+      const exec = await this.$store.dispatch('removeCategory', categoryId);
+
+      console.log(exec);
     },
     logout() {
       this.$store.dispatch('signOut');

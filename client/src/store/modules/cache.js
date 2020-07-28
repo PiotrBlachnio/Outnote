@@ -22,6 +22,9 @@ export default {
     },
     NOTES_CACHE_NEW_CATEGORY(state, category) {
       state.categories[category._id] = category;
+    },
+    NOTES_REMOVE_CATEGORY(state, categoryId) {
+      delete state.categories[categoryId];
     }
   },
   actions: {
@@ -62,6 +65,20 @@ export default {
         });
 
         commit('NOTES_CACHE_NEW_CATEGORY', response.data.category);
+        return { success: true };
+      } catch (error) {
+        return { ...error.response, success: false };
+      }
+    },
+    async removeCategory({ commit }, categoryId) {
+      try {
+        const response = await axios({
+          url: '/category/' + categoryId,
+          method: 'delete'
+        });
+
+        console.log(response);
+        commit('NOTES_REMOVE_CATEGORY', categoryId);
         return { success: true };
       } catch (error) {
         return { ...error.response, success: false };
