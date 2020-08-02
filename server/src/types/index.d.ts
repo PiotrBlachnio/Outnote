@@ -15,7 +15,7 @@ declare module 'express-serve-static-core' {
           id?: string,
           username?: string,
           email?: string;
-       }
+       };
        context?: {
            username?: string;
            email?: string;
@@ -26,7 +26,7 @@ declare module 'express-serve-static-core' {
            notes?: Record<string, INote>;
            category?: ICategory;
            updatedData?: Record<string, unknown>;
-       },
+       };
        services: {
            email: EmailService;
            token: TokenService;
@@ -34,7 +34,7 @@ declare module 'express-serve-static-core' {
            note: NoteService;
            category: CategoryService;
            file: FileService;
-       },
-       eventEmitter: typeof EventEmitter
+       };
+       eventEmitter: typeof EventEmitter;
     }
 }
