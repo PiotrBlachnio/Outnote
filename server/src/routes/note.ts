@@ -69,7 +69,7 @@ router.delete('/:id', auth(Roles.USER), validate.note.delete, async (req: Reques
 router.patch('/:id', auth(Roles.USER), validate.note.update, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Note updated successfully!', place: 'Update note route' });
     req.eventEmitter.emit('UPDATE_NOTE_SUCCESS', req.context?.id, req.context?.updatedData);
-    
+
     res.status(200).end();
 });
 

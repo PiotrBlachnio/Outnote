@@ -38,8 +38,23 @@ export default {
     };
   },
   methods: {
-    showSubmenu(category) {
-      this.notes = this.$store.state.cache.categories[category._id].notes;
+    async showSubmenu(category) {
+      const notes = this.$store.state.cache.categories[category._id].notes;
+
+      if (!notes) {
+        const exec = await this.$store.dispatch('fetchNotes', category._id);
+
+        if (!exec.success) {
+          this.$store.dispatch('notificationActivate', {
+            content: errors[exec.data.error.id].message,
+            type: 'error'
+          });
+        } else {
+          this.notes = exec.data;
+        }
+      } else {
+        this.notes = notes;
+      }
 
       this.submenuActive = true;
     },

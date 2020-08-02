@@ -11,7 +11,7 @@
       <div
         class="sub-navigation__notes"
         v-show="isActive"
-        v-if="notes.length > 0"
+        v-if="doesNotesExist"
       >
         <note-thumbnail
           ref="note"
@@ -63,6 +63,11 @@ export default {
           )
           .play();
       });
+    }
+  },
+  computed: {
+    doesNotesExist() {
+      return Object.entries(this.notes).length > 0;
     }
   }
 };
