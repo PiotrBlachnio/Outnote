@@ -49,7 +49,7 @@ async function validateGetPublicNoteRoute(req: Request, res: Response, next: Nex
 
 async function validateGetAllNotesRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-        const { id } = req.body;
+        const id: string | undefined = req.query.id as string;
 
         if(!validator.validateInput({ id })) {
             throw new CategoryNotFoundError;
