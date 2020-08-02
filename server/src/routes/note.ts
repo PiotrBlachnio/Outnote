@@ -34,7 +34,7 @@ router.get('/public/:userId/:noteId', validate.note.getPublic, async (req: Reque
  * @desc    Get all notes in the specific category
  * @access  Protected
 */
-router.get('/', validate.note.getAll, async (req: Request, res: Response): Promise<void> => {
+router.get('/', auth(Roles.USER), validate.note.getAll, async (req: Request, res: Response): Promise<void> => {
     await logger.log({ type: 'info', message: 'Notes retrieved successfully!', place: 'Get all notes route' });
     res.status(200).json({ notes: req.context?.notes });
 });
