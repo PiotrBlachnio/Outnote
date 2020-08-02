@@ -49,10 +49,10 @@ async function validateGetPublicNoteRoute(req: Request, res: Response, next: Nex
 
 async function validateGetAllNotesRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-        const { id } = req.body;
+        const id: string | undefined = req.query.id as string;
 
         if(!validator.validateInput({ id })) {
-            throw new NoteNotFoundError;
+            throw new CategoryNotFoundError;
         };
 
         const category: ICategory | null = await req.services.category.findById(id);
@@ -71,7 +71,7 @@ async function validateGetAllNotesRoute(req: Request, res: Response, next: NextF
         
         next();
     } catch(error) {
-        error.place = 'Get note by id route';
+        error.place = 'Get all notes route';
         next(error);
     };
 };
