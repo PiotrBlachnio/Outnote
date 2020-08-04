@@ -122,27 +122,28 @@ async function validateDeleteNoteRoute(req: Request, res: Response, next: NextFu
     };
 };
 
-async function validateUpdateNoteRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function validateUpdateNotesRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-        const { field, value } = req.body;
+        const { notes }: { notes: Record<string, Record<string, unknown>> } = req.body;
 
-        if(!validator.validateInput({ field: field, [field]: value, id: req.params.id })) {
-            throw new IncorrectInputError;
+        for(const [id, note] of Object.entries(notes)) {
+            for(const [key, value] of Object.entries(note)) {
+                if(!validator.validateInput({ field: key, [key as string]: value })) {
+                    throw new IncorrectInputError;
+                };
+    
+                const existingNote: INote | null = await req.services.note.findOne({ _id: id, ownerId: req.user!.id });
+    
+                if(!existingNote) {
+                    throw new NoteNotFoundError;
+                };
+            };
         };
 
-        const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
-
-        if(!note) {
-            throw new NoteNotFoundError;
-        }
-
-        req.context = { 
-            updatedData: { [field]: value },
-            id: req.params.id
-        };
+        req.context = { updatedNotes: notes };
         next();
     } catch(error) {
-        error.place = 'Update note route';
+        error.place = 'Update notes route';
         next(error);
     };
 };
@@ -152,6 +153,6 @@ export default {
     getPublic: validateGetPublicNoteRoute,
     getAll: validateGetAllNotesRoute,
     create: validateCreateNoteRoute,
-    update: validateUpdateNoteRoute,
+    update: validateUpdateNotesRoute,
     delete: validateDeleteNoteRoute
 }
