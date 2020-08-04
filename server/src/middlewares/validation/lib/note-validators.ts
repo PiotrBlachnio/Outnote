@@ -78,9 +78,9 @@ async function validateGetAllNotesRoute(req: Request, res: Response, next: NextF
 
 async function validateCreateNoteRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-        const { title, categoryId, isPrivate } = req.body;
+        const { categoryId } = req.body;
 
-        if(!validator.validateInput({ id: categoryId, title, isPrivate })) {
+        if(!validator.validateInput({ id: categoryId })) {
             throw new IncorrectInputError;
         };
 
@@ -90,9 +90,7 @@ async function validateCreateNoteRoute(req: Request, res: Response, next: NextFu
         };
 
         const note: INote = await req.services.note.create({
-            title,
-            categoryId,
-            isPrivate,
+            categoryId: categoryId,
             ownerId: req.user!.id,
         });
 
