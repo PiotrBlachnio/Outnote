@@ -126,6 +126,10 @@ async function validateUpdateNotesRoute(req: Request, res: Response, next: NextF
     try {
         const { notes }: { notes: Record<string, Record<string, unknown>> } = req.body;
 
+        if(!validator.validateInput({ notes })) {
+            throw new IncorrectInputError;
+        };
+
         for(const [id, note] of Object.entries(notes)) {
             for(const [key, value] of Object.entries(note)) {
                 if(!validator.validateInput({ field: key, [key as string]: value })) {

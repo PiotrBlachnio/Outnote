@@ -77,6 +77,12 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
             ];
 
             break;
+        case 'notes':
+            schema = [
+                hasType.bind(null, value, 'object')
+            ];
+
+            break;
         default: 
             throw new IncorrectInputError;
     };
