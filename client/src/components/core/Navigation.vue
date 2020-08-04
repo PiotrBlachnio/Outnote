@@ -10,6 +10,30 @@
       <span class="navigation__hamburger-line"></span>
     </button>
 
+    <div class="navigation__add-category-wrapper" v-show="isMenuActive">
+      <button
+        @click="showAddCategoryInput"
+        to="#"
+        class="navigation__add-category-link"
+      >
+        <i class="fas fa-plus navigation__icon"></i> New
+      </button>
+
+      <div
+        v-show="isAddCategoryActive"
+        class="navigation__add-category-input-wrapper"
+      >
+        <base-input
+          id="newCategory"
+          less-padding
+          label="New category..."
+          v-model="newCategoryName"
+          @keypressEnter="addNewCategory"
+        />
+        <button @click="addNewCategory"><i class="fas fa-save"></i></button>
+      </div>
+    </div>
+
     <ul class="navigation__list">
       <li
         class="navigation__element"
@@ -23,8 +47,11 @@
           @click.native="$emit('selectedCategory', category)"
         >
           {{ category.name }}
-          <button class="navigation__add-button">+</button>
         </router-link>
+        <base-dropdown
+          :options="dropdownOptions"
+          @dropdownRemove="removeCategory(category._id)"
+        ></base-dropdown>
       </li>
     </ul>
 
@@ -51,18 +78,35 @@
 
 <script>
 import gsap from 'gsap';
+import { errors } from '@/assets/consts';
+import BaseInput from '@/components/core/BaseInput';
+import BaseDropdown from '@/components/core/BaseDropdown';
 
 export default {
   data() {
     return {
-      isMenuActive: false
+      isMenuActive: true,
+      isAddCategoryActive: false,
+      newCategoryName: '',
+      dropdownOptions: [
+        {
+          label: 'Rename'
+        },
+        {
+          label: 'Remove'
+        }
+      ]
     };
   },
   props: {
     categories: {
-      type: Array,
+      type: Object,
       required: true
     }
+  },
+  components: {
+    BaseInput,
+    BaseDropdown
   },
   watch: {
     isMenuActive(state) {
@@ -78,6 +122,12 @@ export default {
           state ? 0.6 : 0,
           { opacity: 0 },
           { opacity: 1, ease: 'none' }
+        ),
+        gsap.fromTo(
+          '.navigation__add-category-wrapper',
+          state ? 0.4 : 0,
+          { opacity: 0 },
+          { opacity: 1, ease: 'none' }
         )
       ];
 
@@ -88,6 +138,46 @@ export default {
     closeNavigation() {
       this.isMenuActive = !this.isMenuActive;
       this.$emit('navigationClosed');
+    },
+    showAddCategoryInput() {
+      this.isAddCategoryActive = !this.isAddCategoryActive;
+      this.newCategoryName = '';
+
+      gsap.fromTo(
+        '.navigation__add-category-input-wrapper',
+        this.isAddCategoryActive ? 0.4 : 0,
+        { opacity: 0, x: '-2rem', maxHeight: 0 },
+        { opacity: 1, x: 0, maxHeight: 100 }
+      );
+    },
+    async addNewCategory() {
+      if (this.newCategoryName.length > 0) {
+        const exec = await this.$store.dispatch(
+          'addNewCategory',
+          this.newCategoryName
+        );
+
+        if (exec.success) {
+          this.$store.dispatch('notificationActivate', {
+            content: 'New category has been added!',
+            type: 'success'
+          });
+
+          this.newCategoryName = '';
+          this.isAddCategoryActive = false;
+          this.$emit('addedCategory');
+        } else {
+          this.$store.dispatch('notificationActivate', {
+            content: errors[exec.data.error.id].message,
+            type: 'error'
+          });
+        }
+      }
+    },
+    async removeCategory(categoryId) {
+      const exec = await this.$store.dispatch('removeCategory', categoryId);
+
+      console.log(exec);
     },
     logout() {
       this.$store.dispatch('signOut');
@@ -101,6 +191,7 @@ export default {
   padding: 24px;
   width: 80px;
   height: 0;
+  z-index: 99;
   position: absolute;
   background-color: transparent;
   transition: background 0.2s ease-in-out;
@@ -156,12 +247,74 @@ export default {
     }
   }
 
+  &__add-category-wrapper {
+    margin-top: 3rem;
+    text-align: right;
+    margin-left: auto;
+  }
+
+  &__add-category-link {
+    font-size: 0.7rem;
+    display: inline-block;
+    color: $navigationAddLinkColor;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    transition: border-color 0.2s;
+    border: 1px solid $navigationAddLinkBorderColor;
+
+    &:hover {
+      border-color: $success;
+    }
+  }
+
+  &__add-category-link:hover &__icon {
+    color: $success;
+  }
+
+  &__icon {
+    margin-right: 0.5rem;
+    transition: color 0.2s;
+    transform: translateX(1px);
+  }
+
+  &__add-category-input-wrapper {
+    display: flex;
+    margin-top: 1rem;
+
+    .base__input {
+      margin: 0;
+    }
+    button {
+      color: $primary;
+      height: auto;
+      padding: 0 1rem;
+      font-size: 1rem;
+    }
+  }
+
   &__list {
-    margin-top: 5rem;
+    margin-top: 1rem;
+    min-height: 35vh;
+    max-height: 50vh;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 0.25rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $color3;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: $color4;
+    }
+  }
+
+  &__element {
+    display: flex;
   }
 
   &__link {
-    display: flex;
+    width: 100%;
     color: $navigationLinkColor;
     padding: 0.5rem;
     font-weight: bold;

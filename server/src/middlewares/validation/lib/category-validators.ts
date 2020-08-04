@@ -62,7 +62,7 @@ async function validateUpdateCategoryRoute(req: Request, res: Response, next: Ne
             id: category.id,
             updatedData: { [req.body.field]: req.body.value }
         };
-        next();
+        next()
     } catch(error) {
         error.place = 'Update category route';
         next(error);

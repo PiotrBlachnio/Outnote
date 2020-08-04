@@ -22,7 +22,7 @@ export const errors = {
   0: {
     message: 'Internal server error'
   },
-  
+
   // ? Auth errors
   100: { message: 'Invalid email or password' },
   101: { message: 'Invalid password' },
@@ -54,4 +54,5 @@ export const errors = {
   // ? Notes & categories errors},
   600: { message: 'Note does not exist' },
   601: { message: 'Category does not exist' },
+  602: { message: 'You do not have access to this note' }
 };

@@ -9,13 +9,13 @@
       @submit="resetPassword"
       show-back-to-login
     >
-      <auth-input
+      <base-input
         id="password"
         label="New Password"
         type="password"
         v-model="form.password"
       />
-      <auth-input
+      <base-input
         id="repeatPassword"
         label="Repeat Password"
         type="password"
@@ -28,7 +28,7 @@
 <script>
 import axios from 'axios';
 import { errors } from '@/assets/consts';
-import AuthInput from '@/components/auth/AuthInput';
+import BaseInput from '@/components/core/BaseInput';
 import AuthForm from '@/components/auth/AuthForm';
 import authLoadingMixin from '@/mixins/AuthLoadingMixin';
 import authValidator from '@/mixins/AuthValidatorMixin';
@@ -36,7 +36,7 @@ import authValidator from '@/mixins/AuthValidatorMixin';
 export default {
   components: {
     AuthForm,
-    AuthInput
+    BaseInput
   },
   mixins: [authLoadingMixin, authValidator],
   data() {
