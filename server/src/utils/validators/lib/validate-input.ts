@@ -5,6 +5,7 @@ import hasType from "./has-type";
 import config from "../../../assets/config";
 import matchRegex from "./match-regex";
 import isCorrectField from "./is-correct-field";
+import { IncorrectInputError } from "../../../assets/errors";
 
 const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
     let schema: (() => boolean)[] = [];
@@ -76,6 +77,14 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
             ];
 
             break;
+        case 'notes':
+            schema = [
+                hasType.bind(null, value, 'object')
+            ];
+
+            break;
+        default: 
+            throw new IncorrectInputError;
     };
 
     return schema;
@@ -89,9 +98,9 @@ const validateSchema = (schemaType: string, value: string) => {
     return true;
 };
 
-export default (data: Record<string, string>): boolean => {
+export default (data: Record<string, string | unknown>): boolean => {
     for(const key of Object.keys(data)) {
-        if(!validateSchema(key, data[key])) return false;
+        if(!validateSchema(key, data[key] as string)) return false;
     };
 
     return true;

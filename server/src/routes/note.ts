@@ -62,14 +62,14 @@ router.delete('/:id', auth(Roles.USER), validate.note.delete, async (req: Reques
 });
 
 /**
- * @route   PATCH api/v1/note/:id
- * @desc    Update single note by providing valid id
+ * @route   PUT api/v1/note
+ * @desc    Update multiple notes
  * @access  Protected
 */
-router.patch('/:id', auth(Roles.USER), validate.note.update, async (req: Request, res: Response): Promise<void> => {
-    await logger.log({ type: 'info', message: 'Note updated successfully!', place: 'Update note route' });
-    req.eventEmitter.emit('UPDATE_NOTE_SUCCESS', req.context?.id, req.context?.updatedData);
-
+router.put('/', auth(Roles.USER), validate.note.update, async (req: Request, res: Response): Promise<void> => {
+    await logger.log({ type: 'info', message: 'Notes updated successfully!', place: 'Update notes route' });
+    req.eventEmitter.emit('UPDATE_NOTES_SUCCESS', req.context?.updatedNotes);
+    
     res.status(200).end();
 });
 

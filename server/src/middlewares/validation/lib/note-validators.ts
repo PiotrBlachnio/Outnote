@@ -78,9 +78,9 @@ async function validateGetAllNotesRoute(req: Request, res: Response, next: NextF
 
 async function validateCreateNoteRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-        const { title, categoryId, isPrivate } = req.body;
+        const { categoryId } = req.body;
 
-        if(!validator.validateInput({ id: categoryId, title, isPrivate })) {
+        if(!validator.validateInput({ id: categoryId })) {
             throw new IncorrectInputError;
         };
 
@@ -90,9 +90,7 @@ async function validateCreateNoteRoute(req: Request, res: Response, next: NextFu
         };
 
         const note: INote = await req.services.note.create({
-            title,
-            categoryId,
-            isPrivate,
+            categoryId: categoryId,
             ownerId: req.user!.id,
         });
 
@@ -124,27 +122,32 @@ async function validateDeleteNoteRoute(req: Request, res: Response, next: NextFu
     };
 };
 
-async function validateUpdateNoteRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
+async function validateUpdateNotesRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-        const { field, value } = req.body;
+        const { notes }: { notes: Record<string, Record<string, unknown>> } = req.body;
 
-        if(!validator.validateInput({ field: field, [field]: value, id: req.params.id })) {
+        if(!validator.validateInput({ notes })) {
             throw new IncorrectInputError;
         };
 
-        const note: INote | null = await req.services.note.findOne({ _id: req.params.id, ownerId: req.user!.id });
-
-        if(!note) {
-            throw new NoteNotFoundError;
-        }
-
-        req.context = { 
-            updatedData: { [field]: value },
-            id: req.params.id
+        for(const [id, note] of Object.entries(notes)) {
+            for(const [key, value] of Object.entries(note)) {
+                if(!validator.validateInput({ field: key, [key as string]: value })) {
+                    throw new IncorrectInputError;
+                };
+    
+                const existingNote: INote | null = await req.services.note.findOne({ _id: id, ownerId: req.user!.id });
+    
+                if(!existingNote) {
+                    throw new NoteNotFoundError;
+                };
+            };
         };
+
+        req.context = { updatedNotes: notes };
         next();
     } catch(error) {
-        error.place = 'Update note route';
+        error.place = 'Update notes route';
         next(error);
     };
 };
@@ -154,6 +157,6 @@ export default {
     getPublic: validateGetPublicNoteRoute,
     getAll: validateGetAllNotesRoute,
     create: validateCreateNoteRoute,
-    update: validateUpdateNoteRoute,
+    update: validateUpdateNotesRoute,
     delete: validateDeleteNoteRoute
 }

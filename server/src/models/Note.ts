@@ -4,7 +4,7 @@ import { INote } from '../types/models';
 const NoteSchema: Schema = new Schema({
     title: {
         type: String,
-        required: true
+        default: 'Untitled'
     },
     content: {
         type: String,
@@ -32,7 +32,7 @@ const NoteSchema: Schema = new Schema({
     },
     isPrivate: {
         type: Boolean,
-        required: true
+        default: true
     }
 });
 

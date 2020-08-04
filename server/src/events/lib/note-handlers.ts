@@ -8,11 +8,13 @@ async function deleteNoteSuccessHandler(id: string, services: typeof defaultServ
     await services.note.deleteOne({ _id: id });
 };
 
-async function updateNoteSuccessHandler(id: string, updatedData: Record<string, unknown>, services: typeof defaultServices = defaultServices): Promise<void> {
-    await services.note.updateOne({ _id: id }, updatedData);
+async function updateNotesSuccessHandler(updatedNotes: Record<string, Record<string, unknown>>, services: typeof defaultServices = defaultServices): Promise<void> {
+    for(const [id, note] of Object.entries(updatedNotes)) {
+        await services.note.updateOne({ _id: id }, note);
+    }
 };
 
 export default {
     deleteNoteSuccessHandler,
-    updateNoteSuccessHandler
+    updateNotesSuccessHandler
 };
