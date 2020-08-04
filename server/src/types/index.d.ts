@@ -26,6 +26,7 @@ declare module 'express-serve-static-core' {
            notes?: Record<string, INote>;
            category?: ICategory;
            updatedData?: Record<string, unknown>;
+           updatedNotes?: Record<string, Record<string, unknown>>;
        };
        services: {
            email: EmailService;
