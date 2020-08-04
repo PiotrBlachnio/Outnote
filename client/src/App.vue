@@ -1,5 +1,6 @@
 <template>
   <div id="app" data-theme="dark">
+    <notification />
     <transition name="fade">
       <router-view />
     </transition>

@@ -1,7 +1,5 @@
 <template>
   <div class="resend-email">
-    <notification />
-
     <div>
       <img
         src="https://image.flaticon.com/icons/svg/1632/1632600.svg"

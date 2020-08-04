@@ -1,7 +1,5 @@
 <template>
   <div class="auth login">
-    <notification />
-
     <auth-form
       form-type="login"
       button-label="Sign in"

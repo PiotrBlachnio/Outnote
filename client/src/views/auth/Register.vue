@@ -1,7 +1,5 @@
 <template>
   <div class="auth register">
-    <notification />
-
     <transition name="fade-out">
       <auth-form
         v-if="!isSuccess"

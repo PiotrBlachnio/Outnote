@@ -1,7 +1,5 @@
 <template>
   <div class="auth login">
-    <notification />
-
     <auth-form
       form-type="forgotPassword"
       button-label="Remind password"
