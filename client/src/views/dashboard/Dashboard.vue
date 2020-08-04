@@ -11,8 +11,6 @@
     <div class="dashboard__content">
       <router-view />
     </div>
-
-    <button class="dashboard__add-button"><span>+</span></button>
   </div>
 </template>
 
@@ -97,33 +95,22 @@ export default {
 <style lang="scss" scoped>
 .dashboard {
   display: flex;
-  position: relative;
 
   &__content {
     // width: 100%;
     flex-grow: 1;
     padding: 4rem 2rem;
     max-width: 100%;
+    max-height: 100vh;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     @include mq {
       padding: 2rem;
     }
-  }
-
-  &__add-button {
-    width: 64px;
-    height: 64px;
-    display: flex;
-    align-self: center;
-    justify-content: center;
-    border-radius: 50%;
-    color: $dashboardAddNoteButtonColor;
-    font-size: 3rem;
-    padding: 1rem;
-    background-color: $success;
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
   }
 }
 </style>

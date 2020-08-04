@@ -53,6 +53,18 @@ export default {
         return { ...error.response, success: false };
       }
     },
+    async fetchSingleNote(Null, noteId) {
+      try {
+        const response = await axios({
+          method: 'get',
+          url: `/note/${noteId}`
+        });
+
+        return { data: response.data.note, success: true };
+      } catch (error) {
+        return { ...error.response, success: false };
+      }
+    },
     async addNewCategory({ commit }, name) {
       try {
         const response = await axios({

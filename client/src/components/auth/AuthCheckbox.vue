@@ -7,7 +7,7 @@
       v-model="isChecked"
       @change="$emit('change', isChecked)"
     />
-    <label :for="id" class="auth__label">{{ label }}</label>
+    <label :for="id" class="auth__label" v-html="label"></label>
   </div>
 </template>
 
