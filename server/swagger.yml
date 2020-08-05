@@ -523,16 +523,15 @@ paths:
         schema:
           type: string
     get:
+      parameters:
+        - in: query
+          name: id
+          description: Category id
+          schema:
+            type: string
       tags:
         - NOTE
       summary: Get all notes in the specific category
-      requestBody:
-        content:
-          application/json:
-            schema:
-              properties:
-                id:
-                  type: string
       responses:
         200:
           content:
@@ -550,12 +549,8 @@ paths:
           application/json:
             schema:
               properties:
-                title:
-                  type: string
                 categoryId:
                   type: string
-                isPrivate:
-                  type: boolean
       responses:
         201:
           content:
@@ -644,25 +639,23 @@ paths:
                     error:
                       message: Note does not exist
                       id: 600
-    patch:
+    put:
       tags:
         - NOTE
-      summary: Update existing note
+      summary: Update multiple notes
       requestBody:
         content:
           application/json:
             schema:
               properties:
-                field:
-                  type: string
-                value:
-                  type: string
+                notes:
+                  type: object
       responses:
         200:
           content:
             application/json:
               examples:
-                  Note updated successfully:
+                  Notes updated successfully:
                     value: "{\n\n\n\n}"
         401:
           content:
