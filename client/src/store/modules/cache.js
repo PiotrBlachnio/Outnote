@@ -2,7 +2,8 @@ import axios from 'axios';
 
 export default {
   state: {
-    categories: {}
+    categories: {},
+    editedNotes: {}
   },
   mutations: {
     NOTES_FETCH_CATEGORIES(state, data) {
@@ -19,6 +20,19 @@ export default {
     },
     NOTES_REMOVE_CATEGORY(state, categoryId) {
       delete state.categories[categoryId];
+    },
+    NOTES_ADD_NEW_NOTE(state, note) {
+      if (!state.categories[note.categoryId].notes) {
+        state.categories[note.categoryId].notes = {};
+      }
+
+      state.categories[note.categoryId].notes[note._id] = note;
+    },
+    NOTES_SAVE_NOTE(state, { note, field, data }) {
+      if (!state.editedNotes[note._id]) state.editedNotes[note._id] = {};
+
+      state.categories[note.categoryId].notes[note._id] = note;
+      state.editedNotes[note._id][field] = data;
     }
   },
   actions: {
@@ -64,6 +78,13 @@ export default {
       } catch (error) {
         return { ...error.response, success: false };
       }
+    },
+    async saveNote({ commit }, data) {
+      commit('NOTES_SAVE_NOTE', {
+        note: data.note,
+        field: data.field,
+        data: data.data
+      });
     },
     async addNewCategory({ commit }, name) {
       try {

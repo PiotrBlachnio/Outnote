@@ -1,6 +1,5 @@
 <template>
   <div class="dashboard">
-    <notification />
     <navigation
       :categories="categories"
       @selectedCategory="showSubmenu"
