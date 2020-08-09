@@ -1,18 +1,15 @@
 <template>
-  <div>
+  <div style="height: 100%;">
     <form class="note" @submit.prevent v-if="doesNoteExist">
       <note-state :isVisible="isStateVisible" />
 
-      <note-title-input @input="cacheNote('title')" v-model="note.title" />
+      <note-title @input="cacheNote('title')" v-model="note.title" />
 
       <div class="note__divider"></div>
 
-      <note-content-input
-        @input="cacheNote('content')"
-        v-model="note.content"
-      />
+      <note-content @input="cacheNote('content')" v-model="note.content" />
 
-      <div class="note__divider"></div>
+      <!-- <div class="note__divider"></div>
 
       <note-tags
         :propTags="note.tags"
@@ -28,7 +25,7 @@
           note.isPrivate = !note.isPrivate;
           cacheNote('isPrivate');
         "
-      />
+      /> -->
     </form>
 
     <div class="note--doesnt-exist" v-else>
@@ -39,11 +36,11 @@
 
 <script>
 import _ from 'lodash';
-import NoteTitleInput from '@/components/note/NoteTitleInput';
-import NoteContentInput from '@/components/note/NoteContentInput';
-import NoteTags from '@/components/note/NoteTagsComponent';
+import NoteTitle from '@/components/note/NoteTitleInput';
+import NoteContent from '@/components/note/NoteContentInput';
+// import NoteTags from '@/components/note/NoteTagsComponent';
 import NoteState from '@/components/note/NoteState';
-import NoteCheckbox from '@/components/note/NoteCheckbox';
+// import NoteCheckbox from '@/components/note/NoteCheckbox';
 
 export default {
   data() {
@@ -60,10 +57,10 @@ export default {
   },
   components: {
     NoteState,
-    NoteTitleInput,
-    NoteContentInput,
-    NoteTags,
-    NoteCheckbox
+    NoteTitle,
+    NoteContent,
+    // NoteTags,
+    // NoteCheckbox
   },
   created() {
     this.reloadNote();
@@ -111,6 +108,10 @@ export default {
 
 <style lang="scss" scoped>
 .note {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
   position: relative;
 
   &--doesnt-exist {
@@ -120,7 +121,7 @@ export default {
   &__divider {
     width: 100%;
     height: 1px;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     background-color: $noteDividerColor;
   }
 }

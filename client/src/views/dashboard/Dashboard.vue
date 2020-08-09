@@ -98,9 +98,9 @@ export default {
   &__content {
     // width: 100%;
     flex-grow: 1;
-    padding: 4rem 2rem;
+    padding: 2rem;
     max-width: 100%;
-    max-height: 100vh;
+    height: 100vh;
     overflow-y: scroll;
 
     &::-webkit-scrollbar {

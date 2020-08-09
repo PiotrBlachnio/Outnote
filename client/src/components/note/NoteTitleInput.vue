@@ -22,16 +22,14 @@ export default {
 <style lang="scss" scoped>
 @import './inputSettings';
 
-.note__input {
-  &--title {
-    font-size: 1.5rem;
-  }
+.note__input--title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
 
   @include inputSettings;
   @include mq {
-    &--title {
-      font-size: 2rem;
-    }
+    font-size: 1.6rem;
   }
 }
 </style>

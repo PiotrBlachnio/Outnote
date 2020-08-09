@@ -25,9 +25,13 @@ export default {
 @import './inputSettings';
 
 .note__textarea {
-  height: 60vh;
+  flex: 2;
   resize: vertical;
   letter-spacing: 0.05rem;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @include inputSettings;
 }
