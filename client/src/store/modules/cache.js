@@ -86,6 +86,22 @@ export default {
         data: data.data
       });
     },
+    async addNewNote({ commit }, categoryId) {
+      try {
+        const response = await axios({
+          url: '/note',
+          method: 'post',
+          data: {
+            categoryId: categoryId
+          }
+        });
+
+        commit('NOTES_ADD_NEW_NOTE', response.data.note);
+        return { data: response.data.note, success: true };
+      } catch (error) {
+        return { ...error.response, success: false };
+      }
+    },
     async addNewCategory({ commit }, name) {
       try {
         const response = await axios({

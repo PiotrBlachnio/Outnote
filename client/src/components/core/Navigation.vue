@@ -44,12 +44,13 @@
         <router-link
           to="#"
           class="navigation__link"
-          @click.native="$emit('selectedCategory', category)"
+          @click.native="$emit('selected-category', category)"
         >
           {{ category.name }}
         </router-link>
         <base-dropdown
           :options="dropdownOptions"
+          @dropdownAddNote="addNote(category._id)"
           @dropdownRemove="removeCategory(category._id)"
         ></base-dropdown>
       </li>
@@ -89,6 +90,9 @@ export default {
       isAddCategoryActive: false,
       newCategoryName: '',
       dropdownOptions: [
+        {
+          label: 'Add Note'
+        },
         {
           label: 'Rename'
         },
@@ -172,6 +176,23 @@ export default {
             type: 'error'
           });
         }
+      }
+    },
+    async addNote(categoryId) {
+      const exec = await this.$store.dispatch('addNewNote', categoryId);
+
+      if (exec.success) {
+        console.log(exec);
+
+        this.$store.dispatch('notificationActivate', {
+          content: 'Note has been added.',
+          type: 'success'
+        });
+      } else {
+        this.$store.dispatch('notificationActivate', {
+          content: errors[exec.data.error.id].message,
+          type: 'error'
+        });
       }
     },
     async removeCategory(categoryId) {

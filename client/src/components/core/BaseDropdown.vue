@@ -10,16 +10,18 @@
       <i class="fas fa-ellipsis-h"></i>
     </button>
 
-    <div class="base-dropdown__menu" v-show="isDropdownMenuActive">
-      <button
-        class="base-dropdown__button"
-        v-for="option in options"
-        :key="option.label"
-        @click="$emit(`dropdown${option.label}`)"
-      >
-        {{ option.label }}
-      </button>
-    </div>
+    <transition name="fade">
+      <div class="base-dropdown__menu" v-show="isDropdownMenuActive">
+        <button
+          class="base-dropdown__button"
+          v-for="option in options"
+          :key="option.label"
+          @click="$emit(`dropdown${option.label.split(' ').join('')}`)"
+        >
+          {{ option.label }}
+        </button>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -60,14 +62,33 @@ export default {
     display: flex;
     flex-direction: column;
     position: absolute;
+    box-shadow: 0 0 1rem -0.5rem black;
   }
 
   &__button {
+    white-space: nowrap;
     color: $dropdownMenuButtonColor;
-    margin-bottom: 0.1rem;
     background-color: $dropdownMenuButtonBackground;
-    border-radius: 0.25rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem 1.5rem;
+    transition: background-color 0.1s;
+    border-bottom: 1px solid $dropdownMenuButtonBorderColor;
+
+    &:hover {
+      background-color: $dropdownMenuButtonBackgroundHover;
+    }
+
+    &:first-of-type {
+      border-radius: 0.25rem 0.25rem 0 0;
+    }
+
+    &:last-of-type {
+      border-radius: 0 0 0.25rem 0.25rem;
+      border-bottom: none;
+    }
+
+    @include mq {
+      padding: 0.5rem 1rem;
+    }
   }
 }
 </style>

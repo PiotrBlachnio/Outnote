@@ -62,7 +62,7 @@ $noteThumbnailRedirectColor: $color1;
 $noteThumbnailBackgroundColor: $color5;
 $noteThumbnailTitleColor: $color1;
 $noteThumbnailContentColor: $color2;
-$noteThumbnailTagBackground: purple; // todo: change it
+$noteThumbnailTagBackground: $primary;
 $noteThumbnailTagColor: $color1;
 $noteThumbnailDropdownButtonBackground: $color1;
 $noteThumbnailDropdownElementColor: $color1;
@@ -83,6 +83,8 @@ $dashboardAddNoteButtonColor: $color1;
 $dropdownMainButtonColor: $color1;
 $dropdownMenuButtonColor: $color1;
 $dropdownMenuButtonBackground: $color4;
+$dropdownMenuButtonBackgroundHover: $color3;
+$dropdownMenuButtonBorderColor: $color3;
 
 //? BaseSelect
 $baseSelectBorderColor: $color2;

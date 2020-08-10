@@ -2,7 +2,7 @@
   <div class="dashboard">
     <navigation
       :categories="categories"
-      @selectedCategory="showSubmenu"
+      @selected-category="showSubmenu"
       @navigationClosed="submenuActive = false"
     />
     <sub-navigation :is-active="submenuActive" :notes="notes" />
