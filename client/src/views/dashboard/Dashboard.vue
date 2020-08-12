@@ -4,6 +4,7 @@
       :categories="categories"
       @selected-category="showSubmenu"
       @navigationClosed="submenuActive = false"
+      @addedNote="reloadNotesFromCache(submenuCategoryId)"
     />
     <sub-navigation :is-active="submenuActive" :notes="notes" />
 
@@ -31,12 +32,19 @@ export default {
     return {
       submenuActive: false,
       categories: {},
-      notes: {}
+      notes: {},
+      submenuCategoryId: null
     };
   },
   methods: {
     async showSubmenu(category) {
-      const notes = this.$store.state.cache.categories[category._id].notes;
+      const notes = this.reloadNotesFromCache(category._id);
+
+      if (this.submenuCategoryId === category._id) {
+        this.submenuActive = false;
+        this.submenuCategoryId = null;
+        return;
+      }
 
       if (!notes) {
         const exec = await this.$store.dispatch('fetchNotes', category._id);
@@ -54,6 +62,7 @@ export default {
       }
 
       this.submenuActive = true;
+      this.submenuCategoryId = category._id;
     },
     async fetchUser() {
       if (!this.$store.getters.doesUserExist) {
@@ -86,6 +95,9 @@ export default {
       } else {
         this.categories = this.$store.state.cache.categories;
       }
+    },
+    reloadNotesFromCache(categoryId) {
+      this.notes = this.$store.state.cache.categories[categoryId].notes;
     }
   }
 };

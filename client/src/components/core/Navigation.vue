@@ -89,17 +89,7 @@ export default {
       isMenuActive: true,
       isAddCategoryActive: false,
       newCategoryName: '',
-      dropdownOptions: [
-        {
-          label: 'Add Note'
-        },
-        {
-          label: 'Rename'
-        },
-        {
-          label: 'Remove'
-        }
-      ]
+      dropdownOptions: ['Add Note', 'Rename', 'Remove']
     };
   },
   props: {
@@ -182,12 +172,11 @@ export default {
       const exec = await this.$store.dispatch('addNewNote', categoryId);
 
       if (exec.success) {
-        console.log(exec);
-
         this.$store.dispatch('notificationActivate', {
           content: 'Note has been added.',
           type: 'success'
         });
+        this.$emit('addedNote');
       } else {
         this.$store.dispatch('notificationActivate', {
           content: errors[exec.data.error.id].message,
@@ -198,7 +187,20 @@ export default {
     async removeCategory(categoryId) {
       const exec = await this.$store.dispatch('removeCategory', categoryId);
 
-      console.log(exec);
+      if (!exec.success) {
+        this.$store.dispatch('notificationActivate', {
+          content: errors[exec.data.error.id].message,
+          type: 'error'
+        });
+      } else {
+        this.$store.dispatch('notificationActivate', {
+          content: 'Category has been deleted.',
+          type: 'success'
+        });
+      }
+    },
+    renameCategory() {
+      this.$refs.navigationLink[0].focus();
     },
     logout() {
       this.$store.dispatch('signOut');
@@ -317,9 +319,10 @@ export default {
     margin-top: 1rem;
     min-height: 35vh;
     max-height: 50vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     &::-webkit-scrollbar {
+      display: none;
       width: 0.25rem;
     }
     &::-webkit-scrollbar-thumb {
@@ -328,6 +331,10 @@ export default {
     &::-webkit-scrollbar-track {
       background-color: $color4;
     }
+  }
+
+  &--active &__list::-webkit-scrollbar {
+    display: inherit;
   }
 
   &__element {
@@ -339,7 +346,6 @@ export default {
     color: $navigationLinkColor;
     padding: 0.5rem;
     font-weight: bold;
-    white-space: nowrap;
     transition: border-left 0.1s ease-in-out;
 
     &:hover {

@@ -15,10 +15,10 @@
         <button
           class="base-dropdown__button"
           v-for="option in options"
-          :key="option.label"
-          @click="$emit(`dropdown${option.label.split(' ').join('')}`)"
+          :key="option"
+          @click="$emit(`dropdown${option.split(' ').join('')}`)"
         >
-          {{ option.label }}
+          {{ option }}
         </button>
       </div>
     </transition>
@@ -48,6 +48,7 @@ export default {
 
 <style lang="scss" scoped>
 .base-dropdown {
+  display: flex;
   margin-left: auto;
   position: relative;
 
