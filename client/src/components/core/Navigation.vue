@@ -1,5 +1,10 @@
 <template>
   <nav class="navigation" :class="{ 'navigation--active': isMenuActive }">
+    <base-dialog
+      @dialog-save="saveCategory"
+      v-model="renameData.categoryName"
+    />
+
     <button
       class="navigation__hamburger"
       @click="closeNavigation"
@@ -50,6 +55,7 @@
         </router-link>
         <base-dropdown
           :options="dropdownOptions"
+          @dropdownRename="renameCategory(category._id)"
           @dropdownAddNote="addNote(category._id)"
           @dropdownRemove="removeCategory(category._id)"
         ></base-dropdown>
@@ -82,6 +88,7 @@ import gsap from 'gsap';
 import { errors } from '@/assets/consts';
 import BaseInput from '@/components/core/BaseInput';
 import BaseDropdown from '@/components/core/BaseDropdown';
+import BaseDialog from '@/components/core/BaseDialog';
 
 export default {
   data() {
@@ -89,6 +96,10 @@ export default {
       isMenuActive: true,
       isAddCategoryActive: false,
       newCategoryName: '',
+      renameData: {
+        categoryName: '',
+        categoryId: null
+      },
       dropdownOptions: ['Add Note', 'Rename', 'Remove']
     };
   },
@@ -100,7 +111,8 @@ export default {
   },
   components: {
     BaseInput,
-    BaseDropdown
+    BaseDropdown,
+    BaseDialog
   },
   watch: {
     isMenuActive(state) {
@@ -199,8 +211,42 @@ export default {
         });
       }
     },
-    renameCategory() {
-      this.$refs.navigationLink[0].focus();
+    renameCategory(categoryId) {
+      const categoryName = this.$store.state.cache.categories[categoryId].name;
+
+      this.renameData.categoryId = categoryId;
+
+      this.$store.dispatch('openDialog', {
+        title: 'Enter new category name:',
+        defaultValue: categoryName,
+        type: 'prompt',
+        mode: 'save'
+      });
+    },
+    async saveCategory() {
+      const { categoryId, categoryName } = this.renameData;
+
+      const newName =
+        categoryName || this.$store.state.cache.categories[categoryId].name;
+
+      const exec = await this.$store.dispatch('renameCategory', {
+        categoryId,
+        newName
+      });
+
+      if (exec.success) {
+        this.$store.dispatch('notificationActivate', {
+          content: `Category has been renamed.`,
+          type: 'success'
+        });
+      } else {
+        this.$store.dispatch('notificationActivate', {
+          content: errors[exec.data.error.id].message,
+          type: 'error'
+        });
+      }
+
+      this.$store.dispatch('closeDialog');
     },
     logout() {
       this.$store.dispatch('signOut');

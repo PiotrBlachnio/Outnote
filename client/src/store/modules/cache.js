@@ -33,6 +33,9 @@ export default {
 
       state.categories[note.categoryId].notes[note._id] = note;
       state.editedNotes[note._id][field] = data;
+    },
+    NOTES_RENAME_CATEGORY(state, { categoryId, newName }) {
+      state.categories[categoryId].name = newName;
     }
   },
   actions: {
@@ -127,6 +130,23 @@ export default {
 
         console.log(response);
         commit('NOTES_REMOVE_CATEGORY', categoryId);
+        return { success: true };
+      } catch (error) {
+        return { ...error.response, success: false };
+      }
+    },
+    async renameCategory({ commit }, { categoryId, newName }) {
+      try {
+        await axios({
+          url: `/category/${categoryId}`,
+          method: 'patch',
+          data: {
+            field: 'name',
+            value: newName
+          }
+        });
+
+        commit('NOTES_RENAME_CATEGORY', { categoryId, newName });
         return { success: true };
       } catch (error) {
         return { ...error.response, success: false };
