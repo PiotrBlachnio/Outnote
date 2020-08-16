@@ -83,7 +83,15 @@ const createSchema = (schemaType: string, value: string): (() => boolean)[] => {
             ];
 
             break;
-        default: 
+        case 'name':
+            schema = [
+                hasType.bind(null, value, 'string'),
+                hasMinLength.bind(null, value, 1),
+                hasMaxLength.bind(null, value, 32)
+            ];
+
+            break;
+        default:
             throw new IncorrectInputError;
     };
 
