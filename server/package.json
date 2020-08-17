@@ -6,7 +6,7 @@
     "dev": "cross-env NODE_ENV=dev concurrently \"tsc -w\" \"nodemon dist/server.js\"",
     "build:ts": "tsc",
     "build:webpack": "webpack",
-    "prod": "node build/server.bundle.js",
+    "prod": "NODE_ENV=production node build/server.bundle.js",
     "test:services": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/services",
     "test:utils": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/utils",
     "test:events": "jest --testTimeout=25000 --detectOpenHandles --forceExit ./src/events",

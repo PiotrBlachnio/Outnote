@@ -412,7 +412,7 @@ paths:
               examples:
                   Categories retrieved successfully:
                     value:
-                      categories: []
+                      categories: {}
     post:
       tags:
         - CATEGORY
@@ -515,6 +515,53 @@ paths:
                     error:
                       message: Category does not exist
                       id: 601
+  /api/v1/note/public:
+    get:
+      parameters:
+        - in: query
+          name: noteId
+          description: Note id
+          schema:
+            type: string
+        - in: query
+          name: userId
+          description: User id
+          schema:
+            type: string
+      tags:
+        - NOTE
+      summary: Get a public note
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                  Note retrieved successfully:
+                    value:
+                      note: {}
+        401:
+          content:
+            application/json:
+              examples:
+                Incorrect input:
+                  value:
+                    error:
+                      message: Provided data did not pass the validation proccess
+                      id: 200
+                Inaccessible note:
+                  value:
+                    error:
+                      message: You do not have access to this note
+                      id: 601
+        404:
+          content:
+            application/json:
+              examples:
+                Note does not exist:
+                  value:
+                    error:
+                      message: Note does not exist
+                      id: 600
   /api/v1/note:
     parameters:
       - in: cookie
@@ -539,7 +586,7 @@ paths:
               examples:
                   Notes retrieved successfully:
                     value:
-                      notes: []
+                      notes: {}
     post:
       tags:
         - NOTE
