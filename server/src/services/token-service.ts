@@ -13,7 +13,7 @@ class TokenService {
 
         switch(type) {
             case Token.ACCESS:
-                token = jwt.sign(payload, config.ACCESS_TOKEN_SECRET);
+                token = jwt.sign(payload, config.ACCESS_TOKEN_SECRET, { expiresIn: '30d' });
                 break;
             case Token.CONFIRM_EMAIL:
                 token = jwt.sign(payload, config.CONFIRM_EMAIL_TOKEN_SECRET, { expiresIn: '1h' });
