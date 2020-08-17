@@ -2,12 +2,14 @@ import { Application, json } from 'express';
 import compression from 'compression';
 import renderRoutes from './render-routes';
 import handleErrors from '../middlewares/handle-errors';
+import helmet from 'helmet';
 import cors from 'cors';
 import initServices from './services';
 import initEvents from './events';
 import { spamLimiter } from '../middlewares/speed-limiter';
 
 export default (app: Application): void => {
+    app.use(helmet());
     app.use(compression());
 
     const corsConfig = {
