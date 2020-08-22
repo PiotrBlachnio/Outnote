@@ -38,15 +38,16 @@ export default {
   },
   methods: {
     async showSubmenu(category) {
-      const notes = this.reloadNotesFromCache(category._id);
+      const notesInCache = this.$store.state.cache.categories[category._id]
+        .notes;
 
-      if (this.submenuCategoryId === category._id) {
-        this.submenuActive = false;
-        this.submenuCategoryId = null;
-        return;
-      }
+      // if (this.submenuCategoryId === category._id) {
+      //   this.submenuActive = false;
+      //   this.submenuCategoryId = null;
+      //   return;
+      // }
 
-      if (!notes) {
+      if (!notesInCache) {
         const exec = await this.$store.dispatch('fetchNotes', category._id);
 
         if (!exec.success) {
@@ -58,7 +59,7 @@ export default {
           this.notes = exec.data;
         }
       } else {
-        this.notes = notes;
+        this.notes = notesInCache;
       }
 
       this.submenuActive = true;
