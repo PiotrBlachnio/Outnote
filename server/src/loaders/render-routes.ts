@@ -5,7 +5,6 @@ import swaggerUI, { JsonObject } from 'swagger-ui-express';
 import yaml from 'yamljs';
 import path from 'path';
 
-
 export default (app: Application): void => {
     const rootRouter: { path: string, router: Router }[] = [
         { path: 'logs', router: routes.logs },

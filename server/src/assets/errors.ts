@@ -229,7 +229,7 @@ export class InaccessibleNoteError extends GenericError {
         super();
 
         this.id = 601;
-        this.statusCode = 404;
+        this.statusCode = 401;
         this.message = 'You do not have access to this note';
     };
 };

@@ -25,11 +25,13 @@ async function validateGetNoteByIdRoute(req: Request, res: Response, next: NextF
 
 async function validateGetPublicNoteRoute(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-        if(!validator.validateInput({ id: req.params.noteId })) {
+        const { noteId, userId } = req.query;
+
+        if(!validator.validateInput({ id: noteId })) {
             throw new NoteNotFoundError();
         };
 
-        const note: INote | null = await req.services.note.findOne({ _id: req.params.noteId, ownerId: req.params.userId });
+        const note: INote | null = await req.services.note.findOne({ _id: noteId, ownerId: userId });
 
         if(!note) {
             throw new NoteNotFoundError;
