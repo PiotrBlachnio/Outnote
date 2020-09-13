@@ -5,6 +5,7 @@
     placeholder="Note content..."
     class="note__textarea"
     spellcheck="false"
+    autofocus
     @input="$emit('input', $event.target.value)"
     :value="value"
   ></textarea>
@@ -22,17 +23,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './inputSettings';
-
 .note__textarea {
-  flex: 2;
-  resize: vertical;
+  padding: 2rem 3rem;
   letter-spacing: 0.05rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.25rem;
+  color: $noteInputColor;
+  border: none;
+  background-color: transparent;
+  transition: background-color 0.2s;
+
+  &::placeholder {
+    color: $noteInputPlaceholderColor;
+    transition: color 0.2s;
+  }
+
+  &:focus::placeholder {
+    color: $noteInputPlaceholderFocusColor;
+  }
+
+  &:focus {
+    outline: none;
+  }
 
   &::-webkit-scrollbar {
     display: none;
   }
-
-  @include inputSettings;
 }
 </style>

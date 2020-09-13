@@ -6,7 +6,7 @@
       @navigationClosed="submenuActive = false"
       @addedNote="reloadNotesFromCache(submenuCategoryId)"
     />
-    <sub-navigation :is-active="submenuActive" :notes="notes" />
+    <!-- <sub-navigation :is-active="submenuActive" :notes="notes" /> -->
 
     <div class="dashboard__content">
       <router-view />
@@ -17,12 +17,12 @@
 <script>
 import { errors } from '@/assets/consts';
 import Navigation from '@/components/core/Navigation';
-import SubNavigation from '@/components/dashboard/SubNavigation.vue';
+// import SubNavigation from '@/components/dashboard/SubNavigation.vue';
 
 export default {
   components: {
-    Navigation,
-    SubNavigation
+    Navigation
+    // SubNavigation
   },
   async created() {
     this.fetchUser();
@@ -111,7 +111,7 @@ export default {
   &__content {
     // width: 100%;
     flex-grow: 1;
-    padding: 2rem;
+    // padding: 2rem;
     max-width: 100%;
     height: 100vh;
     overflow-y: scroll;
@@ -121,7 +121,7 @@ export default {
     }
 
     @include mq {
-      padding: 2rem;
+      // padding: 2rem;
     }
   }
 }

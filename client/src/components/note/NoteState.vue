@@ -18,7 +18,7 @@ export default {
 <style lang="scss" scoped>
 .note__state {
   position: absolute;
-  top: 0;
+  top: 2rem;
   left: 0;
   width: 100%;
   padding: 0.5rem;

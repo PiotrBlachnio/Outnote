@@ -1,64 +1,54 @@
 <template>
-  <nav class="navigation" :class="{ 'navigation--active': isMenuActive }">
-    <base-dialog
-      @dialog-save="saveCategory"
-      v-model="renameData.categoryName"
-    />
+  <nav class="navigation">
+    <div class="navigation__navbar">
+      <ul class="navigation__list">
+        <li class="navigation__element">
+          <a
+            href="#"
+            data-title="Notes"
+            @click="isSubnavigationActive = !isSubnavigationActive"
+            class="navigation__link navigation__link--icon"
+          >
+            <i class="far fa-sticky-note"></i>
+          </a>
+        </li>
+        <li class="navigation__element">
+          <a
+            href="#"
+            data-title="Tags"
+            class="navigation__link navigation__link--icon"
+          >
+            <i class="fas fa-hashtag"></i>
+          </a>
+        </li>
+        <li class="navigation__element">
+          <a
+            href="#"
+            class="navigation__link navigation__link--icon navigation__link--settings"
+          >
+            <i class="fas fa-cogs"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
 
-    <hamburger @click="closeNavigation" :isMenuActive="isMenuActive" />
-
-    <add-category-field
-      v-show="isMenuActive"
-      :is-visible="isCategoryFieldVisible"
-      @click="showAddCategoryInput"
-      v-model="newCategoryName"
-      @click-save="addNewCategory"
-      @keypress-enter="addNewCategory"
-    />
-
-    <ul class="navigation__list">
-      <li
-        class="navigation__element"
-        v-for="category in categories"
-        :key="category._id"
-        v-show="isMenuActive"
-      >
-        <router-link
-          to="#"
-          class="navigation__link"
-          @click.native="$emit('selected-category', category)"
-        >
-          {{ category.name }}
-        </router-link>
-
-        <base-dropdown
-          :options="dropdownOptions"
-          @dropdownRename="renameCategory(category._id)"
-          @dropdownAddNote="addNote(category._id)"
-          @dropdownRemove="removeCategory(category._id)"
-        />
-      </li>
-    </ul>
-
-    <navigation-bottom v-show="isMenuActive" />
+    <sub-navigation :is-active="isSubnavigationActive" />
   </nav>
 </template>
 
 <script>
 import gsap from 'gsap';
 import { errors } from '@/assets/consts';
-import BaseDropdown from '@/components/core/BaseDropdown';
-import BaseDialog from '@/components/core/BaseDialog';
-import Hamburger from '@/components/navigation/Hamburger';
-import NavigationBottom from '@/components/navigation/NavigationBottom';
-import AddCategoryField from '@/components/navigation/AddCategoryField';
+import SubNavigation from '@/components/navigation/SubNavigation';
+// import BaseDialog from '@/components/core/BaseDialog';
 
 export default {
   data() {
     return {
-      isMenuActive: true,
+      isMenuActive: false,
       isCategoryFieldVisible: false,
       newCategoryName: '',
+      isSubnavigationActive: true,
       renameData: {
         categoryName: '',
         categoryId: null
@@ -73,11 +63,8 @@ export default {
     }
   },
   components: {
-    BaseDropdown,
-    BaseDialog,
-    Hamburger,
-    NavigationBottom,
-    AddCategoryField
+    SubNavigation
+    // BaseDialog,
   },
   watch: {
     isMenuActive(state) {
@@ -219,79 +206,110 @@ export default {
 
 <style lang="scss" scoped>
 .navigation {
-  padding: 24px;
-  width: 80px;
-  height: 0;
-  z-index: 99;
+  width: 100%;
   position: absolute;
-  background-color: transparent;
-  transition: background 0.2s ease-in-out;
+  color: white;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 99;
+  overflow: hidden;
+  background-color: $navigationBackground;
 
   @include mq {
-    height: 100vh;
+    width: auto;
+    flex-direction: row;
     position: relative;
-    transition: width 0.2s ease-in-out;
-    background-color: $navigationBackground;
   }
 
-  &--active {
+  &__navbar {
+    order: 2;
+    z-index: 99;
+    padding: 0 3rem;
     width: 100%;
-    height: 100vh;
+    padding: 1rem 2rem;
     background-color: $navigationBackground;
 
     @include mq {
-      width: 20rem;
-      flex-shrink: 0;
+      width: 64px;
+      padding: 0;
+      padding: 2.5rem 0;
+      height: 100vh;
+      border-top: none;
     }
   }
 
   &__list {
-    margin-top: 1rem;
-    min-height: 35vh;
-    max-height: 50vh;
-    overflow-y: auto;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
 
-    &::-webkit-scrollbar {
-      display: none;
-      width: 0.25rem;
+    @include mq {
+      height: 100%;
+      flex-direction: column;
     }
-    &::-webkit-scrollbar-thumb {
-      background-color: $color3;
-    }
-    &::-webkit-scrollbar-track {
-      background-color: $color4;
-    }
-  }
-
-  &--active &__list::-webkit-scrollbar {
-    display: inherit;
   }
 
   &__element {
-    display: flex;
-  }
+    display: inline-block;
 
-  &__link {
-    width: 100%;
-    color: $navigationLinkColor;
-    padding: 0.5rem;
-    font-weight: bold;
-    transition: border-left 0.1s ease-in-out;
+    &:first-of-type {
+      order: 2;
+    }
+    &:nth-of-type(2) {
+      order: 1;
+    }
+    &:nth-of-type(3) {
+      order: 3;
+    }
 
-    &:hover {
-      border-left: 2px solid $navigationLinkActiveBorderColor;
+    @include mq {
+      margin-bottom: 4rem;
+
+      &:nth-of-type(3) {
+        margin-top: auto;
+        margin-bottom: 0;
+      }
+
+      @for $i from 1 through 3 {
+        &:nth-of-type(#{$i}) {
+          order: $i;
+        }
+      }
     }
   }
 
-  &__add-button {
-    opacity: 0;
-    font-weight: bold;
-    margin-left: auto;
-    transition: opacity 0.1s;
-  }
+  &__link {
+    display: block;
+    text-align: center;
+    position: relative;
+    color: $navigationLinkColor;
 
-  &__link:hover &__add-button {
-    opacity: 1;
+    &--icon {
+      font-size: 1.5rem;
+    }
+
+    &--settings {
+      margin-top: auto;
+    }
+
+    @include mq {
+      &::after {
+        display: block;
+        opacity: 0;
+        content: attr(data-title);
+        position: absolute;
+        bottom: -1.5rem;
+        width: 100%;
+        font-size: 1rem;
+        color: $color2;
+        transition: opacity 0.2s;
+      }
+
+      &:hover::after {
+        opacity: 1;
+      }
+    }
   }
 }
 

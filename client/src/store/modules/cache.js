@@ -123,12 +123,11 @@ export default {
     },
     async removeCategory({ commit }, categoryId) {
       try {
-        const response = await axios({
+        await axios({
           url: '/category/' + categoryId,
           method: 'delete'
         });
 
-        console.log(response);
         commit('NOTES_REMOVE_CATEGORY', categoryId);
         return { success: true };
       } catch (error) {

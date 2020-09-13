@@ -3,9 +3,9 @@
     <form class="note" @submit.prevent v-if="doesNoteExist">
       <note-state :isVisible="isStateVisible" />
 
-      <note-title @input="cacheNote('title')" v-model="note.title" />
+      <!-- <note-title @input="cacheNote('title')" v-model="note.title" /> -->
 
-      <div class="note__divider"></div>
+      <!-- <div class="note__divider"></div> -->
 
       <note-content @input="cacheNote('content')" v-model="note.content" />
 
@@ -36,7 +36,7 @@
 
 <script>
 import _ from 'lodash';
-import NoteTitle from '@/components/note/NoteTitleInput';
+// import NoteTitle from '@/components/note/NoteTitleInput';
 import NoteContent from '@/components/note/NoteContentInput';
 // import NoteTags from '@/components/note/NoteTagsComponent';
 import NoteState from '@/components/note/NoteState';
@@ -57,8 +57,8 @@ export default {
   },
   components: {
     NoteState,
-    NoteTitle,
-    NoteContent,
+    // NoteTitle,
+    NoteContent
     // NoteTags,
     // NoteCheckbox
   },
