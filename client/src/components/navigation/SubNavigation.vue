@@ -1,30 +1,25 @@
 <template>
-  <transition name="width">
-    <div class="sub-navigation" :class="{ 'sub-navigation--active': isActive }">
-      <p class="sub-navigation__title" v-if="isActive && mode === 'categories'">
-        Your categories
-      </p>
-      <p class="sub-navigation__title" v-else-if="isActive">
-        <button
-          class="sub-navigation__back-button"
-          @click="mode = 'categories'"
-        >
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        {{ categoryName }}'s notes
-      </p>
+  <div class="sub-navigation" :class="{ 'sub-navigation--active': isActive }">
+    <p class="sub-navigation__title" v-if="isActive && mode === 'categories'">
+      Your categories
+    </p>
+    <p class="sub-navigation__title" v-else-if="isActive">
+      <button class="sub-navigation__back-button" @click="mode = 'categories'">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      {{ categoryName }}'s notes
+    </p>
 
-      <notes-menu
-        v-if="isActive && mode === 'notes'"
-        :categoryId="categoryId"
-        @selected-note="openNote"
-      />
-      <categories-menu
-        v-else-if="isActive && mode === 'categories'"
-        @selected-category="expandNotes"
-      />
-    </div>
-  </transition>
+    <notes-menu
+      v-if="isActive && mode === 'notes'"
+      :categoryId="categoryId"
+      @selected-note="openNote"
+    />
+    <categories-menu
+      v-else-if="isActive && mode === 'categories'"
+      @selected-category="expandNotes"
+    />
+  </div>
 </template>
 
 <script>
@@ -77,7 +72,7 @@ export default {
 .sub-navigation {
   order: 1;
   height: 0;
-  max-height: calc(100% - 5rem);
+  max-height: calc(100% - 4rem);
   transition: height 0.25s;
 
   @include mq {
@@ -116,18 +111,5 @@ export default {
     transform: translateY(-50%);
     position: absolute;
   }
-}
-
-.width-enter-active,
-.width-leave-active {
-  transition: all 0.3s ease;
-}
-.width-enter-to,
-.width-leave {
-  opacity: 1;
-}
-.width-enter,
-.width-leave-to {
-  opacity: 0;
 }
 </style>

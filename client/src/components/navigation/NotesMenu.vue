@@ -17,39 +17,6 @@
           </span>
         </a>
       </li>
-            <li class="notes__element" v-for="note in notes" :key="note._id">
-        <a
-          href="#"
-          @click.prevent="$emit('selected-note', note._id)"
-          class="notes__note"
-        >
-          <p class="notes__title">{{ note.title }}</p>
-          <span class="notes__content" v-if="note.content">
-            {{
-              note.content.length > 32
-                ? note.content.substr(0, 32).concat('...')
-                : note.content
-            }}
-          </span>
-        </a>
-      </li>
-
-                  <li class="notes__element" v-for="note in notes" :key="note._id">
-        <a
-          href="#"
-          @click.prevent="$emit('selected-note', note._id)"
-          class="notes__note"
-        >
-          <p class="notes__title">{{ note.title }}</p>
-          <span class="notes__content" v-if="note.content">
-            {{
-              note.content.length > 32
-                ? note.content.substr(0, 32).concat('...')
-                : note.content
-            }}
-          </span>
-        </a>
-      </li>
     </ul>
   </div>
 </template>

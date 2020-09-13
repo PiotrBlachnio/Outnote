@@ -3,7 +3,7 @@
     <ul class="categories__list">
       <li class="categories__element categories__element--new">
         <a href="#" class="categories__link">
-          <i class="fas fa-plus"></i> Create new
+          <i class="fas fa-plus categories__link__icon"></i> Create new
         </a>
       </li>
       <li
@@ -71,6 +71,10 @@ export default {
 
   &__element--new {
     border: 1px dashed $color2;
+
+    &:hover {
+      border-color: $success;
+    }
   }
 
   &__link {
@@ -83,6 +87,10 @@ export default {
     &:hover {
       background-color: $color5;
       border-left: 2px solid $color2;
+    }
+
+    &__icon {
+      margin-right: 0.5rem;
     }
   }
 }
