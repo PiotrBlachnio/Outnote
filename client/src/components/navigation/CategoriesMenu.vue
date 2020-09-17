@@ -1,11 +1,11 @@
 <template>
   <div class="categories">
-    <ul class="categories__list">
-      <li class="categories__element categories__element--new">
-        <a href="#" class="categories__link">
-          <i class="fas fa-plus categories__link__icon"></i> Create new
-        </a>
-      </li>
+    <create-category
+      @added-category="categoryKey += 1"
+      class="categories__element"
+    />
+
+    <ul class="categories__list" :key="categoryKey">
       <li
         class="categories__element"
         v-for="category in categories"
@@ -25,12 +25,17 @@
 
 <script>
 import gsap from 'gsap';
+import CreateCategory from './CreateNewCategory';
 
 export default {
   data() {
     return {
-      categories: {}
+      categories: {},
+      categoryKey: 0
     };
+  },
+  components: {
+    CreateCategory
   },
   mounted() {
     gsap.fromTo(
@@ -42,12 +47,7 @@ export default {
   },
 
   created() {
-    this.fetchCategories();
-  },
-  methods: {
-    fetchCategories() {
-      this.categories = this.$store.state.cache.categories;
-    }
+    this.categories = this.$store.state.cache.categories;
   }
 };
 </script>
@@ -75,6 +75,10 @@ export default {
     &:hover {
       border-color: $success;
     }
+  }
+
+  &__element {
+    white-space: nowrap;
   }
 
   &__link {
