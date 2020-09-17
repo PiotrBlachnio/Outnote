@@ -1,6 +1,17 @@
 <template>
   <div class="notes">
-    <ul class="notes__list">
+    <span class="notes__empty-message" v-if="!doesNotesExist">
+      Nothing to show...
+    </span>
+
+    <create-new-item
+      class="notes__add-new"
+      mode="note"
+      :categoryId="categoryId"
+      @added-note="notesKey += 1"
+    />
+
+    <ul class="notes__list" v-if="doesNotesExist" :key="notesKey">
       <li class="notes__element" v-for="note in notes" :key="note._id">
         <a
           href="#"
@@ -23,6 +34,7 @@
 
 <script>
 import gsap from 'gsap';
+import CreateNewItem from './CreateNewItem';
 
 export default {
   props: {
@@ -31,25 +43,59 @@ export default {
       required: true
     }
   },
+  components: {
+    CreateNewItem
+  },
   data() {
     return {
-      notes: {}
+      notes: {},
+      notesKey: 0
     };
   },
-  mounted() {
-    gsap.fromTo(
-      '.notes__element',
-      0.5,
-      { x: '-2.5rem', opacity: 0 },
-      { x: 0, opacity: 1, stagger: 0.1 }
-    );
+  watch: {
+    notes() {
+      if (this.doesNotesExist) {
+        this.$nextTick(() => {
+          gsap.fromTo(
+            '.notes__element',
+            0.5,
+            { x: '-2.5rem', opacity: 0 },
+            { x: 0, opacity: 1, stagger: 0.1 }
+          );
+        });
+      } else {
+        gsap.fromTo(
+          '.notes__empty-message, .notes__add-new',
+          0.5,
+          { x: '-2.5rem', opacity: 0 },
+          { x: 0, opacity: 1 }
+        );
+      }
+    }
   },
   created() {
     this.fetchnotes();
   },
   methods: {
-    fetchnotes() {
-      this.notes = this.$store.state.cache.categories[this.categoryId].notes;
+    async fetchnotes() {
+      const cachedNoted = this.$store.state.cache.categories[this.categoryId]
+        .notes;
+
+      if (!cachedNoted) {
+        const response = await this.$store.dispatch(
+          'fetchNotes',
+          this.categoryId
+        );
+
+        this.notes = response.data;
+      } else {
+        this.notes = cachedNoted;
+      }
+    }
+  },
+  computed: {
+    doesNotesExist() {
+      return Object.entries(this.notes).length > 1;
     }
   }
 };
@@ -92,6 +138,13 @@ export default {
     display: block;
     margin-top: 0.5rem;
     color: $color3;
+  }
+
+  &__empty-message {
+    display: block;
+    text-align: center;
+    color: $color3;
+    padding: 1rem;
   }
 }
 </style>

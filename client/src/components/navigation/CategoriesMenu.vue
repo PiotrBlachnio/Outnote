@@ -1,6 +1,6 @@
 <template>
   <div class="categories">
-    <create-category
+    <create-new-item
       @added-category="categoryKey += 1"
       class="categories__element"
     />
@@ -25,7 +25,7 @@
 
 <script>
 import gsap from 'gsap';
-import CreateCategory from './CreateNewCategory';
+import CreateNewItem from './CreateNewItem';
 
 export default {
   data() {
@@ -35,7 +35,7 @@ export default {
     };
   },
   components: {
-    CreateCategory
+    CreateNewItem
   },
   mounted() {
     gsap.fromTo(

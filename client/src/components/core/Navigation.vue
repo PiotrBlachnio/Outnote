@@ -48,7 +48,7 @@ export default {
       isMenuActive: false,
       isCategoryFieldVisible: false,
       newCategoryName: '',
-      isSubnavigationActive: true,
+      isSubnavigationActive: false,
       renameData: {
         categoryName: '',
         categoryId: null
