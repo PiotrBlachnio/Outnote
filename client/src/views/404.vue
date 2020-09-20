@@ -23,7 +23,7 @@ export default {
     changeRoute() {
       const mode = this.mode;
 
-      this.$router.push(mode ? '/dashboard' : '/auth/login');
+      this.$router.push(mode === 'Dashboard' ? '/dashboard' : '/auth/login');
     }
   }
 };
