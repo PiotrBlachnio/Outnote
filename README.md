@@ -1,16 +1,16 @@
 # Outnote
-Outnote is a note taking app. It allows you to save your thoughts using markdown. Data is stored using MongoDB and is easily accessable.
+Outnote is a note-taking app. It allows you to save your thoughts using markdown. Data is stored using MongoDB and is easily accessible.
 
 ## Technologies used
-* Typescript
 * NodeJS & ExpressJS
+* Typescript
 * Javascript
 * SCSS
 * MongoDB
 * Docker
 
 ## Running on docker
-__Make sure you createad .env file with corresponding variables__
+__Make sure you've createad .env file with corresponding variables__
 ```
 git clone https://github.com/PiotrBlachnio/Outnote.git
 ```
@@ -28,7 +28,7 @@ docker-compose up
 ```
 
 ## Running on localhost
-__Make sure you createad .env file with corresponding variables__
+__Make sure you've createad .env file with corresponding variables__
 ```
 git clone https://github.com/PiotrBlachnio/Outnote.git
 ```
