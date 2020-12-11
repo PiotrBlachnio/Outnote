@@ -10,7 +10,11 @@ Outnote is a note-taking app. It allows you to save your thoughts using markdown
 * Docker
 
 ## Running on docker
-__Make sure you've createad .env file with corresponding variables__
+****
+**_Make sure you've createad .env file with corresponding variables_**
+
+****
+
 ```
 git clone https://github.com/PiotrBlachnio/Outnote.git
 ```
@@ -28,7 +32,10 @@ docker-compose up
 ```
 
 ## Running on localhost
-__Make sure you've createad .env file with corresponding variables__
+****
+**_Make sure you've createad .env file with corresponding variables_**
+
+****
 ```
 git clone https://github.com/PiotrBlachnio/Outnote.git
 ```
